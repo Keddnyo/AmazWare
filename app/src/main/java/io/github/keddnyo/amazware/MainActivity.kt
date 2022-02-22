@@ -41,8 +41,16 @@ class MainActivity : AppCompatActivity() {
                     for (i in 1 .. 100) {
                         if (json.has(i.toString())) {
                             val jsonObject = json.getString(i.toString()).toString()
+
+                            val deviceName = if (Device().name(i.toString()) != "Unknown") {
+                                Device().name(i.toString())
+                            } else {
+                                jsonObject
+                            }
+
+                            //val deviceName = Device().name(i.toString())
                             runOnUiThread {
-                                adapter.add(jsonObject)
+                                adapter.add(deviceName)
                             }
                         }
                     }
