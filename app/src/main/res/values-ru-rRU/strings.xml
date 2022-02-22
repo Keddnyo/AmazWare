@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_credits">Приложение создал Keddnyo</string>
+    <string name="logic_credits">Локику создал Schakal</string>
+    <string name="support_credits">Поддержал Matteo C</string>
+    <string name="exit_title">Выход</string>
+    <string name="downloading">Загрузка файла</string>
+    <string name="error">Ошибка</string>
+    <string name="retry_connect">Проверьте подключение к интернету</string>
+    <string name="back">Назад</string>
+    <string name="refresh">Обновить</string>
+    <string name="feed">Лента</string>
+    <string name="about">О приложении</string>
+</resources>

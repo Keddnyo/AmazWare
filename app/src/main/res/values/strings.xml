@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AmazWare</string>
+    <string name="app_name" translatable="false">AmazWare</string>
     <string name="app_credits">App created by Keddnyo</string>
     <string name="logic_credits">Logic created by Schakal</string>
     <string name="support_credits">Supported by Matteo C</string>
@@ -10,6 +10,5 @@
     <string name="back">Back</string>
     <string name="refresh">Refresh</string>
     <string name="feed">Feed</string>
-    <string name="telegram">Telegram</string>
     <string name="about">About</string>
 </resources>

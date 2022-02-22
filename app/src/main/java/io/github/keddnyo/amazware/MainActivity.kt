@@ -36,21 +36,6 @@ class MainActivity : AppCompatActivity() {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
         webView.loadUrl(url)
-        webView.webViewClient = object : WebViewClient() {
-            override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
-                webView.loadUrl("about:blank")
-                val alertDialog = AlertDialog.Builder(this@MainActivity)
-                alertDialog.setTitle(getString(R.string.error))
-                alertDialog.setMessage(getString(R.string.retry_connect))
-                alertDialog.setNegativeButton(getString(R.string.refresh)) { dialog, _ ->
-                    dialog.dismiss()
-                    webView.reload()
-                    webView.loadUrl(url)
-                }
-                alertDialog.setCancelable(false)
-                alertDialog.show()
-            }
-        }
         webView.setDownloadListener { url, _, contentDisposition, mimeType, _ ->
             val request = DownloadManager.Request(Uri.parse(url))
             request.setDescription(getString(R.string.downloading))
@@ -72,11 +57,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.Refresh -> {
+                findViewById<WebView>(R.id.webView).loadUrl(url)
+            }
             R.id.Feed -> {
                 startActivity(Intent(this@MainActivity, Feed::class.java))
-            }
-            R.id.Telegram -> {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/firmwarehouse")))
             }
             R.id.About -> {
                 val aboutDialog = AlertDialog.Builder(this)
@@ -87,10 +72,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
                     dialog.dismiss()
-                }
-                aboutDialog.setNeutralButton(getString(R.string.refresh)) { dialog, _ ->
-                    dialog.dismiss()
-                    findViewById<WebView>(R.id.webView).loadUrl(url)
                 }
                 aboutDialog.show()
             }
