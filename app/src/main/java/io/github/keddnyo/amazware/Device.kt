@@ -101,6 +101,18 @@ class Device {
                 "Mi Band 6 Chinese NFC"
             } "212" -> {
                 "Mi Band 6 Global"
+            } "224" -> {
+                "Amazfit GTS3 Chinese"
+            } "225" -> {
+                "Amazfit GTS3 Global"
+            } "226" -> {
+                "Amazfit GTR3 Chinese"
+            } "227" -> {
+                "Amazfit GTR3 Global"
+            } "229" -> {
+                "Amazfit GTR3 Pro Chinese"
+            } "230" -> {
+                "Amazfit GTR3 Pro Global"
             } else -> {
                 "(Unknown - $name)"
             }
