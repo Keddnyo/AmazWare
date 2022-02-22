@@ -39,11 +39,12 @@ class MainActivity : AppCompatActivity() {
                 val json = JSONObject(response.body()!!.string())
 
                 try {
-                    for (i in 1 .. 300) {
+                    for (i in 1 .. 1000) {
                         if (json.has(i.toString())) {
                             val deviceName = Device().name(i.toString())
+                            val firmware = json.getJSONObject(i.toString()).getString("fw").toString()
                             runOnUiThread {
-                                list.add(Adapter(deviceName, "firmware"))
+                                list.add(Adapter(deviceName, firmware))
                                 adapter.notifyDataSetChanged()
                             }
                         }
