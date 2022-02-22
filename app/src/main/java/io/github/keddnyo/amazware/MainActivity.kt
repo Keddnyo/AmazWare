@@ -2,10 +2,10 @@ package io.github.keddnyo.amazware
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.SimpleAdapter
 import okhttp3.*
-import org.json.*
+import org.json.JSONObject
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -23,10 +23,11 @@ class MainActivity : AppCompatActivity() {
         val request = Request.Builder().url(url).build()
         val deviceIndex = findViewById<ListView>(R.id.deviceIndex)
 
-        val adapter = ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_dropdown_item_1line,
-            android.R.id.text1
+        val list = ArrayList<Adapter>()
+        val adapter = SimpleAdapter(
+            this, list, android.R.layout.simple_list_item_2, arrayOf(Adapter.NAME, Adapter.FIRMWARE), intArrayOf(
+                android.R.id.text1, android.R.id.text2
+            )
         )
         deviceIndex.adapter = adapter
 
@@ -38,19 +39,12 @@ class MainActivity : AppCompatActivity() {
                 val json = JSONObject(response.body()!!.string())
 
                 try {
-                    for (i in 1 .. 100) {
+                    for (i in 1 .. 300) {
                         if (json.has(i.toString())) {
-                            val jsonObject = json.getString(i.toString()).toString()
-
-                            val deviceName = if (Device().name(i.toString()) != "Unknown") {
-                                Device().name(i.toString())
-                            } else {
-                                jsonObject
-                            }
-
-                            //val deviceName = Device().name(i.toString())
+                            val deviceName = Device().name(i.toString())
                             runOnUiThread {
-                                adapter.add(deviceName)
+                                list.add(Adapter(deviceName, "firmware"))
+                                adapter.notifyDataSetChanged()
                             }
                         }
                     }

@@ -6,7 +6,7 @@ class Device {
             "12" -> {
                 "Amazfit Bip"
             } "20" -> {
-                "(dongtinghu)"
+                "Amazfit Bip2"
             } "24" -> {
                 "Xiaomi Mi Band 4 Chinese NFC"
             } "25" -> {
@@ -16,9 +16,9 @@ class Device {
             } "29" -> {
                 "Amazfit Bip S Lite"
             } "30" -> {
-                "Amazfit Verge Lite"
+                "Amazfit Verge Lite Global"
             } "31" -> {
-                "(rio)"
+                "Mi Band 3i"
             } "35" -> {
                 "Amazfit GTR 47 mm Chinese"
             } "36" -> {
@@ -46,15 +46,15 @@ class Device {
             } "53" -> {
                 "Amazfit X Chinese"
             } "56" -> {
-                "(osprey)"
+                "Zepp Z Chinese"
             } "57" -> {
-                "(onyx)"
+                "Zepp E Circle Chinese"
             } "58" -> {
                 "Xiaomi Mi Band 5 Chinese NFC"
             } "59" -> {
                 "Xiaomi Mi Band 5 Chinese"
             } "61" -> {
-                "(corsica)"
+                "Zepp E Square Chinese"
             } "62" -> {
                 "Amazfit Neo"
             } "63" -> {
@@ -74,27 +74,35 @@ class Device {
             } "73" -> {
                 "Amazfit Band 5"
             } "76" -> {
-                "(ospreyw)"
+                "Zepp Z Global"
             } "77" -> {
                 "Amazfit GTS 2 Chinese"
             } "78" -> {
                 "Amazfit GTS 2 Global"
             } "81" -> {
-                "(onyxw)"
+                "Zepp E Circle Global"
             } "82" -> {
-                "(corsicaw)"
+                "Zepp E Square Global"
             } "83" -> {
                 "Amazfit T-Rex Pro Chinese"
             } "92" -> {
                 "Amazfit GTS 2 Mini Global"
             } "200" -> {
                 "Amazfit T-Rex Pro Global"
+            } "206" -> {
+                "Amazfit GTR2e Chinese"
+            } "207" -> {
+                "Amazfit GTS2e Chinese"
+            } "209" -> {
+                "Amazfit GTR2e Global"
+            } "210" -> {
+                "Amazfit GTS2e Global"
             } "211" -> {
                 "Mi Band 6 Chinese NFC"
             } "212" -> {
                 "Mi Band 6 Global"
             } else -> {
-                "Unknown"
+                "(Unknown - $name)"
             }
         }
     }
