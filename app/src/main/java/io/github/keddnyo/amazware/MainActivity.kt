@@ -35,7 +35,33 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
+        webView.clearHistory()
         webView.loadUrl(url)
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                return if (url.startsWith("tg:")) {
+                    view.context.startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    webView.goBack()
+                    true
+                } else {
+                    false
+                }
+            }
+            override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
+                webView.loadUrl("about:blank")
+                val alertDialog = AlertDialog.Builder(this@MainActivity)
+                alertDialog.setTitle(getString(R.string.error))
+                alertDialog.setMessage(getString(R.string.retry_connect))
+                alertDialog.setNegativeButton(getString(R.string.refresh)) { dialog, _ ->
+                    dialog.dismiss()
+                    webView.reload()
+                    webView.loadUrl(url)
+                }
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+        }
         webView.setDownloadListener { url, _, contentDisposition, mimeType, _ ->
             val request = DownloadManager.Request(Uri.parse(url))
             request.setDescription(getString(R.string.downloading))
