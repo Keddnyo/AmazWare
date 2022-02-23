@@ -6,9 +6,7 @@
     <string name="exit_title">Выход</string>
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
-    <string name="retry_connect">Проверьте подключение к интернету</string>
     <string name="back">Назад</string>
-    <string name="refresh">Обновить</string>
     <string name="cloud">Облако</string>
     <string name="feed">Дайджест</string>
     <string name="manual">Вручную</string>

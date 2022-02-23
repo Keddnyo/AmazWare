@@ -1,7 +1,6 @@
 package io.github.keddnyo.amazware.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
@@ -43,6 +42,7 @@ class CloudFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
+        webView.clearHistory()
         webView.loadUrl(url)
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
@@ -58,16 +58,7 @@ class CloudFragment : Fragment() {
             }
             override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
                 webView.loadUrl("about:blank")
-                val alertDialog = AlertDialog.Builder(activity)
-                alertDialog.setTitle(getString(R.string.error))
-                alertDialog.setMessage(getString(R.string.retry_connect))
-                alertDialog.setNegativeButton(getString(R.string.refresh)) { dialog, _ ->
-                    dialog.dismiss()
-                    webView.reload()
-                    webView.loadUrl(url)
-                }
-                alertDialog.setCancelable(false)
-                alertDialog.show()
+                activity!!.title = getString(R.string.error)
             }
         }
 
@@ -83,9 +74,11 @@ class CloudFragment : Fragment() {
             Toast.makeText(activity, getString(R.string.downloading), Toast.LENGTH_LONG).show()
         }
 
-        val refreshButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.refresh_button)
-        refreshButton.setOnClickListener {
+        val cloudRefresh = activity!!.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.cloud_refresh)
+        cloudRefresh.setOnRefreshListener {
+            activity!!.title = getString(R.string.cloud)
             webView.reload()
+            cloudRefresh.isRefreshing = false
         }
     }
 }

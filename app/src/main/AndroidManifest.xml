@@ -15,9 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AmazWare">
         <activity
-            android:name=".Feed"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

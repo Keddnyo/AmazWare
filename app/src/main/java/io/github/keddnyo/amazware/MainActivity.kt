@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         }
 
-        replaceFragment(cloudFragment)
-        bottomNavigation.selectedItemId = R.id.Cloud
+        replaceFragment(feedFragment)
+        bottomNavigation.selectedItemId = R.id.Feed
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {
                 Handler().postDelayed({
@@ -53,6 +53,26 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+    /**override fun onResume() {
+        super.onResume()
+        val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+
+        when {
+            feedFragment.isVisible -> {
+                bottomNavigation.selectedItemId = R.id.Feed
+            }
+            cloudFragment.isVisible -> {
+                bottomNavigation.selectedItemId = R.id.Cloud
+            }
+            manualFragment.isVisible -> {
+                bottomNavigation.selectedItemId = R.id.Manual
+            }
+            telegramFragment.isVisible -> {
+                bottomNavigation.selectedItemId = R.id.Telegram
+            }
+        }
+    }**/
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

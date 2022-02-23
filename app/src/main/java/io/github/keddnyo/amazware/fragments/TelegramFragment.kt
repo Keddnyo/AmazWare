@@ -1,19 +1,16 @@
 package io.github.keddnyo.amazware.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.method.Touch.scrollTo
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import io.github.keddnyo.amazware.R
 
 class TelegramFragment : Fragment() {
@@ -38,8 +35,9 @@ class TelegramFragment : Fragment() {
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            webSettings.forceDark = WebSettings.FORCE_DARK_ON
+            webSettings.forceDark = WebSettings.FORCE_DARK_OFF
         }
+        webView.clearHistory()
         webView.loadUrl(url)
         webView.pageDown(true)
 
