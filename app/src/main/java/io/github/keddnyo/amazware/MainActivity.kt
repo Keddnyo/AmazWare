@@ -92,6 +92,6 @@ class MainActivity : AppCompatActivity() {
                 aboutDialog.show()
             }
         }
-        return super.onOptionsItemSelected(item)
+        return onOptionsItemSelected(item)
     }
 }

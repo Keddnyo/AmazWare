@@ -11,4 +11,22 @@
     <string name="feed">Дайджест</string>
     <string name="manual">Вручную</string>
     <string name="info">Инфо</string>
+
+
+    <string name="submit">Submit</string>
+    <string name="remember">Copy MD5</string>
+    <string name="restore">Download</string>
+    <string name="reset">Reset</string>
+    <string name="model_hint">Model code</string>
+    <string name="production_hint">Production code</string>
+    <string name="app_name_hint">App name</string>
+    <string name="app_version_number_hint">App version number</string>
+    <string name="app_version_build_hint">App version build</string>
+    <string name="response_hint">Server response</string>
+    <string name="zepp_appname">Zepp</string>
+    <string name="mifit_appname">Mi Fit</string>
+    <string name="play_postfix_checkbox">play postfix</string>
+    <string name="clear_response">Clear</string>
+    <string name="shoose_app">Shoose an app name!</string>
+
 </resources>
