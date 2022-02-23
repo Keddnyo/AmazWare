@@ -29,8 +29,9 @@ class TelegramFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity!!.title = getString(R.string.telegram)
+        activity!!.title = getString(R.string.telegram) // New title
 
+        // Setting WebView
         val webView = activity!!.findViewById<WebView>(R.id.telegramView)
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
@@ -38,9 +39,12 @@ class TelegramFragment : Fragment() {
             webSettings.forceDark = WebSettings.FORCE_DARK_OFF
         }
         webView.clearHistory()
+
+        // Loading WebView
         webView.loadUrl(url)
         webView.pageDown(true)
 
+        // Telegram button
         val telegramButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.open_telegram)
         telegramButton.setOnClickListener {
             startActivity(

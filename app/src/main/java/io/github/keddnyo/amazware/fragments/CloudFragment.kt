@@ -34,8 +34,9 @@ class CloudFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity!!.title = getString(R.string.cloud)
+        activity!!.title = getString(R.string.cloud) // New title
 
+        // Setting WebView
         val webView = activity!!.findViewById<WebView>(R.id.webView)
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
@@ -43,8 +44,11 @@ class CloudFragment : Fragment() {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
         webView.clearHistory()
+
+        // Loading WebView
         webView.loadUrl(url)
         webView.webViewClient = object : WebViewClient() {
+            // Override loading
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 return if (url.startsWith("tg:")) {
                     startActivity(
@@ -56,12 +60,14 @@ class CloudFragment : Fragment() {
                     false
                 }
             }
+            // Error
             override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
                 webView.loadUrl("about:blank")
                 activity!!.title = getString(R.string.error)
             }
         }
 
+        // Downloading code
         webView.setDownloadListener { url, _, contentDisposition, mimeType, _ ->
             val request = DownloadManager.Request(Uri.parse(url))
             request.setDescription(getString(R.string.downloading))
@@ -74,6 +80,7 @@ class CloudFragment : Fragment() {
             Toast.makeText(activity, getString(R.string.downloading), Toast.LENGTH_LONG).show()
         }
 
+        // Pull refresh
         val cloudRefresh = activity!!.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.cloud_refresh)
         cloudRefresh.setOnRefreshListener {
             activity!!.title = getString(R.string.cloud)

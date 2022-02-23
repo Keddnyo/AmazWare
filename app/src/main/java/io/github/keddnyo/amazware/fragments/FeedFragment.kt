@@ -25,7 +25,19 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+    }
 
+    private fun init() {
+        activity!!.title = getString(R.string.feed) // New title
+
+        // Variables
+        val okHttpClient = OkHttpClient()
+        val urlMain = "https://schakal.ru/fw/latest.json"
+        val requestMain = Request.Builder().url(urlMain).build()
+        val deviceIndex = activity!!.findViewById<ListView>(R.id.feedView)
+
+        // Setting adapter
         val list = ArrayList<Adapter>()
         val adapter = SimpleAdapter(
             activity,
@@ -36,9 +48,60 @@ class FeedFragment : Fragment() {
                 android.R.id.text1, android.R.id.text2
             )
         )
+        deviceIndex.adapter = adapter
 
-        init()
+        // Creating request
+        okHttpClient.newCall(requestMain).enqueue(object : Callback {
+            // Error
+            override fun onFailure(call: Call, e: IOException) {
+                activity!!.title = getString(R.string.error)
+            }
 
+            // Success
+            override fun onResponse(call: Call, response: Response) {
+                val json = JSONObject(response.body()!!.string())
+
+                try {
+                    for (i in 1..1000) { // Device indexes
+                        if (json.has(i.toString())) { // Existing indexes
+                            val deviceName =
+                                Device().name(i.toString()) // Device name
+                            val firmware =
+                                json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
+                            val languages =
+                                json.getJSONObject(i.toString()).getString("languages").toString() // Languages
+                            val changelog =
+                                json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
+                            val date =
+                                json.getJSONObject(i.toString()).getString("date").toString() // Date
+
+                            deviceIndex.post {
+                                if (changelog == "") { // An empty changelog won't be shown
+                                    list.add(
+                                        Adapter(
+                                            deviceName,
+                                            "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"
+                                        )
+                                    )
+                                } else { // A non-empty changelog will be shown
+                                    list.add(
+                                        Adapter(
+                                            deviceName,
+                                            "Firmware: $firmware\nLanguages: $languages\n\nChangelog:\n$changelog\n\nDate: $date\n"
+                                        )
+                                    )
+                                }
+                                adapter.notifyDataSetChanged() // Commit changes
+                            }
+                        }
+                    }
+                } catch (e: IOException) {
+                    activity!!.title = getString(R.string.error)
+                }
+            }
+        })
+
+        // Pull refresh
         val feedRefresh =
             activity!!.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.feed_refresh)
         feedRefresh.setOnRefreshListener {
@@ -47,72 +110,5 @@ class FeedFragment : Fragment() {
             init()
             feedRefresh.isRefreshing = false
         }
-    }
-
-    private fun init() {
-        activity!!.title = getString(R.string.feed)
-
-        val okHttpClient = OkHttpClient()
-        val urlMain = "https://schakal.ru/fw/latest.json"
-        val requestMain = Request.Builder().url(urlMain).build()
-        val deviceIndex = activity!!.findViewById<ListView>(R.id.feedView)
-
-        val list = ArrayList<Adapter>()
-        val adapter = SimpleAdapter(
-            activity,
-            list,
-            android.R.layout.simple_list_item_2,
-            arrayOf(Adapter.NAME, Adapter.FIRMWARE),
-            intArrayOf(
-                android.R.id.text1, android.R.id.text2
-            )
-        )
-
-        deviceIndex.adapter = adapter
-
-        okHttpClient.newCall(requestMain).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                activity!!.title = getString(R.string.error)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val json = JSONObject(response.body()!!.string())
-
-                try {
-                    for (i in 1..1000) {
-                        if (json.has(i.toString())) {
-                            val deviceName = Device().name(i.toString())
-                            val firmware =
-                                json.getJSONObject(i.toString()).getString("fw").toString()
-                            val languages =
-                                json.getJSONObject(i.toString()).getString("languages").toString()
-                            val changelog =
-                                json.getJSONObject(i.toString()).getString("changelog").toString()
-                            val date = json.getJSONObject(i.toString()).getString("date").toString()
-
-                            deviceIndex.post {
-                                if (changelog == "") {
-                                    list.add(
-                                        Adapter(
-                                            deviceName,
-                                            "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"
-                                        )
-                                    )
-                                } else {
-                                    list.add(
-                                        Adapter(
-                                            deviceName,
-                                            "Firmware: $firmware\nLanguages: $languages\n\nChangelog:\n$changelog\n\nDate: $date\n"
-                                        )
-                                    )
-                                }
-                                adapter.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                } catch (e: IOException) {
-                }
-            }
-        })
     }
 }

@@ -19,6 +19,7 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
+    // Fragments list
     private val feedFragment = FeedFragment()
     private val cloudFragment = CloudFragment()
     private val manualFragment = ManualFragment()
@@ -28,15 +29,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
-
+        // Night Mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        val permissionCheck = ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        // Permissions
+        val permissionCheck = ActivityCompat.checkSelfPermission(this@MainActivity,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+            ActivityCompat.requestPermissions(this@MainActivity,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         }
 
+        // Select fragment
         replaceFragment(feedFragment)
+
+        // Bottom bar logic
+        val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.Feed
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {
@@ -54,38 +62,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**override fun onResume() {
-        super.onResume()
-        val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
-
-        when {
-            feedFragment.isVisible -> {
-                bottomNavigation.selectedItemId = R.id.Feed
-            }
-            cloudFragment.isVisible -> {
-                bottomNavigation.selectedItemId = R.id.Cloud
-            }
-            manualFragment.isVisible -> {
-                bottomNavigation.selectedItemId = R.id.Manual
-            }
-            telegramFragment.isVisible -> {
-                bottomNavigation.selectedItemId = R.id.Telegram
-            }
-        }
-    }**/
-
+    // Fragment replacing code
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
     }
 
+    // Toolbar inflate
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    // Toolbar logic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.Info -> {
