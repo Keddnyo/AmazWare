@@ -12,7 +12,13 @@
         android:title="@string/feed" />
 
     <item
-        android:id="@+id/Info"
-        android:icon="@drawable/ic_info"
-        android:title="@string/info" />
+        android:id="@+id/Manual"
+        android:icon="@drawable/ic_manual"
+        android:title="@string/manual" />
+
+    <item
+        android:id="@+id/Telegram"
+        android:icon="@drawable/ic_telegram"
+        android:title="@string/telegram" />
+
 </menu>

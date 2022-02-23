@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <WebView
-        android:id="@+id/webView"
+        android:id="@+id/telegramView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,13 +18,13 @@
     </WebView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refresh_button"
+        android:id="@+id/open_telegram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_refresh"
+        android:src="@drawable/ic_telegram"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

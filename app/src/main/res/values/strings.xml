@@ -9,7 +9,9 @@
     <string name="retry_connect">Check your internet connection</string>
     <string name="back">Back</string>
     <string name="refresh">Refresh</string>
-    <string name="cloud">Download</string>
+    <string name="cloud">Cloud</string>
     <string name="feed">Feed</string>
+    <string name="manual">Manual</string>
+    <string name="telegram" translatable="false">Telegram</string>
     <string name="info">About</string>
 </resources>

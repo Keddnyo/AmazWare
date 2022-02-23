@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,12 +13,16 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import io.github.keddnyo.amazware.fragments.CloudFragment
 import io.github.keddnyo.amazware.fragments.FeedFragment
+import io.github.keddnyo.amazware.fragments.ManualFragment
+import io.github.keddnyo.amazware.fragments.TelegramFragment
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
     private val feedFragment = FeedFragment()
     private val cloudFragment = CloudFragment()
+    private val manualFragment = ManualFragment()
+    private val telegramFragment = TelegramFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +44,8 @@ class MainActivity : AppCompatActivity() {
                     when (it.itemId) {
                         R.id.Feed -> replaceFragment(feedFragment)
                         R.id.Cloud -> replaceFragment(cloudFragment)
-                        R.id.Info -> {
-                            val aboutDialog = AlertDialog.Builder(this)
-                            aboutDialog.setTitle(getString(R.string.app_name)+" "+BuildConfig.VERSION_NAME)
-                            aboutDialog.setMessage(getString(R.string.app_credits)+"\n"+getString(R.string.logic_credits)+"\n"+getString(R.string.support_credits))
-                            aboutDialog.setPositiveButton(getString(R.string.exit_title)) { _, _ ->
-                                finish()
-                            }
-                            aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            aboutDialog.show()
-                        }
+                        R.id.Manual -> replaceFragment(manualFragment)
+                        R.id.Telegram -> replaceFragment(telegramFragment)
                     }
                 }, 500)
             } catch (e: IOException) {
@@ -62,5 +58,29 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.Info -> {
+                val aboutDialog = AlertDialog.Builder(this)
+                aboutDialog.setTitle(getString(R.string.app_name)+" "+BuildConfig.VERSION_NAME)
+                aboutDialog.setMessage(getString(R.string.app_credits)+"\n"+getString(R.string.logic_credits)+"\n"+getString(R.string.support_credits))
+                aboutDialog.setPositiveButton(getString(R.string.exit_title)) { _, _ ->
+                    finish()
+                }
+                aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                aboutDialog.show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

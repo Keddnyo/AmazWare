@@ -72,11 +72,6 @@ class CloudFragment : Fragment() {
                 alertDialog.show()
             }
         }
-        val refreshButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.refresh_button)
-
-        refreshButton.setOnClickListener {
-            webView.reload()
-        }
 
         webView.setDownloadListener { url, _, contentDisposition, mimeType, _ ->
             val request = DownloadManager.Request(Uri.parse(url))
@@ -88,6 +83,11 @@ class CloudFragment : Fragment() {
             val dm = this.activity!!.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             dm.enqueue(request)
             Toast.makeText(activity, getString(R.string.downloading), Toast.LENGTH_LONG).show()
+        }
+
+        val refreshButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.refresh_button)
+        refreshButton.setOnClickListener {
+            webView.reload()
         }
     }
 }
