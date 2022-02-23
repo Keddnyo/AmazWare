@@ -1,6 +1,8 @@
 package io.github.keddnyo.amazware.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,36 +43,40 @@ class FeedFragment : Fragment() {
         )
         deviceIndex.adapter = adapter
 
-        okHttpClient.newCall(requestMain).enqueue(object: Callback {
-            override fun onFailure(call: Call, e: IOException) {
-            }
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                okHttpClient.newCall(requestMain).enqueue(object: Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                    }
 
-            override fun onResponse(call: Call, response: Response) {
-                val json = JSONObject(response.body()!!.string())
+                    override fun onResponse(call: Call, response: Response) {
+                        val json = JSONObject(response.body()!!.string())
 
-                try {
-                    for (i in 1 .. 400) {
-                        if (json.has(i.toString())) {
-                            val deviceName = Device().name(i.toString())
-                            val firmware = json.getJSONObject(i.toString()).getString("fw").toString()
-                            val languages = json.getJSONObject(i.toString()).getString("languages").toString()
-                            val changelog = json.getJSONObject(i.toString()).getString("changelog").toString()
-                            val date = json.getJSONObject(i.toString()).getString("date").toString()
+                        try {
+                            for (i in 1 .. 400) {
+                                if (json.has(i.toString())) {
+                                    val deviceName = Device().name(i.toString())
+                                    val firmware = json.getJSONObject(i.toString()).getString("fw").toString()
+                                    val languages = json.getJSONObject(i.toString()).getString("languages").toString()
+                                    val changelog = json.getJSONObject(i.toString()).getString("changelog").toString()
+                                    val date = json.getJSONObject(i.toString()).getString("date").toString()
 
-                            activity!!.runOnUiThread {
-                                if (changelog == "") {
-                                    list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"))
-                                } else {
-                                    list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nChangelog:\n$changelog\n\nDate: $date\n"))
+                                    activity!!.runOnUiThread {
+                                        if (changelog == "") {
+                                            list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"))
+                                        } else {
+                                            list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nChangelog:\n$changelog\n\nDate: $date\n"))
+                                        }
+                                        adapter.notifyDataSetChanged()
+                                    }
                                 }
-                                adapter.notifyDataSetChanged()
                             }
-                            activity!!.intent.putExtra("index", i.toString())
+                        } catch (e: IOException) {
                         }
                     }
-                } catch (e: IOException) {
-                }
-            }
-        })
+                })
+            },
+            500 // value in milliseconds
+        )
     }
 }

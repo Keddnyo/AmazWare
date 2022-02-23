@@ -9,7 +9,7 @@
     <string name="retry_connect">Проверьте подключение к интернету</string>
     <string name="back">Назад</string>
     <string name="refresh">Обновить</string>
-    <string name="feed">Лента</string>
-    <string name="cloud">Облако</string>
+    <string name="cloud">Загрузка</string>
+    <string name="feed">Дайджест</string>
     <string name="info">Инфо</string>
 </resources>

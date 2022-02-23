@@ -3,6 +3,7 @@ package io.github.keddnyo.amazware
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -10,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import io.github.keddnyo.amazware.fragments.CloudFragment
 import io.github.keddnyo.amazware.fragments.FeedFragment
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,21 +33,26 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(cloudFragment)
 
         bottomNavigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.Feed -> replaceFragment(feedFragment)
-                R.id.Cloud -> replaceFragment(cloudFragment)
-                R.id.Info -> {
-                    val aboutDialog = AlertDialog.Builder(this)
-                    aboutDialog.setTitle(getString(R.string.app_name)+" "+BuildConfig.VERSION_NAME)
-                    aboutDialog.setMessage(getString(R.string.app_credits)+"\n"+getString(R.string.logic_credits)+"\n"+getString(R.string.support_credits))
-                    aboutDialog.setPositiveButton(getString(R.string.exit_title)) { _, _ ->
-                        finish()
+            try {
+                Handler().postDelayed({
+                    when (it.itemId) {
+                        R.id.Feed -> replaceFragment(feedFragment)
+                        R.id.Cloud -> replaceFragment(cloudFragment)
+                        R.id.Info -> {
+                            val aboutDialog = AlertDialog.Builder(this)
+                            aboutDialog.setTitle(getString(R.string.app_name)+" "+BuildConfig.VERSION_NAME)
+                            aboutDialog.setMessage(getString(R.string.app_credits)+"\n"+getString(R.string.logic_credits)+"\n"+getString(R.string.support_credits))
+                            aboutDialog.setPositiveButton(getString(R.string.exit_title)) { _, _ ->
+                                finish()
+                            }
+                            aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            aboutDialog.show()
+                        }
                     }
-                    aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    aboutDialog.show()
-                }
+                }, 500)
+            } catch (e: IOException) {
             }
             true
         }
