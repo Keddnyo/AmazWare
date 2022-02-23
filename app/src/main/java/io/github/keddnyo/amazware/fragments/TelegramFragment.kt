@@ -40,36 +40,8 @@ class TelegramFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
-        webView.clearHistory()
-        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
         webView.loadUrl(url)
         webView.pageDown(true)
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                return if (url.startsWith("https://tlgr.org/")) {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$name"))
-                    )
-                    webView.goBack()
-                    true
-                } else {
-                    false
-                }
-            }
-            override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
-                webView.loadUrl("about:blank")
-                val alertDialog = AlertDialog.Builder(activity)
-                alertDialog.setTitle(getString(R.string.error))
-                alertDialog.setMessage(getString(R.string.retry_connect))
-                alertDialog.setNegativeButton(getString(R.string.refresh)) { dialog, _ ->
-                    dialog.dismiss()
-                    webView.reload()
-                    webView.loadUrl(url)
-                }
-                alertDialog.setCancelable(false)
-                alertDialog.show()
-            }
-        }
 
         val telegramButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.open_telegram)
         telegramButton.setOnClickListener {

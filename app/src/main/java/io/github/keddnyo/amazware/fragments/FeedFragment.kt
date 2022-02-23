@@ -61,7 +61,7 @@ class FeedFragment : Fragment() {
                                     val changelog = json.getJSONObject(i.toString()).getString("changelog").toString()
                                     val date = json.getJSONObject(i.toString()).getString("date").toString()
 
-                                    activity!!.runOnUiThread {
+                                    deviceIndex.post {
                                         if (changelog == "") {
                                             list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"))
                                         } else {
@@ -76,7 +76,7 @@ class FeedFragment : Fragment() {
                     }
                 })
             },
-            500 // value in milliseconds
+            1000 // value in milliseconds
         )
     }
 }

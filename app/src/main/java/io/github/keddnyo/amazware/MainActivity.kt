@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         replaceFragment(cloudFragment)
-
+        bottomNavigation.selectedItemId = R.id.Cloud
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {
                 Handler().postDelayed({

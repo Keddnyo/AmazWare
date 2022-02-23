@@ -43,8 +43,6 @@ class CloudFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             webSettings.forceDark = WebSettings.FORCE_DARK_ON
         }
-        webView.clearHistory()
-        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
         webView.loadUrl(url)
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
