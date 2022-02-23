@@ -45,6 +45,17 @@ class TelegramFragment : Fragment() {
         webView.loadUrl(url)
         webView.pageDown(true)
         webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                return if (url.startsWith("https://tlgr.org/")) {
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$name"))
+                    )
+                    webView.goBack()
+                    true
+                } else {
+                    false
+                }
+            }
             override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
                 webView.loadUrl("about:blank")
                 val alertDialog = AlertDialog.Builder(activity)

@@ -49,7 +49,7 @@ class CloudFragment : Fragment() {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 return if (url.startsWith("tg:")) {
-                    view.context.startActivity(
+                    startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     )
                     webView.goBack()
