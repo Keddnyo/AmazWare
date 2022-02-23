@@ -1,34 +1,41 @@
-package io.github.keddnyo.amazware
+package io.github.keddnyo.amazware.fragments
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AppCompatDelegate
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import androidx.fragment.app.Fragment
+import io.github.keddnyo.amazware.Adapter
+import io.github.keddnyo.amazware.Device
+import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-class Feed : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed)
-        title = getString(R.string.feed)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+class FeedFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity!!.title = getString(R.string.feed)
 
         val okHttpClient = OkHttpClient()
         val urlMain = "https://schakal.ru/fw/latest.json"
         val requestMain = Request.Builder().url(urlMain).build()
-        val deviceIndex = findViewById<ListView>(R.id.deviceList)
+        val deviceIndex = activity!!.findViewById<ListView>(R.id.deviceList)
 
         val list = ArrayList<Adapter>()
         val adapter = SimpleAdapter(
-            this, list, android.R.layout.simple_list_item_2, arrayOf(Adapter.NAME, Adapter.FIRMWARE), intArrayOf(
+            activity, list, android.R.layout.simple_list_item_2, arrayOf(Adapter.NAME, Adapter.FIRMWARE), intArrayOf(
                 android.R.id.text1, android.R.id.text2
             )
         )
@@ -50,7 +57,7 @@ class Feed : AppCompatActivity() {
                             val changelog = json.getJSONObject(i.toString()).getString("changelog").toString()
                             val date = json.getJSONObject(i.toString()).getString("date").toString()
 
-                            runOnUiThread {
+                            activity!!.runOnUiThread {
                                 if (changelog == "") {
                                     list.add(Adapter(deviceName, "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"))
                                 } else {
@@ -58,17 +65,12 @@ class Feed : AppCompatActivity() {
                                 }
                                 adapter.notifyDataSetChanged()
                             }
-                            intent.putExtra("index", i.toString())
+                            activity!!.intent.putExtra("index", i.toString())
                         }
                     }
                 } catch (e: IOException) {
                 }
             }
         })
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 }

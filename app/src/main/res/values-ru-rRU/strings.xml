@@ -10,5 +10,6 @@
     <string name="back">Назад</string>
     <string name="refresh">Обновить</string>
     <string name="feed">Лента</string>
-    <string name="about">О приложении</string>
+    <string name="cloud">Облако</string>
+    <string name="info">Инфо</string>
 </resources>
