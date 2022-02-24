@@ -12,13 +12,18 @@
         android:title="@string/cloud" />
 
     <item
-        android:id="@+id/Manual"
-        android:icon="@drawable/ic_manual"
-        android:title="@string/manual" />
+        android:id="@+id/Advanced"
+        android:icon="@drawable/ic_advanced"
+        android:title="@string/advanced" />
 
     <item
         android:id="@+id/Telegram"
         android:icon="@drawable/ic_telegram"
         android:title="@string/telegram" />
+
+    <item
+        android:id="@+id/Settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
 
 </menu>

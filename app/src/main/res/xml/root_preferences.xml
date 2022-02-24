@@ -1,0 +1,51 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/behaviour">
+
+        <ListPreference
+            app:defaultValue="@string/feed"
+            app:entries="@array/tabs_entries"
+            app:entryValues="@array/tabs_entries"
+            app:icon="@drawable/ic_feed"
+            app:key="default_tab"
+            app:title="@string/default_tab"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_cloud"
+            app:key="download_provider"
+            app:title="@string/download_provider" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/indication">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_notification"
+            app:key="download_notification"
+            app:title="@string/download_notification"
+            app:dependency="download_provider"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/info">
+
+        <Preference
+            app:icon="@drawable/ic_info"
+            app:key="info"
+            app:summary="@string/app_credits"
+            app:title="@string/app_name"/>
+
+        <Preference
+            app:key="info2"
+            app:summary="@string/logic_credits"/>
+
+        <Preference
+            app:key="info3"
+            app:summary="@string/support_credits"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

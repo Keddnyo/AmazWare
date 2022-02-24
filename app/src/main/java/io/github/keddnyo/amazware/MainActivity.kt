@@ -4,17 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import io.github.keddnyo.amazware.fragments.CloudFragment
-import io.github.keddnyo.amazware.fragments.FeedFragment
-import io.github.keddnyo.amazware.fragments.ManualFragment
-import io.github.keddnyo.amazware.fragments.TelegramFragment
+import androidx.preference.PreferenceManager
+import io.github.keddnyo.amazware.fragments.*
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -22,15 +17,17 @@ class MainActivity : AppCompatActivity() {
     // Fragments list
     private val feedFragment = FeedFragment()
     private val cloudFragment = CloudFragment()
-    private val manualFragment = ManualFragment()
+    private val advancedFragment = AdvancedFragment()
     private val telegramFragment = TelegramFragment()
+    private val settingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Night Mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Night Mode
 
         // Permissions
         val permissionCheck = ActivityCompat.checkSelfPermission(this@MainActivity,
@@ -40,20 +37,42 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         }
 
-        // Select fragment
-        replaceFragment(feedFragment)
-
         // Bottom bar logic
         val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.Feed
+
+        // Select fragment
+        when (sharedPreferences.getString("default_tab", getString(R.string.feed))) {
+            getString(R.string.feed) -> {
+                replaceFragment(feedFragment)
+                bottomNavigation.selectedItemId = R.id.Feed
+            }
+            getString(R.string.cloud) -> {
+                replaceFragment(cloudFragment)
+                bottomNavigation.selectedItemId = R.id.Cloud
+            }
+            getString(R.string.advanced) -> {
+                replaceFragment(advancedFragment)
+                bottomNavigation.selectedItemId = R.id.Advanced
+            }
+            getString(R.string.telegram) -> {
+                replaceFragment(telegramFragment)
+                bottomNavigation.selectedItemId = R.id.Telegram
+            }
+            else -> {
+                replaceFragment(feedFragment)
+                bottomNavigation.selectedItemId = R.id.Feed
+            }
+        }
+
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {
                 Handler().postDelayed({
                     when (it.itemId) {
                         R.id.Feed -> replaceFragment(feedFragment)
                         R.id.Cloud -> replaceFragment(cloudFragment)
-                        R.id.Manual -> replaceFragment(manualFragment)
+                        R.id.Advanced -> replaceFragment(advancedFragment)
                         R.id.Telegram -> replaceFragment(telegramFragment)
+                        R.id.Settings -> replaceFragment(settingsFragment)
                     }
                 }, 500)
             } catch (e: IOException) {
@@ -67,31 +86,5 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
-    }
-
-    // Toolbar inflate
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    // Toolbar logic
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.Info -> {
-                val aboutDialog = AlertDialog.Builder(this)
-                aboutDialog.setTitle(getString(R.string.app_name)+" "+BuildConfig.VERSION_NAME)
-                aboutDialog.setMessage(getString(R.string.app_credits)+"\n"+getString(R.string.logic_credits)+"\n"+getString(R.string.support_credits))
-                aboutDialog.setPositiveButton(getString(R.string.exit_title)) { _, _ ->
-                    finish()
-                }
-                aboutDialog.setNegativeButton(getString(R.string.back)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                aboutDialog.show()
-            }
-        }
-        return onOptionsItemSelected(item)
     }
 }

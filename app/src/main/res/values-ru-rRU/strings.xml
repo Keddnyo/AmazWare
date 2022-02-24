@@ -3,15 +3,18 @@
     <string name="app_credits">Приложение создал Keddnyo</string>
     <string name="logic_credits">Локику создал Schakal</string>
     <string name="support_credits">Поддержал Matteo C</string>
-    <string name="exit_title">Выход</string>
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
-    <string name="back">Назад</string>
+    <string name="feed">Лента</string>
     <string name="cloud">Облако</string>
-    <string name="feed">Дайджест</string>
-    <string name="manual">Вручную</string>
+    <string name="advanced">Вручную</string>
     <string name="info">Инфо</string>
-
+    <string name="settings">Настройки</string>
+    <string name="behaviour">Поведение</string>
+    <string name="default_tab">Главная вкладка</string>
+    <string name="indication">Индикация</string>
+    <string name="download_notification">Показывать уведомление о загрузке</string>
+    <string name="download_provider">Встроенный загрузчик</string>
 
     <string name="submit">Submit</string>
     <string name="remember">Copy MD5</string>
@@ -28,5 +31,4 @@
     <string name="play_postfix_checkbox">play postfix</string>
     <string name="clear_response">Clear</string>
     <string name="shoose_app">Shoose an app name!</string>
-
 </resources>

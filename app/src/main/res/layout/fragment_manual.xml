@@ -9,65 +9,65 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:fillViewport="true"
+        android:orientation="vertical"
         android:padding="10sp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/model_hint"
+                android:inputType="number"
                 android:maxLength="2"/>
 
             <EditText
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/production_hint"
+                android:inputType="number"
                 android:maxLength="3"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <RadioGroup
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_vertical|center"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/zepp_appname"
+                    android:minHeight="40dp"
                     android:paddingEnd="12dp"
-                    android:minHeight="40dp" />
+                    android:text="@string/zepp_appname" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mifit_appname"
-                    android:paddingEnd="12dp" />
+                    android:paddingEnd="12dp"
+                    android:text="@string/mifit_appname" />
 
                 <EditText
-                    android:inputType="none"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/app_name_hint"
-                    android:text="@string/shoose_app"
                     android:editable="false"
+                    android:hint="@string/app_name_hint"
+                    android:inputType="none"
+                    android:text="@string/shoose_app"
                     android:textAlignment="center"/>
 
             </RadioGroup>
@@ -75,53 +75,53 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <CheckBox
-                android:text="@string/play_postfix_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:paddingEnd="12dp"
-                android:enabled="false"/>
+                android:text="@string/play_postfix_checkbox"/>
 
             <EditText
-                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/app_version_number_hint"
                 android:digits="0123456789."
+                android:hint="@string/app_version_number_hint"
+                android:inputType="text"
                 android:maxLength="7"/>
 
         </LinearLayout>
 
         <EditText
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/app_version_build_hint"
+            android:inputType="number"
             android:maxLength="7"/>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:gravity="center|center_horizontal">
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal">
 
             <Button
-                android:text="@string/reset"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="12dp"
+                android:text="@string/reset"
                 android:textColor="#FFFFFF"/>
 
             <Button
-                android:text="@string/submit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="@string/submit"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>
@@ -129,59 +129,58 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:layout_marginBottom="12dp"
             android:choiceMode="singleChoice"
-            android:layout_marginBottom="12dp"/>
-
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center|center_horizontal">
+            android:gravity="center|center_horizontal"
+            android:orientation="vertical">
 
             <EditText
-                android:inputType="none"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/response_hint"
-                android:singleLine="false"
-                android:verticalScrollbarPosition="right"
-                android:scrollbars="vertical"
-                android:editable="false"
-                android:textIsSelectable="true"
                 android:layout_marginBottom="12dp"
+                android:editable="false"
+                android:hint="@string/response_hint"
+                android:inputType="none"
+                android:scrollbars="vertical"
+                android:singleLine="false"
+                android:textIsSelectable="true"
+                android:verticalScrollbarPosition="right"
                 android:visibility="gone"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:gravity="center|center_horizontal">
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal">
 
             <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="12dp"
                 android:text="@string/remember"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
                 android:textColor="#FFFFFF"
                 android:visibility="gone"/>
 
             <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="12dp"
                 android:text="@string/restore"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
                 android:textColor="#FFFFFF"
                 android:visibility="gone"/>
 
             <Button
-                android:text="@string/clear_response"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="@string/clear_response"
                 android:textColor="#FFFFFF"
                 android:visibility="gone"/>
 

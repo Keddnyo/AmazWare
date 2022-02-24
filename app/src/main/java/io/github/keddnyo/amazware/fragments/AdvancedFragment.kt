@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.keddnyo.amazware.R
 
-class ManualFragment : Fragment() {
+class AdvancedFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +19,6 @@ class ManualFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity!!.title = getString(R.string.manual) // New Title
+        requireActivity().title = getString(R.string.advanced) // New Title
     }
 }
