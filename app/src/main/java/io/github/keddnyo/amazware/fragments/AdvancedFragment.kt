@@ -1,17 +1,20 @@
 package io.github.keddnyo.amazware.fragments
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import io.github.keddnyo.amazware.Adapter
 import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
-import java.lang.Exception
 
 
 class AdvancedFragment : Fragment() {
@@ -23,6 +26,7 @@ class AdvancedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_advanced, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,17 +38,10 @@ class AdvancedFragment : Fragment() {
         val appName =  requireActivity().findViewById<EditText>(R.id.appName)
         val appVersion =  requireActivity().findViewById<EditText>(R.id.appVersion)
         val appVersionBuild =  requireActivity().findViewById<EditText>(R.id.appVersionBuild)
-
         val appRadioGroup =  requireActivity().findViewById<RadioGroup>(R.id.appRadioGroup)
-
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
-
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
-
-        val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
-
-        val radioChecked = appRadioGroup.checkedRadioButtonId
 
         appRadioGroup.setOnCheckedChangeListener { _, checkedId -> // find which radio button is selected
             if (checkedId == R.id.radioZepp) {
@@ -58,15 +55,43 @@ class AdvancedFragment : Fragment() {
 
         val playPostfix = when (channelPlay.isChecked) {
             true -> {
-                "-play"
+                "-play_"
             }
             false -> {
-                ""
+                "_"
             }
         }
 
+        appVersionBuild.addTextChangedListener (object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                buttonSubmit.isEnabled = deviceSource.text.isNotEmpty() && productionSource.text.isNotEmpty() && appName.text.isNotEmpty() && appVersion.text.isNotEmpty() && appVersionBuild.text.isNotEmpty()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+
+        val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
+
+        // Setting adapter
+        val list = ArrayList<Adapter>()
+        val adapter = SimpleAdapter(
+            activity,
+            list,
+            android.R.layout.simple_list_item_2,
+            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
+            intArrayOf(
+                android.R.id.text1, android.R.id.text2
+            )
+        )
+        responseList.adapter = adapter
+
+
         buttonReset.setOnClickListener {
-            responseField.visibility = View.GONE
+            responseList.visibility = View.GONE
         }
 
         buttonSubmit.setOnClickListener {
@@ -144,251 +169,121 @@ class AdvancedFragment : Fragment() {
             val request = Request.Builder()
                 .url(uriBuilder.toString())
 
-                /**.addHeader("hm-privacy-diagnostics", "false")
-                .addHeader("country", "CH")
-                .addHeader("appplatform", "android_phone")
-                .addHeader("hm-privacy-ceip", "0")
-                .addHeader("X-Request-Id", "0")
-                .addHeader("timezone", "0")
-                .addHeader("channel", "play")
-                .addHeader("User-Agent", "0")
-                .addHeader("cv", "0")
-                .addHeader("appname", "com.huami.midong")
-                .addHeader("v", "0")
-                .addHeader("apptoken", "0")
-                .addHeader("lang", "zh_CH")
-                .addHeader("Host", requestHost)
-                .addHeader("Connection", "Keep-Alive")
-                .addHeader("Accept-Encoding", "0")**/
-
                 .addHeader("hm-privacy-diagnostics", "false")
                 .addHeader("country", "AR")
                 .addHeader("appplatform", "android_phone")
-                .addHeader("hm-privacy-ceip", "true")
-                .addHeader("x-request-id", "679b1bad-1537-4ebf-bc94-d61424855df2")
-                .addHeader("timezone", "Europe/Moscow")
-                .addHeader("channel", "play")
-                .addHeader("user-agent", "Zepp/5.12.2-play \\(Sharp Aquos S2 4/64; Android 10; Density/2.1000001\\)")
-                .addHeader("cv", "100395_5.12.2-play")
+                .addHeader("hm-privacy-ceip", "0")
+                .addHeader("x-request-id", "0")
+                .addHeader("timezone", "0")
+                .addHeader("channel", "0")
+                .addHeader("user-agent", "0")
+                .addHeader("cv", "0")
                 .addHeader("appname", appName.text.toString())
-                .addHeader("v", "2.0")
+                .addHeader("v", "0")
                 .addHeader("apptoken", "0")
                 .addHeader("lang", "ar_AR")
                 .addHeader("Host", "api-mifit-ru.huami.com")
+                .addHeader("Connection", "Keep-Alive")
                 .addHeader("accept-encoding", "gzip")
                 .addHeader("accept", "*/*")
 
                 .build()
 
-
-
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    TODO("Not yet implemented")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
 
-                    responseField.post {
-                        responseField.visibility = View.VISIBLE
-                        responseField.text = json.toString()
+                    responseList.post {
+                        responseList.visibility = View.VISIBLE
+
+                        if (json.has("firmwareVersion")) {
+                            val firmwareVersion = json.getString("firmwareVersion") // Firmware
+                            val firmwareUrl = json.getString("firmwareUrl") // Firmware Url
+                            val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
+                            list.add(
+                                Adapter(
+                                    getString(R.string.firmwareVersion),
+                                    firmwareVersion
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.firmwareUrl),
+                                    firmwareUrl
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.firmwareMd5),
+                                    firmwareMd5
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
+                        if (json.has("resourceVersion")) {
+                            val resourceVersion = json.getString("firmwareVersion") // Resources
+                            val resourceUrl = json.getString("resourceUrl") // Resources Url
+                            val resourceMd5 = json.getString("resourceMd5") // Resources MD5
+                            list.add(
+                                Adapter(
+                                    getString(R.string.resourceVersion),
+                                    resourceVersion
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.resourceUrl),
+                                    resourceUrl
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.resourceMd5),
+                                    resourceMd5
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
+                        if (json.has("fontVersion")) {
+                            val fontVersion = json.getString("firmwareVersion") // Font
+                            val fontUrl = json.getString("firmwareUrl") // Font Url
+                            val fontMd5 = json.getString("firmwareMd5") // Font MD5
+                            list.add(
+                                Adapter(
+                                    getString(R.string.fontVersion),
+                                    fontVersion
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.fontUrl),
+                                    fontUrl
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.fontMd5),
+                                    fontMd5
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
+                        if (json.has("changelog")) {
+                            val changelog = json.getString("chanelog") // Chanelog
+                            list.add(
+                                Adapter(
+                                    getString(R.string.changelog),
+                                    changelog
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
                     }
                 }
             })
-
-
-
-
-
-
-
-            /**HttpClient client = new HttpClient();
-            HttpRequestMessage request = new HttpRequestMessage();
-
-            string request_host = "api-mifit-ru.huami.com";
-
-            UriBuilder uriBuilder = new UriBuilder
-            {
-            Scheme = "https",
-            Host = request_host,
-            Path = "devices/ALL/hasNewVersion",
-            Query = "productId=71&vendorSource=1&resourceVersion=0&firmwareFlag=0&vendorId=0&resourceFlag=0&productionSource=" + production_text.Text + "&userid=0&userId=0&deviceSource=" + model_text.Text + "&fontVersion=0&fontFlag=0&appVersion=" + app_version_number_text.Text + play_postfix + "_" + app_version_build_text.Text + "&appid=0&callid=0&channel=0&country=0&cv=0&device=0&deviceType=ALL&device_type=0&firmwareVersion=0&hardwareVersion=0&lang=0&support8Bytes=true&timezone=0&v=0",
-            };
-            Uri URL = uriBuilder.Uri;
-            String stringUri;
-            stringUri = URL.ToString();
-
-            request.RequestUri = new Uri(stringUri);
-            request.Method = HttpMethod.Get;
-
-            request.Headers.Add("hm-privacy-diagnostics", "false");
-            request.Headers.Add("country", "CH");
-            request.Headers.Add("appplatform", "android_phone");
-            request.Headers.Add("hm-privacy-ceip", "0");
-            request.Headers.Add("X-Request-Id", "0");
-            request.Headers.Add("timezone", "0");
-            request.Headers.Add("channel", "play");
-            request.Headers.Add("User-Agent", "0");
-            request.Headers.Add("cv", "0");
-            request.Headers.Add("appname", app_name_text.Text);
-            request.Headers.Add("v", "0");
-            request.Headers.Add("apptoken", "0");
-            request.Headers.Add("lang", "zh_CH");
-            request.Headers.Add("Host", request_host);
-            request.Headers.Add("Connection", "Keep-Alive");
-            request.Headers.Add("Accept-Encoding", "0");
-
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-            HttpContent responseContent = response.Content;
-
-            var server_response = await responseContent.ReadAsStringAsync();
-            //response_text.Text = server_response;
-
-            Response content = JsonConvert.DeserializeObject<Response>(server_response);
-            string log = "";
-            if (content.changeLog != null)
-            {
-            log = "Click to show log";
-            }
-            else
-            {
-            log = "Log not founded";
-            }
-
-            ObservableCollection<string> data = new ObservableCollection<string>
-            {
-            "Firmware version: " + content.firmwareVersion + "\n" + "MD5: " + content.firmwareMd5,
-            "Resource version: " + content.resourceVersion.ToString() + "\n" + "MD5: " + content.resourceMd5,
-            "Font version: " + content.fontVersion.ToString() + "\n" + "MD5: " + content.fontMd5,
-            "Languages: " + content.lang,
-            log
-            //content.deviceType,
-            //content.deviceSource,
-            //content.firmwareLength,
-            //content.firmwareFlag,
-            //content.fontLength,
-            //content.fontFlag,
-            //content.resourceFlag,
-            //content.resourceLength,
-            //content.productionSource,
-            //content.changeLog,
-            //content.upgradeType,
-            //content.buildTime,
-            //content.ignore,
-            //content.support8Bytes,
-            //content.downloadBackupPaths
-            };
-
-            adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, data);
-            response_listview.TextFilterEnabled = false;
-
-            if (content.buildTime != 0)
-            {
-            response_listview.Visibility = Android.Views.ViewStates.Visible;
-            response_listview.Adapter = adapter;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            }
-            else
-            {
-            response_listview.Visibility = Android.Views.ViewStates.Gone;
-            clear_response_button.Visibility = Android.Views.ViewStates.Gone;
-            Toast.MakeText(Application, "Firmware not found", ToastLength.Short).Show();
-            }
-
-
-            response_listview.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs args)
-            {
-            //Toast.MakeText(Application, ((TextView)args.View).Text, ToastLength.Short).Show();
-
-
-            if (args.Position.ToString() == "0")
-            {
-            response_text.Text = content.firmwareVersion + " : " + content.firmwareMd5;
-            editor.PutString("content_MD5", content.firmwareMd5);
-            editor.PutString("content_URL", content.firmwareUrl);
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Visible;
-            download_button.Visibility = Android.Views.ViewStates.Visible;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            else if (args.Position.ToString() == "1")
-            {
-            if (content.resourceVersion != 0)
-            {
-            response_text.Text = content.resourceVersion + " : " + content.resourceMd5;
-            editor.PutString("content_MD5", content.resourceMd5);
-            editor.PutString("content_URL", content.resourceUrl);
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Visible;
-            download_button.Visibility = Android.Views.ViewStates.Visible;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            else
-            {
-            response_text.Text = GetString(Resource.String.not_available);
-            editor.PutString("content_MD5", "");
-            editor.PutString("content_URL", "");
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Gone;
-            download_button.Visibility = Android.Views.ViewStates.Gone;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            }
-            else if (args.Position.ToString() == "2")
-            {
-            response_text.Text = content.fontVersion + " : " + content.fontMd5;
-            editor.PutString("content_MD5", content.fontMd5);
-            editor.PutString("content_URL", content.fontUrl);
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Visible;
-            download_button.Visibility = Android.Views.ViewStates.Visible;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            else if (args.Position.ToString() == "3")
-            {
-            response_text.Text = content.lang;
-            editor.PutString("content_MD5", "");
-            editor.PutString("content_URL", "");
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Gone;
-            download_button.Visibility = Android.Views.ViewStates.Gone;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            else if (args.Position.ToString() == "4")
-            {
-            response_text.Text = content.changeLog;
-            editor.PutString("content_MD5", "");
-            editor.PutString("content_URL", "");
-            editor.Apply();
-
-            copy_MD5_button.Visibility = Android.Views.ViewStates.Gone;
-            download_button.Visibility = Android.Views.ViewStates.Gone;
-            clear_response_button.Visibility = Android.Views.ViewStates.Visible;
-            response_text_layout.Visibility = Android.Views.ViewStates.Visible;
-            response_text.Visibility = Android.Views.ViewStates.Visible;
-            }
-            //response_text.Text = ((TextView)args.View).Text;
-            };
-            }**/
-
         }
     }
 }

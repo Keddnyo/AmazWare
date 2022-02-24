@@ -43,7 +43,7 @@ class FeedFragment : Fragment() {
             activity,
             list,
             android.R.layout.simple_list_item_2,
-            arrayOf(Adapter.NAME, Adapter.FIRMWARE),
+            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
             intArrayOf(
                 android.R.id.text1, android.R.id.text2
             )

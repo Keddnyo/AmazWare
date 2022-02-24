@@ -17,6 +17,17 @@
     <string name="download_notification">Show download notification</string>
     <string name="download_provider">Built-in download provider</string>
 
+    <string name="firmwareVersion">Firmware version</string>
+    <string name="firmwareUrl">Firmware Url</string>
+    <string name="firmwareMd5">Firmware MD5</string>
+    <string name="resourceVersion">Resources version</string>
+    <string name="resourceUrl">Resources Url</string>
+    <string name="resourceMd5">Resources MD5</string>
+    <string name="fontVersion">Font version</string>
+    <string name="fontUrl">Font Url</string>
+    <string name="fontMd5">Font MD5</string>
+    <string name="changelog">Changelog</string>
+
     <string name="submit">Submit</string>
     <string name="remember">Copy MD5</string>
     <string name="restore">Download</string>

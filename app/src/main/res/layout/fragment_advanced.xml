@@ -115,7 +115,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:gravity="center|center_horizontal"
             android:orientation="horizontal">
 
@@ -132,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/submit"
+                android:enabled="false"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>
@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:choiceMode="singleChoice"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -162,13 +162,13 @@
                 android:verticalScrollbarPosition="right"
                 android:visibility="gone"/>
 
-        </LinearLayout>
+            <ListView
+                android:id="@+id/responseList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/responseField"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+        </LinearLayout>
 
     </LinearLayout>
 

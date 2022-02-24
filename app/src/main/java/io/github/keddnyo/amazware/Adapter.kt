@@ -1,17 +1,17 @@
 package io.github.keddnyo.amazware
 
-class Adapter(name: String?, firmware: String?) :
+class Adapter(name: String?, description: String?) :
     HashMap<String?, String?>() {
 
     // Object
     companion object {
         const val NAME = "name"
-        const val FIRMWARE = "firmware"
+        const val DESCRIPTION = "firmware"
     }
 
     // Constructor with parameters
     init {
         super.put(NAME, name)
-        super.put(FIRMWARE, firmware)
+        super.put(DESCRIPTION, description)
     }
 }

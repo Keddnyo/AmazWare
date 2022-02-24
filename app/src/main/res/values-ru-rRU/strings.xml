@@ -16,6 +16,17 @@
     <string name="download_notification">Уведомление о загрузке</string>
     <string name="download_provider">Встроенный загрузчик</string>
 
+    <string name="firmwareVersion">Версия прошивки</string>
+    <string name="firmwareUrl">Url прошивки</string>
+    <string name="firmwareMd5">MD5 прошивки</string>
+    <string name="resourceVersion">Версия ресурсов</string>
+    <string name="resourceUrl">Url ресурсов</string>
+    <string name="resourceMd5">MD5 ресурсов</string>
+    <string name="fontVersion">Версия шрифта</string>
+    <string name="fontUrl">Url прошивки</string>
+    <string name="fontMd5">MD5 шрифта</string>
+    <string name="changelog">Список изменений</string>
+
     <string name="submit">Submit</string>
     <string name="remember">Copy MD5</string>
     <string name="restore">Download</string>
