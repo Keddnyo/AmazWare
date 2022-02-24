@@ -6,8 +6,8 @@
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
     <string name="feed">Лента</string>
-    <string name="cloud">Облако</string>
-    <string name="advanced">Ручной режим</string>
+    <string name="explore">Облако</string>
+    <string name="extras">Экстра</string>
     <string name="About">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="behaviour">Поведение</string>

@@ -6,8 +6,8 @@
     <string name="downloading">Downloading file</string>
     <string name="error">Error</string>
     <string name="feed">Feed</string>
-    <string name="cloud">Cloud</string>
-    <string name="advanced">Advanced mode</string>
+    <string name="explore">Explore</string>
+    <string name="extras">Extras</string>
     <string name="telegram" translatable="false">Telegram</string>
     <string name="About">About</string>
     <string name="settings">Settings</string>
@@ -32,8 +32,8 @@
 
     <string name="submitButton">Submit</string>
     <string name="resetButton">Reset</string>
-    <string name="device_source">Model code</string>
-    <string name="production_source">Production code</string>
+    <string name="device_source">Device source</string>
+    <string name="production_source">Production source</string>
     <string name="app_version_number">App version</string>
     <string name="app_build_number">App build</string>
     <string name="zepp_appname">Zepp</string>
@@ -42,8 +42,8 @@
 
     <string-array name="tabs_entries">
         <item>@string/feed</item>
-        <item>@string/cloud</item>
-        <item>@string/advanced</item>
+        <item>@string/extras</item>
+        <item>@string/explore</item>
         <item>@string/telegram</item>
     </string-array>
     <string-array name="tabs_entryvalues">

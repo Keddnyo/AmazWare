@@ -41,18 +41,18 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         // Select fragment
-        when (sharedPreferences.getString("default_tab", "1")) {
+        when (sharedPreferences.getString("default_tab", "3")) {
             "1" -> {
                 replaceFragment(feedFragment)
                 bottomNavigation.selectedItemId = R.id.Feed
             }
             "2" -> {
-                replaceFragment(cloudFragment)
-                bottomNavigation.selectedItemId = R.id.Cloud
+                replaceFragment(advancedFragment)
+                bottomNavigation.selectedItemId = R.id.Extras
             }
             "3" -> {
-                replaceFragment(advancedFragment)
-                bottomNavigation.selectedItemId = R.id.Advanced
+                replaceFragment(cloudFragment)
+                bottomNavigation.selectedItemId = R.id.Explore
             }
             "4" -> {
                 replaceFragment(telegramFragment)
@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
                 Handler().postDelayed({
                     when (it.itemId) {
                         R.id.Feed -> replaceFragment(feedFragment)
-                        R.id.Cloud -> replaceFragment(cloudFragment)
-                        R.id.Advanced -> replaceFragment(advancedFragment)
+                        R.id.Explore -> replaceFragment(cloudFragment)
+                        R.id.Extras -> replaceFragment(advancedFragment)
                         R.id.Telegram -> replaceFragment(telegramFragment)
                         R.id.Settings -> replaceFragment(settingsFragment)
                     }

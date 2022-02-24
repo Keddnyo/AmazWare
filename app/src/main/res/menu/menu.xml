@@ -7,14 +7,14 @@
         android:title="@string/feed" />
 
     <item
-        android:id="@+id/Cloud"
-        android:icon="@drawable/ic_cloud"
-        android:title="@string/cloud" />
+        android:id="@+id/Extras"
+        android:icon="@drawable/ic_advanced"
+        android:title="@string/extras" />
 
     <item
-        android:id="@+id/Advanced"
-        android:icon="@drawable/ic_advanced"
-        android:title="@string/advanced" />
+        android:id="@+id/Explore"
+        android:icon="@drawable/ic_cloud"
+        android:title="@string/explore" />
 
     <item
         android:id="@+id/Telegram"

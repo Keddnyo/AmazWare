@@ -35,7 +35,7 @@ class CloudFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().title = getString(R.string.cloud) // New title
+        requireActivity().title = getString(R.string.explore) // New title
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
 
@@ -115,7 +115,7 @@ class CloudFragment : Fragment() {
         // Pull refresh
         val cloudRefresh = requireActivity().findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.cloud_refresh)
         cloudRefresh.setOnRefreshListener {
-            requireActivity().title = getString(R.string.cloud)
+            requireActivity().title = getString(R.string.explore)
             webView.reload()
             cloudRefresh.isRefreshing = false
         }

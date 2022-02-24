@@ -30,7 +30,7 @@ class AdvancedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().title = getString(R.string.advanced) // New Title
+        requireActivity().title = getString(R.string.extras) // New Title
 
         // Variables
         val deviceSource =  requireActivity().findViewById<EditText>(R.id.deviceSource)
@@ -109,6 +109,8 @@ class AdvancedFragment : Fragment() {
             radioZepp.isChecked = false
 
             responseList.visibility = View.GONE
+
+            deviceSource.requestFocus()
         }
 
         buttonSubmit.setOnClickListener {
