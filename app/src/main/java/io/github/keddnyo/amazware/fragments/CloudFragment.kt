@@ -59,7 +59,6 @@ class CloudFragment : Fragment() {
             .appendPath("firmwares_list.htm")
             .appendQueryParameter("lang", lang)
 
-        Toast.makeText(context, url.toString(), Toast.LENGTH_SHORT).show()
         webView.loadUrl(url.toString())
         webView.webViewClient = object : WebViewClient() {
             // Override loading

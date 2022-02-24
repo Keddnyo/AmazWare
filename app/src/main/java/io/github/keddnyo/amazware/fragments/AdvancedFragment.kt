@@ -39,6 +39,8 @@ class AdvancedFragment : Fragment() {
         val appVersion =  requireActivity().findViewById<EditText>(R.id.appVersion)
         val appVersionBuild =  requireActivity().findViewById<EditText>(R.id.appVersionBuild)
         val appRadioGroup =  requireActivity().findViewById<RadioGroup>(R.id.appRadioGroup)
+        val radioMiFit =  requireActivity().findViewById<RadioButton>(R.id.radioMiFit)
+        val radioZepp =  requireActivity().findViewById<RadioButton>(R.id.radioZepp)
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
@@ -47,8 +49,10 @@ class AdvancedFragment : Fragment() {
             if (checkedId == R.id.radioZepp) {
                 appName.setText("com.huami.midong")
                 channelPlay.isEnabled = true
+                channelPlay.visibility = View.VISIBLE
             } else if (checkedId == R.id.radioMiFit) {
                 channelPlay.isEnabled = false
+                channelPlay.visibility = View.GONE
                 appName.setText("com.xiaomi.hm.health")
             }
         }
@@ -89,8 +93,21 @@ class AdvancedFragment : Fragment() {
         )
         responseList.adapter = adapter
 
-
         buttonReset.setOnClickListener {
+            // Clear views
+
+            channelPlay.isEnabled = false
+            channelPlay.visibility = View.GONE
+
+            deviceSource.setText("")
+            productionSource.setText("")
+            appName.setText("")
+            appVersion.setText("")
+            appVersionBuild.setText("")
+
+            radioMiFit.isChecked = false
+            radioZepp.isChecked = false
+
             responseList.visibility = View.GONE
         }
 

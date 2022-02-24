@@ -29,14 +29,13 @@
     <string name="changeLog">Список изменений</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 
-    <string name="submit">Submit</string>
-    <string name="reset">Reset</string>
-    <string name="model_hint">Model code</string>
-    <string name="production_hint">Production code</string>
-    <string name="app_name_hint">App name</string>
-    <string name="app_version_number_hint">App version number</string>
-    <string name="app_version_build_hint">App version build</string>
+    <string name="submitButton">Отправить</string>
+    <string name="resetButton">Сброс</string>
+    <string name="device_source">Код устройства</string>
+    <string name="production_source">Код продукции</string>
+    <string name="app_version_number">Версия приложения</string>
+    <string name="app_build_number">Номер сборки</string>
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
-    <string name="play_postfix_checkbox">play postfix</string>
+    <string name="play_postfix_checkbox">Постфикс play</string>
 </resources>

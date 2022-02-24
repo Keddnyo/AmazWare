@@ -23,7 +23,7 @@
                 android:id="@+id/deviceSource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/model_hint"
+                android:hint="@string/device_source"
                 android:inputType="number"
                 android:maxLength="2"/>
 
@@ -31,7 +31,7 @@
                 android:id="@+id/productionSource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/production_hint"
+                android:hint="@string/production_source"
                 android:inputType="number"
                 android:maxLength="3"/>
 
@@ -52,6 +52,13 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/radioMiFit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:text="@string/mifit_appname" />
+
+                <RadioButton
                     android:id="@+id/radioZepp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,19 +66,12 @@
                     android:paddingEnd="5dp"
                     android:text="@string/zepp_appname" />
 
-                <RadioButton
-                    android:id="@+id/radioMiFit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="5dp"
-                    android:text="@string/mifit_appname" />
-
                 <EditText
                     android:id="@+id/appVersion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:digits="0123456789."
-                    android:hint="@string/app_version_number_hint"
+                    android:hint="@string/app_version_number"
                     android:inputType="number"
                     android:maxLength="7"/>
 
@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:digits="0123456789."
             android:enabled="false"
-            android:hint="@string/app_name_hint"
             android:visibility="gone"/>
 
         <LinearLayout
@@ -100,13 +99,14 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:paddingEnd="12dp"
-                android:text="@string/play_postfix_checkbox"/>
+                android:text="@string/play_postfix_checkbox"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/appVersionBuild"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/app_version_build_hint"
+                android:hint="@string/app_build_number"
                 android:inputType="number"
                 android:maxLength="7"/>
 
@@ -123,15 +123,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="12dp"
-                android:text="@string/reset"
+                android:text="@string/resetButton"
                 android:textColor="#FFFFFF"/>
 
             <Button
                 android:id="@+id/buttonSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/submit"
                 android:enabled="false"
+                android:text="@string/submitButton"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>

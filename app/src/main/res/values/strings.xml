@@ -30,13 +30,12 @@
     <string name="changeLog">changeLog</string>
     <string name="firmware_not_found">Firmware not found</string>
 
-    <string name="submit">Submit</string>
-    <string name="reset">Reset</string>
-    <string name="model_hint">Model code</string>
-    <string name="production_hint">Production code</string>
-    <string name="app_name_hint">App name</string>
-    <string name="app_version_number_hint">App version number</string>
-    <string name="app_version_build_hint">App version build</string>
+    <string name="submitButton">Submit</string>
+    <string name="resetButton">Reset</string>
+    <string name="device_source">Model code</string>
+    <string name="production_source">Production code</string>
+    <string name="app_version_number">App version</string>
+    <string name="app_build_number">App build</string>
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
