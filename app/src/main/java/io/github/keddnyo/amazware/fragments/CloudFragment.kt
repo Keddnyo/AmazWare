@@ -19,10 +19,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
+import java.util.*
 
 class CloudFragment : Fragment() {
 
-    private val url = "https://schakal.ru/fw/firmwares_list.htm"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +49,18 @@ class CloudFragment : Fragment() {
         webView.clearHistory()
 
         // Loading WebView
-        webView.loadUrl(url)
+        val lang = Locale.getDefault().language.toString()
+
+        // Build url
+        val url: Uri.Builder = Uri.Builder()
+        url.scheme("https")
+            .authority("schakal.ru")
+            .appendPath("fw")
+            .appendPath("firmwares_list.htm")
+            .appendQueryParameter("lang", lang)
+
+        Toast.makeText(context, url.toString(), Toast.LENGTH_SHORT).show()
+        webView.loadUrl(url.toString())
         webView.webViewClient = object : WebViewClient() {
             // Override loading
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {

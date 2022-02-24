@@ -81,7 +81,7 @@ class AdvancedFragment : Fragment() {
         val adapter = SimpleAdapter(
             activity,
             list,
-            android.R.layout.simple_list_item_2,
+            android.R.layout.two_line_list_item,
             arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
             intArrayOf(
                 android.R.id.text1, android.R.id.text2
@@ -207,44 +207,20 @@ class AdvancedFragment : Fragment() {
                             val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
                             list.add(
                                 Adapter(
-                                    getString(R.string.firmwareVersion),
-                                    firmwareVersion
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.firmwareUrl),
-                                    firmwareUrl
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.firmwareMd5),
-                                    firmwareMd5
+                                    getString(R.string.firmwareVersion) + ": " + firmwareVersion,
+                                    "MD5: $firmwareMd5"
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes
                         }
                         if (json.has("resourceVersion")) {
-                            val resourceVersion = json.getString("firmwareVersion") // Resources
+                            val resourceVersion = json.getString("resourceVersion") // Resources
                             val resourceUrl = json.getString("resourceUrl") // Resources Url
                             val resourceMd5 = json.getString("resourceMd5") // Resources MD5
                             list.add(
                                 Adapter(
-                                    getString(R.string.resourceVersion),
-                                    resourceVersion
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.resourceUrl),
-                                    resourceUrl
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.resourceMd5),
-                                    resourceMd5
+                                    getString(R.string.resourceVersion) + ": " + resourceVersion,
+                                    "MD5: $resourceMd5"
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes
@@ -255,54 +231,31 @@ class AdvancedFragment : Fragment() {
                             val baseResourceMd5 = json.getString("baseResourceMd5") // Base resources MD5
                             list.add(
                                 Adapter(
-                                    getString(R.string.baseResourceVersion),
-                                    baseResourceVersion
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.baseResourceUrl),
-                                    baseResourceUrl
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.baseResourceMd5),
-                                    baseResourceMd5
+                                    getString(R.string.baseResourceVersion) + ": " + baseResourceVersion,
+                                    "MD5: $baseResourceMd5"
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes
                         }
                         if (json.has("fontVersion")) {
-                            val fontVersion = json.getString("firmwareVersion") // Font
-                            val fontUrl = json.getString("firmwareUrl") // Font Url
-                            val fontMd5 = json.getString("firmwareMd5") // Font MD5
+                            val fontVersion = json.getString("fontVersion") // Font
+                            val fontUrl = json.getString("fontUrl") // Font Url
+                            val fontMd5 = json.getString("fontMd5") // Font MD5
                             list.add(
                                 Adapter(
-                                    getString(R.string.fontVersion),
-                                    fontVersion
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.fontUrl),
-                                    fontUrl
-                                )
-                            )
-                            list.add(
-                                Adapter(
-                                    getString(R.string.fontMd5),
-                                    fontMd5
+                                    getString(R.string.fontVersion) + ": " + fontVersion,
+                                    "MD5: $fontMd5"
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes
                         }
                         if (json.has("gpsVersion")) {
                             val gpsVersion = json.getString("gpsVersion") // gpsVersion
+                            val gpsMd5 = json.getString("gpsMd5") // gpsVersion
                             list.add(
                                 Adapter(
-                                    getString(R.string.gpsVersion),
-                                    gpsVersion
+                                    getString(R.string.gpsVersion) + ": " + gpsVersion,
+                                    "MD5: $gpsMd5"
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes

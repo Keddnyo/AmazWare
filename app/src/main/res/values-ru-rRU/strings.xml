@@ -18,17 +18,14 @@
 
     <string name="firmwareVersion">Версия прошивки</string>
     <string name="firmwareUrl">Url прошивки</string>
-    <string name="firmwareMd5">MD5 прошивки</string>
     <string name="resourceVersion">Версия ресурсов</string>
     <string name="resourceUrl">Url ресурсов</string>
-    <string name="resourceMd5">MD5 ресурсов</string>
     <string name="baseResourceVersion">Версия базовых ресурсов</string>
     <string name="baseResourceUrl">Url базовых ресурсов</string>
-    <string name="baseResourceMd5">MD5 базовых ресурсов</string>
     <string name="fontVersion">Версия шрифта</string>
     <string name="fontUrl">Url прошивки</string>
-    <string name="fontMd5">MD5 шрифта</string>
     <string name="gpsVersion">Версия GPS</string>
+    <string name="gpsUrl">Url GPS</string>
     <string name="changeLog">Список изменений</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 

@@ -19,17 +19,14 @@
 
     <string name="firmwareVersion">Firmware version</string>
     <string name="firmwareUrl">Firmware Url</string>
-    <string name="firmwareMd5">Firmware MD5</string>
     <string name="resourceVersion">Resources version</string>
     <string name="resourceUrl">Resources Url</string>
-    <string name="resourceMd5">Resources MD5</string>
     <string name="baseResourceVersion">Base resources version</string>
     <string name="baseResourceUrl">Base resources Url</string>
-    <string name="baseResourceMd5">Base resources MD5</string>
     <string name="fontVersion">Font version</string>
     <string name="fontUrl">Font Url</string>
-    <string name="fontMd5">Font MD5</string>
     <string name="gpsVersion">GPS version</string>
+    <string name="gpsUrl">GPS Url</string>
     <string name="changeLog">changeLog</string>
     <string name="firmware_not_found">Firmware not found</string>
 
