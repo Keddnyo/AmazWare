@@ -95,6 +95,8 @@ class AdvancedFragment : Fragment() {
         }
 
         buttonSubmit.setOnClickListener {
+            // Clear for a new list
+            list.clear()
 
             val okHttpClient = OkHttpClient()
             val requestHost = "api-mifit-ru.huami.com"
@@ -170,7 +172,7 @@ class AdvancedFragment : Fragment() {
                 .url(uriBuilder.toString())
 
                 .addHeader("hm-privacy-diagnostics", "false")
-                .addHeader("country", "AR")
+                .addHeader("country", "US")
                 .addHeader("appplatform", "android_phone")
                 .addHeader("hm-privacy-ceip", "0")
                 .addHeader("x-request-id", "0")
@@ -247,6 +249,30 @@ class AdvancedFragment : Fragment() {
                             )
                             adapter.notifyDataSetChanged() // Commit changes
                         }
+                        if (json.has("baseResourceVersion")) {
+                            val baseResourceVersion = json.getString("baseResourceVersion") // Base resources
+                            val baseResourceUrl = json.getString("baseResourceUrl") // Base resources Url
+                            val baseResourceMd5 = json.getString("baseResourceMd5") // Base resources MD5
+                            list.add(
+                                Adapter(
+                                    getString(R.string.baseResourceVersion),
+                                    baseResourceVersion
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.baseResourceUrl),
+                                    baseResourceUrl
+                                )
+                            )
+                            list.add(
+                                Adapter(
+                                    getString(R.string.baseResourceMd5),
+                                    baseResourceMd5
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
                         if (json.has("fontVersion")) {
                             val fontVersion = json.getString("firmwareVersion") // Font
                             val fontUrl = json.getString("firmwareUrl") // Font Url
@@ -271,15 +297,28 @@ class AdvancedFragment : Fragment() {
                             )
                             adapter.notifyDataSetChanged() // Commit changes
                         }
-                        if (json.has("changelog")) {
-                            val changelog = json.getString("chanelog") // Chanelog
+                        if (json.has("gpsVersion")) {
+                            val gpsVersion = json.getString("gpsVersion") // gpsVersion
                             list.add(
                                 Adapter(
-                                    getString(R.string.changelog),
+                                    getString(R.string.gpsVersion),
+                                    gpsVersion
+                                )
+                            )
+                            adapter.notifyDataSetChanged() // Commit changes
+                        }
+                        if (json.has("changeLog")) {
+                            val changelog = json.getString("changeLog") // changeLog
+                            list.add(
+                                Adapter(
+                                    getString(R.string.changeLog),
                                     changelog
                                 )
                             )
                             adapter.notifyDataSetChanged() // Commit changes
+                        }
+                        if (!json.has("firmwareVersion") || !json.has("resourceVersion") || !json.has("fontVersion")) {
+                            Toast.makeText(context, getString(R.string.firmware_not_found), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

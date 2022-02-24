@@ -41,20 +41,20 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         // Select fragment
-        when (sharedPreferences.getString("default_tab", getString(R.string.feed))) {
-            getString(R.string.feed) -> {
+        when (sharedPreferences.getString("default_tab", "1")) {
+            "1" -> {
                 replaceFragment(feedFragment)
                 bottomNavigation.selectedItemId = R.id.Feed
             }
-            getString(R.string.cloud) -> {
+            "2" -> {
                 replaceFragment(cloudFragment)
                 bottomNavigation.selectedItemId = R.id.Cloud
             }
-            getString(R.string.advanced) -> {
+            "3" -> {
                 replaceFragment(advancedFragment)
                 bottomNavigation.selectedItemId = R.id.Advanced
             }
-            getString(R.string.telegram) -> {
+            "4" -> {
                 replaceFragment(telegramFragment)
                 bottomNavigation.selectedItemId = R.id.Telegram
             }

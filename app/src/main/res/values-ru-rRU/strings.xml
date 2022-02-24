@@ -8,7 +8,7 @@
     <string name="feed">Лента</string>
     <string name="cloud">Облако</string>
     <string name="advanced">Ручной режим</string>
-    <string name="info">Инфо</string>
+    <string name="About">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
@@ -22,24 +22,24 @@
     <string name="resourceVersion">Версия ресурсов</string>
     <string name="resourceUrl">Url ресурсов</string>
     <string name="resourceMd5">MD5 ресурсов</string>
+    <string name="baseResourceVersion">Версия базовых ресурсов</string>
+    <string name="baseResourceUrl">Url базовых ресурсов</string>
+    <string name="baseResourceMd5">MD5 базовых ресурсов</string>
     <string name="fontVersion">Версия шрифта</string>
     <string name="fontUrl">Url прошивки</string>
     <string name="fontMd5">MD5 шрифта</string>
-    <string name="changelog">Список изменений</string>
+    <string name="gpsVersion">Версия GPS</string>
+    <string name="changeLog">Список изменений</string>
+    <string name="firmware_not_found">Прошивка не найдена</string>
 
     <string name="submit">Submit</string>
-    <string name="remember">Copy MD5</string>
-    <string name="restore">Download</string>
     <string name="reset">Reset</string>
     <string name="model_hint">Model code</string>
     <string name="production_hint">Production code</string>
     <string name="app_name_hint">App name</string>
     <string name="app_version_number_hint">App version number</string>
     <string name="app_version_build_hint">App version build</string>
-    <string name="response_hint">Server response</string>
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
-    <string name="clear_response">Clear</string>
-    <string name="shoose_app">Choose an app name</string>
 </resources>

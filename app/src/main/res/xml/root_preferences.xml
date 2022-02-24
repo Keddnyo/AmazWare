@@ -30,7 +30,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/info">
+    <PreferenceCategory app:title="@string/About">
 
         <Preference
             app:icon="@drawable/ic_info"

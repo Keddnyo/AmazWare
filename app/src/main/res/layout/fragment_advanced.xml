@@ -149,19 +149,6 @@
             android:gravity="center|center_horizontal"
             android:orientation="vertical">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
-                android:editable="false"
-                android:hint="@string/response_hint"
-                android:inputType="none"
-                android:scrollbars="vertical"
-                android:singleLine="false"
-                android:textIsSelectable="true"
-                android:verticalScrollbarPosition="right"
-                android:visibility="gone"/>
-
             <ListView
                 android:id="@+id/responseList"
                 android:layout_width="match_parent"

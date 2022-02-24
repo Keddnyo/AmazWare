@@ -9,7 +9,7 @@
     <string name="cloud">Cloud</string>
     <string name="advanced">Advanced mode</string>
     <string name="telegram" translatable="false">Telegram</string>
-    <string name="info">About</string>
+    <string name="About">About</string>
     <string name="settings">Settings</string>
     <string name="behaviour">Behaviour</string>
     <string name="default_tab">Default tab</string>
@@ -23,26 +23,26 @@
     <string name="resourceVersion">Resources version</string>
     <string name="resourceUrl">Resources Url</string>
     <string name="resourceMd5">Resources MD5</string>
+    <string name="baseResourceVersion">Base resources version</string>
+    <string name="baseResourceUrl">Base resources Url</string>
+    <string name="baseResourceMd5">Base resources MD5</string>
     <string name="fontVersion">Font version</string>
     <string name="fontUrl">Font Url</string>
     <string name="fontMd5">Font MD5</string>
-    <string name="changelog">Changelog</string>
+    <string name="gpsVersion">GPS version</string>
+    <string name="changeLog">changeLog</string>
+    <string name="firmware_not_found">Firmware not found</string>
 
     <string name="submit">Submit</string>
-    <string name="remember">Copy MD5</string>
-    <string name="restore">Download</string>
     <string name="reset">Reset</string>
     <string name="model_hint">Model code</string>
     <string name="production_hint">Production code</string>
     <string name="app_name_hint">App name</string>
     <string name="app_version_number_hint">App version number</string>
     <string name="app_version_build_hint">App version build</string>
-    <string name="response_hint">Server response</string>
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
-    <string name="clear_response">Clear</string>
-    <string name="shoose_app">Choose an app name</string>
 
     <string-array name="tabs_entries">
         <item>@string/feed</item>
