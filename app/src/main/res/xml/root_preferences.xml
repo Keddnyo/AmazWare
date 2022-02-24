@@ -5,7 +5,7 @@
         <ListPreference
             app:defaultValue="3"
             app:entries="@array/tabs_entries"
-            app:entryValues="@array/tabs_entryvalues"
+            app:entryValues="@array/entryvalues"
             app:icon="@drawable/ic_feed"
             app:key="default_tab"
             app:title="@string/default_tab"
@@ -23,10 +23,37 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:dependency="download_provider"
             app:icon="@drawable/ic_notification"
             app:key="download_notification"
-            app:title="@string/download_notification"
-            app:dependency="download_provider"/>
+            app:title="@string/download_notification"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/appearance">
+
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/accent_colors"
+            app:entryValues="@array/entryvalues"
+            app:icon="@drawable/ic_palette"
+            app:key="accent_color"
+            app:title="@string/accent_color"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:dependency="accent_color"
+            app:icon="@drawable/ic_icon"
+            app:key="colorize_icons"
+            app:title="@string/colorize_icons" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:dependency="accent_color"
+            app:icon="@drawable/ic_title"
+            app:key="colorize_titles"
+            app:title="@string/colorize_titles" />
 
     </PreferenceCategory>
 

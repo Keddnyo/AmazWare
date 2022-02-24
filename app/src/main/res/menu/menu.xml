@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/Extras"
-        android:icon="@drawable/ic_advanced"
+        android:icon="@drawable/ic_extras"
         android:title="@string/extras" />
 
     <item

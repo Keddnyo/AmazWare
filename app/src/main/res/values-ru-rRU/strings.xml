@@ -10,6 +10,10 @@
     <string name="extras">Экстра</string>
     <string name="About">О приложении</string>
     <string name="settings">Настройки</string>
+    <string name="appearance">Внешний вид</string>
+    <string name="accent_color">Цвет акцента</string>
+    <string name="colorize_icons">Окрашивать иконки</string>
+    <string name="colorize_titles">Окрашивать заголовки</string>
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
     <string name="indication">Индикация</string>
@@ -38,4 +42,11 @@
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">Постфикс play</string>
+
+    <string-array name="accent_colors">
+        <item>Белый</item>
+        <item>Голубой</item>
+        <item>Зелёный</item>
+        <item>Красный</item>
+    </string-array>
 </resources>

@@ -1,5 +1,7 @@
 package io.github.keddnyo.amazware.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
@@ -19,7 +21,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
         requireActivity().title = getString(R.string.settings) // New title
 
         val about = findPreference<Preference>("info")
+        val cloud = findPreference<Preference>("info2")
+        val support = findPreference<Preference>("info3")
         about?.title = getString(R.string.app_name) + " " + "v" + BuildConfig.VERSION_NAME
 
+        about!!.setOnPreferenceClickListener {
+            startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Keddnyo"))
+            )
+            true
+        }
+        cloud!!.setOnPreferenceClickListener {
+            startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://4pda.to/forum/index.php?showuser=243484"))
+            )
+            true
+        }
+        support!!.setOnPreferenceClickListener {
+            startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://mibandnotify.com"))
+            )
+            true
+        }
     }
 }

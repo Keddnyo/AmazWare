@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">AmazWare</string>
     <string name="app_credits">App created by Keddnyo</string>
     <string name="logic_credits">Cloud created by Schakal</string>
-    <string name="support_credits">Supported by Matteo C</string>
+    <string name="support_credits">Supported by Matteo</string>
     <string name="downloading">Downloading file</string>
     <string name="error">Error</string>
     <string name="feed">Feed</string>
@@ -11,6 +11,10 @@
     <string name="telegram" translatable="false">Telegram</string>
     <string name="About">About</string>
     <string name="settings">Settings</string>
+    <string name="appearance">Appearance</string>
+    <string name="accent_color">Accent color</string>
+    <string name="colorize_icons">Colorize icons</string>
+    <string name="colorize_titles">Colorize titles</string>
     <string name="behaviour">Behaviour</string>
     <string name="default_tab">Default tab</string>
     <string name="indication">Indication</string>
@@ -46,7 +50,13 @@
         <item>@string/explore</item>
         <item>@string/telegram</item>
     </string-array>
-    <string-array name="tabs_entryvalues">
+    <string-array name="accent_colors">
+        <item>White</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Red</item>
+    </string-array>
+    <string-array name="entryvalues">
         <item>1</item>
         <item>2</item>
         <item>3</item>

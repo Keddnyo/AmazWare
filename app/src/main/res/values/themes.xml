@@ -1,10 +1,19 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.AmazWare" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@android:color/holo_blue_bright</item>
-        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="Blue">
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="Green">
+        <item name="colorAccent">@color/green</item>
+    </style>
+
+    <style name="Red">
+        <item name="colorAccent">@color/red</item>
     </style>
 </resources>

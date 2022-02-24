@@ -1,7 +1,9 @@
 package io.github.keddnyo.amazware
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val telegramFragment = TelegramFragment()
     private val settingsFragment = SettingsFragment()
 
+    @SuppressLint("UseCompatLoadingForColorStateLists")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +42,72 @@ class MainActivity : AppCompatActivity() {
 
         // Bottom bar logic
         val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+
+        // Select accent color
+        when (sharedPreferences.getString("accent_color", "1")) {
+            "1" -> {
+                theme.applyStyle(R.style.Theme_AmazWare, true)
+                bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)
+                bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
+            }
+            "2" -> {
+                theme.applyStyle(R.style.Blue, true)
+                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                    true -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.blue)
+                    }
+                    false -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                    true -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.blue)
+                    }
+                    false -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+            }
+            "3" -> {
+                theme.applyStyle(R.style.Green, true)
+                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                    true -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.green)
+                    }
+                    false -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                    true -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.green)
+                    }
+                    false -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+            }
+            "4" -> {
+                theme.applyStyle(R.style.Red, true)
+                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                    true -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.red)
+                    }
+                    false -> {
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                    true -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.red)
+                    }
+                    false -> {
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)
+                    }
+                }
+            }
+        }
 
         // Select fragment
         when (sharedPreferences.getString("default_tab", "3")) {
