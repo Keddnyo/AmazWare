@@ -66,7 +66,7 @@ class CloudFragment : Fragment() {
             // Error
             override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
                 webView.loadUrl("about:blank")
-                activity!!.title = getString(R.string.error)
+                requireActivity().title = getString(R.string.error)
             }
         }
 

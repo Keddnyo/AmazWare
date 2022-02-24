@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_credits">Приложение создал Keddnyo</string>
-    <string name="logic_credits">Локику создал Schakal</string>
+    <string name="app_credits">Приложение разработал Keddnyo</string>
+    <string name="logic_credits">Облако разработал Schakal</string>
     <string name="support_credits">Поддержал Matteo C</string>
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
@@ -13,7 +13,7 @@
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
     <string name="indication">Индикация</string>
-    <string name="download_notification">Показывать уведомление о загрузке</string>
+    <string name="download_notification">Уведомление о загрузке</string>
     <string name="download_provider">Встроенный загрузчик</string>
 
     <string name="submit">Submit</string>
@@ -30,5 +30,5 @@
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
     <string name="clear_response">Clear</string>
-    <string name="shoose_app">Shoose an app name!</string>
+    <string name="shoose_app">Choose an app name</string>
 </resources>

@@ -29,13 +29,13 @@ class FeedFragment : Fragment() {
     }
 
     private fun init() {
-        activity!!.title = getString(R.string.feed) // New title
+        requireActivity().title = getString(R.string.feed) // New title
 
         // Variables
         val okHttpClient = OkHttpClient()
         val urlMain = "https://schakal.ru/fw/latest.json"
         val requestMain = Request.Builder().url(urlMain).build()
-        val deviceIndex = activity!!.findViewById<ListView>(R.id.feedView)
+        val deviceIndex = requireActivity().findViewById<ListView>(R.id.feedView)
 
         // Setting adapter
         val list = ArrayList<Adapter>()
@@ -54,7 +54,7 @@ class FeedFragment : Fragment() {
         okHttpClient.newCall(requestMain).enqueue(object : Callback {
             // Error
             override fun onFailure(call: Call, e: IOException) {
-                activity!!.title = getString(R.string.error)
+                requireActivity().title = getString(R.string.error)
             }
 
             // Success
@@ -103,7 +103,7 @@ class FeedFragment : Fragment() {
 
         // Pull refresh
         val feedRefresh =
-            activity!!.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.feed_refresh)
+            requireActivity().findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.feed_refresh)
         feedRefresh.setOnRefreshListener {
             list.clear()
             adapter.notifyDataSetChanged()

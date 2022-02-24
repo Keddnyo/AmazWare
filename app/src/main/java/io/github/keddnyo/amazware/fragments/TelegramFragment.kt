@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import io.github.keddnyo.amazware.R
 
 class TelegramFragment : Fragment() {
@@ -29,10 +30,10 @@ class TelegramFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity!!.title = getString(R.string.telegram) // New title
+        requireActivity().title = getString(R.string.telegram) // New title
 
         // Setting WebView
-        val webView = activity!!.findViewById<WebView>(R.id.telegramView)
+        val webView = requireActivity().findViewById<WebView>(R.id.telegramView)
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -43,9 +44,16 @@ class TelegramFragment : Fragment() {
         // Loading WebView
         webView.loadUrl(url)
         webView.pageDown(true)
+        webView.webViewClient = object : WebViewClient() {
+            // Error
+            override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
+                webView.loadUrl("about:blank")
+                requireActivity().title = getString(R.string.error)
+            }
+        }
 
         // Telegram button
-        val telegramButton = activity!!.findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.open_telegram)
+        val telegramButton = requireActivity().findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.open_telegram)
         telegramButton.setOnClickListener {
             startActivity(
                 Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$name")))

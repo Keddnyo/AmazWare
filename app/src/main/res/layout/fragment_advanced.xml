@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/deviceSource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/model_hint"
@@ -27,6 +28,7 @@
                 android:maxLength="2"/>
 
             <EditText
+                android:id="@+id/productionSource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/production_hint"
@@ -42,6 +44,7 @@
             android:orientation="horizontal">
 
             <RadioGroup
+                android:id="@+id/appRadioGroup"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center"
@@ -49,6 +52,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/radioZepp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="40dp"
@@ -56,19 +60,20 @@
                     android:text="@string/zepp_appname" />
 
                 <RadioButton
+                    android:id="@+id/radioMiFit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="12dp"
                     android:text="@string/mifit_appname" />
 
                 <EditText
+                    android:id="@+id/appVersion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:editable="false"
-                    android:hint="@string/app_name_hint"
-                    android:inputType="none"
-                    android:text="@string/shoose_app"
-                    android:textAlignment="center"/>
+                    android:digits="0123456789."
+                    android:hint="@string/app_version_number_hint"
+                    android:inputType="text"
+                    android:maxLength="7"/>
 
             </RadioGroup>
 
@@ -81,6 +86,7 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/channelPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -88,21 +94,14 @@
                 android:text="@string/play_postfix_checkbox"/>
 
             <EditText
+                android:id="@+id/appVersionBuild"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="0123456789."
-                android:hint="@string/app_version_number_hint"
-                android:inputType="text"
+                android:hint="@string/app_version_build_hint"
+                android:inputType="number"
                 android:maxLength="7"/>
 
         </LinearLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/app_version_build_hint"
-            android:inputType="number"
-            android:maxLength="7"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -112,13 +111,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/buttonReset"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
                 android:text="@string/reset"
                 android:textColor="#FFFFFF"/>
 
             <Button
+                android:id="@+id/buttonSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/submit"
@@ -154,37 +155,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:gravity="center|center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
-                android:text="@string/remember"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="12dp"
-                android:text="@string/restore"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/clear_response"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/responseField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView" />
 
     </LinearLayout>
 

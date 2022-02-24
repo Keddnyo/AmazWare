@@ -3,9 +3,9 @@
     <PreferenceCategory app:title="@string/behaviour">
 
         <ListPreference
-            app:defaultValue="@string/feed"
+            app:defaultValue="1"
             app:entries="@array/tabs_entries"
-            app:entryValues="@array/tabs_entries"
+            app:entryValues="@array/tabs_entryvalues"
             app:icon="@drawable/ic_feed"
             app:key="default_tab"
             app:title="@string/default_tab"

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">AmazWare</string>
     <string name="app_credits">App created by Keddnyo</string>
-    <string name="logic_credits">Logic created by Schakal</string>
+    <string name="logic_credits">Cloud created by Schakal</string>
     <string name="support_credits">Supported by Matteo C</string>
     <string name="downloading">Downloading file</string>
     <string name="error">Error</string>
@@ -31,12 +31,18 @@
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
     <string name="clear_response">Clear</string>
-    <string name="shoose_app">Shoose an app name!</string>
+    <string name="shoose_app">Choose an app name</string>
 
     <string-array name="tabs_entries">
         <item>@string/feed</item>
         <item>@string/cloud</item>
         <item>@string/advanced</item>
         <item>@string/telegram</item>
+    </string-array>
+    <string-array name="tabs_entryvalues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>
