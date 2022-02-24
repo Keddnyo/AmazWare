@@ -56,14 +56,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="40dp"
-                    android:paddingEnd="12dp"
+                    android:paddingEnd="5dp"
                     android:text="@string/zepp_appname" />
 
                 <RadioButton
                     android:id="@+id/radioMiFit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="12dp"
+                    android:paddingEnd="5dp"
                     android:text="@string/mifit_appname" />
 
                 <EditText
@@ -72,12 +72,21 @@
                     android:layout_height="match_parent"
                     android:digits="0123456789."
                     android:hint="@string/app_version_number_hint"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="7"/>
 
             </RadioGroup>
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789."
+            android:enabled="false"
+            android:hint="@string/app_name_hint"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -159,7 +168,7 @@
             android:id="@+id/responseField"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 

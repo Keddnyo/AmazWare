@@ -7,7 +7,7 @@
     <string name="error">Error</string>
     <string name="feed">Feed</string>
     <string name="cloud">Cloud</string>
-    <string name="advanced">Advanced</string>
+    <string name="advanced">Advanced mode</string>
     <string name="telegram" translatable="false">Telegram</string>
     <string name="info">About</string>
     <string name="settings">Settings</string>

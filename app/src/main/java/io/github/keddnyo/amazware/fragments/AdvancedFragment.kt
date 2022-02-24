@@ -2,7 +2,6 @@ package io.github.keddnyo.amazware.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,8 @@ import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+import java.lang.Exception
+
 
 class AdvancedFragment : Fragment() {
 
@@ -30,12 +31,11 @@ class AdvancedFragment : Fragment() {
         // Variables
         val deviceSource =  requireActivity().findViewById<EditText>(R.id.deviceSource)
         val productionSource =  requireActivity().findViewById<EditText>(R.id.productionSource)
+        val appName =  requireActivity().findViewById<EditText>(R.id.appName)
         val appVersion =  requireActivity().findViewById<EditText>(R.id.appVersion)
         val appVersionBuild =  requireActivity().findViewById<EditText>(R.id.appVersionBuild)
 
         val appRadioGroup =  requireActivity().findViewById<RadioGroup>(R.id.appRadioGroup)
-        val radioZepp =  requireActivity().findViewById<RadioButton>(R.id.radioZepp)
-        val radioMiFit =  requireActivity().findViewById<RadioButton>(R.id.radioMiFit)
 
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
 
@@ -45,6 +45,29 @@ class AdvancedFragment : Fragment() {
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
 
         val radioChecked = appRadioGroup.checkedRadioButtonId
+
+        appRadioGroup.setOnCheckedChangeListener { _, checkedId -> // find which radio button is selected
+            if (checkedId == R.id.radioZepp) {
+                appName.setText("com.huami.midong")
+                channelPlay.isEnabled = true
+            } else if (checkedId == R.id.radioMiFit) {
+                channelPlay.isEnabled = false
+                appName.setText("com.xiaomi.hm.health")
+            }
+        }
+
+        val playPostfix = when (channelPlay.isChecked) {
+            true -> {
+                "-play"
+            }
+            false -> {
+                ""
+            }
+        }
+
+        buttonReset.setOnClickListener {
+            responseField.visibility = View.GONE
+        }
 
         buttonSubmit.setOnClickListener {
 
@@ -100,7 +123,7 @@ class AdvancedFragment : Fragment() {
                 .appendQueryParameter("deviceSource", deviceSource.text.toString())
                 .appendQueryParameter("fontVersion", "0")
                 .appendQueryParameter("fontFlag", "3")
-                .appendQueryParameter("appVersion", appVersion.text.toString() + "-play_" + appVersionBuild.text.toString())
+                .appendQueryParameter("appVersion", appVersion.text.toString() + playPostfix + appVersionBuild.text.toString())
                 .appendQueryParameter("appid", "2882303761517383915")
                 .appendQueryParameter("callid", "1614431188364")
                 .appendQueryParameter("channel", "play")
@@ -147,7 +170,7 @@ class AdvancedFragment : Fragment() {
                 .addHeader("channel", "play")
                 .addHeader("user-agent", "Zepp/5.12.2-play \\(Sharp Aquos S2 4/64; Android 10; Density/2.1000001\\)")
                 .addHeader("cv", "100395_5.12.2-play")
-                .addHeader("appname", "com.huami.midong")
+                .addHeader("appname", appName.text.toString())
                 .addHeader("v", "2.0")
                 .addHeader("apptoken", "0")
                 .addHeader("lang", "ar_AR")
@@ -166,7 +189,9 @@ class AdvancedFragment : Fragment() {
 
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
+
                     responseField.post {
+                        responseField.visibility = View.VISIBLE
                         responseField.text = json.toString()
                     }
                 }
