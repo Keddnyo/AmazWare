@@ -44,8 +44,8 @@
             app:entries="@array/dark_mode_entries"
             app:entryValues="@array/dark_mode_entry_values"
             app:icon="@drawable/ic_dark_mode"
-            app:key="dark_mode"
-            app:title="@string/gui_mode"
+            app:key="theme"
+            app:title="@string/theme"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import io.github.keddnyo.amazware.BuildConfig
+import io.github.keddnyo.amazware.MainActivity
 import io.github.keddnyo.amazware.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -20,6 +21,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         requireActivity().title = getString(R.string.settings) // New title
 
+        val theme = findPreference<Preference>("theme")
         val about = findPreference<Preference>("info")
         val cloud = findPreference<Preference>("info2")
         about?.title = getString(R.string.app_name) + " " + "v" + BuildConfig.VERSION_NAME
