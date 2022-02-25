@@ -41,62 +41,24 @@ class ExtrasFragment : Fragment() {
         val productionSource =  requireActivity().findViewById<EditText>(R.id.productionSource)
         val appName =  requireActivity().findViewById<EditText>(R.id.appName)
         val appVersion =  requireActivity().findViewById<EditText>(R.id.appVersion)
-        val appVersionBuild =  requireActivity().findViewById<EditText>(R.id.appVersionBuild)
-        val appRadioGroup =  requireActivity().findViewById<RadioGroup>(R.id.appRadioGroup)
-        val radioMiFit =  requireActivity().findViewById<RadioButton>(R.id.radioMiFit)
-        val radioZepp =  requireActivity().findViewById<RadioButton>(R.id.radioZepp)
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
-        val deviceList = requireActivity().findViewById<Spinner>(R.id.deviceList)
+        val deviceSpinner = requireActivity().findViewById<Spinner>(R.id.deviceList)
         val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
 
-        appRadioGroup.setOnCheckedChangeListener { _, checkedId -> // find which radio button is selected
-            if (checkedId == R.id.radioZepp) {
-                appName.setText("com.huami.midong")
-                channelPlay.isEnabled = true
-                channelPlay.visibility = View.VISIBLE
-            } else if (checkedId == R.id.radioMiFit) {
-                channelPlay.isEnabled = false
-                channelPlay.visibility = View.GONE
-                appName.setText("com.xiaomi.hm.health")
-            }
-        }
-
-        val playPostfix = when (channelPlay.isChecked) {
-            true -> {
-                "-play_"
-            }
-            false -> {
-                "_"
-            }
-        }
-
-        appVersionBuild.addTextChangedListener (object : TextWatcher {
+        appVersion.addTextChangedListener (object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                buttonSubmit.isEnabled = deviceSource.text.isNotEmpty() && productionSource.text.isNotEmpty() && appName.text.isNotEmpty() && appVersion.text.isNotEmpty() && appVersionBuild.text.isNotEmpty()
+                buttonSubmit.isEnabled = deviceSource.text.isNotEmpty() && productionSource.text.isNotEmpty() && appName.text.isNotEmpty() && appVersion.text.isNotEmpty()
             }
 
             override fun afterTextChanged(p0: Editable?) {
             }
         })
-
-        // Setting adapter
-        val list = ArrayList<Adapter>()
-        val adapter = SimpleAdapter(
-            activity,
-            list,
-            android.R.layout.two_line_list_item,
-            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
-            intArrayOf(
-                android.R.id.text1, android.R.id.text2
-            )
-        )
-        responseList.adapter = adapter
 
         val devList = ArrayList<String>()
         val devAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
@@ -110,21 +72,66 @@ class ExtrasFragment : Fragment() {
             }
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
+                deviceSpinner.post{
+                    devList.add(getString(R.string.manual_input))
+                    devAdapter.notifyDataSetChanged()
+                }
+                for (i in 1..1000) {
+                    if (json.has(i.toString())) {
+                        deviceSpinner.post{
+                            val name = json.getJSONObject(i.toString()).getString("name")
+                            devList.add(name)
+                            devAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
 
-                try {
-                    for (i in 1..1000) {
-                        if (json.has(i.toString())) {
-                            deviceList.post{
-                                devList.add(i.toString())
-                                adapter.notifyDataSetChanged()
+                deviceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+                        val selectedItem = deviceSpinner.selectedItem.toString()
+
+                        for (i in 1..1000) {
+                            if (json.has(i.toString())) { // Existing indexes
+                                val nameResult = json.getJSONObject(i.toString()).getString("name")
+                                val productionSourceResult = json.getJSONObject(i.toString()).getString("productionSource")
+                                val appnameResult = json.getJSONObject(i.toString()).getString("appname")
+                                val appVersionResult = json.getJSONObject(i.toString()).getString("appVersion")
+
+                                if (selectedItem == nameResult) { // Compare values
+                                    deviceSource.setText(i.toString())
+                                    productionSource.setText(productionSourceResult)
+                                    appName.setText(appnameResult)
+                                    appVersion.setText(appVersionResult)
+
+                                    deviceSource.isEnabled = false
+                                    productionSource.isEnabled = false
+                                } else if (selectedItem == getString(R.string.manual_input)) {
+                                    deviceSource.isEnabled = true
+                                    productionSource.isEnabled = true
+                                    buttonSubmit.isEnabled
+                                }
                             }
                         }
                     }
-                } catch (e: IOException) {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
             }
         })
-        deviceList.adapter = devAdapter
+        deviceSpinner.adapter = devAdapter
+
+        // Setting response adapter
+        val list = ArrayList<Adapter>()
+        val adapter = SimpleAdapter(
+            activity,
+            list,
+            android.R.layout.two_line_list_item,
+            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
+            intArrayOf(
+                android.R.id.text1, android.R.id.text2
+            )
+        )
+        responseList.adapter = adapter
+        // Setting response adapter
 
         buttonReset.setOnClickListener {
             // Clear views
@@ -136,10 +143,6 @@ class ExtrasFragment : Fragment() {
             productionSource.setText("")
             appName.setText("")
             appVersion.setText("")
-            appVersionBuild.setText("")
-
-            radioMiFit.isChecked = false
-            radioZepp.isChecked = false
 
             responseList.visibility = View.GONE
 
@@ -148,6 +151,12 @@ class ExtrasFragment : Fragment() {
             responseField.text = ""
 
             deviceSource.requestFocus()
+
+            deviceSource.isEnabled = true
+            productionSource.isEnabled = true
+
+            deviceSpinner.setSelection(0)
+            buttonSubmit.isEnabled = false
         }
 
         buttonSubmit.setOnClickListener {
@@ -177,7 +186,7 @@ class ExtrasFragment : Fragment() {
                 .appendQueryParameter("deviceSource", deviceSource.text.toString())
                 .appendQueryParameter("fontVersion", "0")
                 .appendQueryParameter("fontFlag", "3")
-                .appendQueryParameter("appVersion", appVersion.text.toString() + playPostfix + appVersionBuild.text.toString())
+                .appendQueryParameter("appVersion", appVersion.text.toString())
                 .appendQueryParameter("appid", "2882303761517383915")
                 .appendQueryParameter("callid", "1614431188364")
                 .appendQueryParameter("channel", "play")
@@ -360,8 +369,9 @@ class ExtrasFragment : Fragment() {
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
                                 }
-                                if (!json.has("firmwareVersion") || !json.has("resourceVersion") || !json.has("fontVersion")) {
+                                if (!json.has("firmwareVersion")) {
                                     responseField.post {
+                                        responseList.visibility = View.GONE
                                         responseField.visibility = View.VISIBLE
                                         responseField.text = json.toString()
                                     }

@@ -36,12 +36,13 @@
     <string name="none">None</string>
     <string name="firmware_not_found">Firmware not found</string>
 
+    <string name="manual_input">Manual</string>
     <string name="submitButton">Submit</string>
     <string name="resetButton">Reset</string>
     <string name="device_source">Device source</string>
     <string name="production_source">Production source</string>
-    <string name="app_version_number">App version</string>
-    <string name="app_build_number">App build</string>
+    <string name="response_app_name">App name</string>
+    <string name="app_version">App version</string>
     <string name="zepp_appname">Zepp</string>
     <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
