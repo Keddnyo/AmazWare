@@ -19,7 +19,6 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-
 class ExtrasFragment : Fragment() {
 
     override fun onCreateView(
@@ -49,6 +48,7 @@ class ExtrasFragment : Fragment() {
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
+        val deviceList = requireActivity().findViewById<Spinner>(R.id.deviceList)
         val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
 
@@ -98,6 +98,34 @@ class ExtrasFragment : Fragment() {
         )
         responseList.adapter = adapter
 
+        val devList = ArrayList<String>()
+        val devAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
+
+        val okHttpClient = OkHttpClient()
+        val urlMain = "https://schakal.ru/fw/dev_apps.json"
+        val requestMain = Request.Builder().url(urlMain).build()
+
+        okHttpClient.newCall(requestMain).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+            }
+            override fun onResponse(call: Call, response: Response) {
+                val json = JSONObject(response.body()!!.string())
+
+                try {
+                    for (i in 1..1000) {
+                        if (json.has(i.toString())) {
+                            deviceList.post{
+                                devList.add(i.toString())
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                } catch (e: IOException) {
+                }
+            }
+        })
+        deviceList.adapter = devAdapter
+
         buttonReset.setOnClickListener {
             // Clear views
 
@@ -128,7 +156,6 @@ class ExtrasFragment : Fragment() {
             responseField.visibility = View.GONE
             responseField.text = ""
 
-            val okHttpClient = OkHttpClient()
             val requestHost = "api-mifit-ru.huami.com"
 
             val uriBuilder: Uri.Builder = Uri.Builder()

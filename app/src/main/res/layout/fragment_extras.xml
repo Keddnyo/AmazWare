@@ -14,6 +14,11 @@
         android:orientation="vertical"
         android:padding="10sp">
 
+        <Spinner
+            android:id="@+id/deviceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/deviceSource"
             android:layout_width="match_parent"
