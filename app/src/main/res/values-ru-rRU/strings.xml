@@ -39,10 +39,8 @@
     <string name="resetButton">Сброс</string>
     <string name="device_source">Код устройства</string>
     <string name="production_source">Код продукции</string>
-    <string name="response_app_name">>Имя приложения</string>
+    <string name="response_app_name">Имя приложения</string>
     <string name="app_version">Версия приложения</string>
-    <string name="zepp_appname">Zepp</string>
-    <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">Постфикс play</string>
 
     <string-array name="accent_colors">

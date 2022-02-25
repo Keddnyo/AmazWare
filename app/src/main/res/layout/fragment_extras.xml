@@ -41,7 +41,7 @@
             android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/app_name"
+            android:hint="@string/response_app_name"
             tools:ignore="Autofill,TextFields"/>
 
         <EditText

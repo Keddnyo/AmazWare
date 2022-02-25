@@ -1,6 +1,10 @@
 package io.github.keddnyo.amazware.fragments
 
+import android.R.attr.label
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.AdapterView.OnItemLongClickListener
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.Adapter
@@ -18,6 +24,7 @@ import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+
 
 class ExtrasFragment : Fragment() {
 
@@ -72,6 +79,11 @@ class ExtrasFragment : Fragment() {
             }
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
+
+                val output = json.toString()
+                output.replace(",", ", ")
+                output.substringBefore('#')
+
                 deviceSpinner.post{
                     devList.add(getString(R.string.manual_input))
                     devAdapter.notifyDataSetChanged()
@@ -88,6 +100,8 @@ class ExtrasFragment : Fragment() {
 
                 deviceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+                        responseList.visibility = View.GONE
+
                         val selectedItem = deviceSpinner.selectedItem.toString()
 
                         for (i in 1..1000) {
@@ -175,32 +189,32 @@ class ExtrasFragment : Fragment() {
                 .appendPath("hasNewVersion")
 
                 .appendQueryParameter("productId", "0")
-                .appendQueryParameter("vendorSource", "1")
+                .appendQueryParameter("vendorSource", "0")
                 .appendQueryParameter("resourceVersion", "0")
-                .appendQueryParameter("firmwareFlag", "1")
-                .appendQueryParameter("vendorId", "343")
-                .appendQueryParameter("resourceFlag", "7")
+                .appendQueryParameter("firmwareFlag", "0")
+                .appendQueryParameter("vendorId", "0")
+                .appendQueryParameter("resourceFlag", "0")
                 .appendQueryParameter("productionSource", productionSource.text.toString())
-                .appendQueryParameter("userid", "8719393185")
-                .appendQueryParameter("userId", "8719393185")
+                .appendQueryParameter("userid", "0")
+                .appendQueryParameter("userId", "0")
                 .appendQueryParameter("deviceSource", deviceSource.text.toString())
                 .appendQueryParameter("fontVersion", "0")
                 .appendQueryParameter("fontFlag", "3")
                 .appendQueryParameter("appVersion", appVersion.text.toString())
-                .appendQueryParameter("appid", "2882303761517383915")
-                .appendQueryParameter("callid", "1614431188364")
-                .appendQueryParameter("channel", "play")
-                .appendQueryParameter("country", "CH")
-                .appendQueryParameter("cv", "100395_5.12.2-play")
-                .appendQueryParameter("device", "android_29")
+                .appendQueryParameter("appid", "0")
+                .appendQueryParameter("callid", "0")
+                .appendQueryParameter("channel", "0")
+                .appendQueryParameter("country", "0")
+                .appendQueryParameter("cv", "0")
+                .appendQueryParameter("device", "0")
                 .appendQueryParameter("deviceType", "ALL")
                 .appendQueryParameter("device_type", "android_phone")
                 .appendQueryParameter("firmwareVersion", "0")
-                .appendQueryParameter("hardwareVersion", "0.62.130.16")
-                .appendQueryParameter("lang", "zh_CH")
+                .appendQueryParameter("hardwareVersion", "0")
+                .appendQueryParameter("lang", "0")
                 .appendQueryParameter("support8Bytes", "true")
-                .appendQueryParameter("timezone", "Europe/Moscow")
-                .appendQueryParameter("v", "2.0")
+                .appendQueryParameter("timezone", "0")
+                .appendQueryParameter("v", "0")
                 .appendQueryParameter("gpsVersion", "0")
                 .appendQueryParameter("baseResourceVersion", "0")
 
@@ -208,7 +222,7 @@ class ExtrasFragment : Fragment() {
                 .url(uriBuilder.toString())
 
                 .addHeader("hm-privacy-diagnostics", "false")
-                .addHeader("country", "US")
+                .addHeader("country", "0")
                 .addHeader("appplatform", "android_phone")
                 .addHeader("hm-privacy-ceip", "0")
                 .addHeader("x-request-id", "0")
@@ -219,7 +233,7 @@ class ExtrasFragment : Fragment() {
                 .addHeader("appname", appName.text.toString())
                 .addHeader("v", "0")
                 .addHeader("apptoken", "0")
-                .addHeader("lang", "ar_AR")
+                .addHeader("lang", "0")
                 .addHeader("Host", "api-mifit-ru.huami.com")
                 .addHeader("Connection", "Keep-Alive")
                 .addHeader("accept-encoding", "gzip")
@@ -229,10 +243,16 @@ class ExtrasFragment : Fragment() {
 
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
+                    requireActivity().title = getString(R.string.error)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
+
+                    val output = json.toString()
+                    output.replace(",", ", ")
+                    output.substringBefore('#')
+
                     val none = getString(R.string.none)
 
                     when (sharedPreferences.getBoolean("simple_response", true)) {

@@ -43,8 +43,6 @@
     <string name="production_source">Production source</string>
     <string name="response_app_name">App name</string>
     <string name="app_version">App version</string>
-    <string name="zepp_appname">Zepp</string>
-    <string name="mifit_appname">Mi Fit</string>
     <string name="play_postfix_checkbox">play postfix</string>
 
     <string-array name="tabs_entries">

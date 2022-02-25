@@ -7,7 +7,6 @@ import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import io.github.keddnyo.amazware.BuildConfig
-import io.github.keddnyo.amazware.MainActivity
 import io.github.keddnyo.amazware.R
 
 class SettingsFragment : PreferenceFragmentCompat() {

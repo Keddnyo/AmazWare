@@ -61,6 +61,10 @@ class FeedFragment : Fragment() {
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
 
+                val output = json.toString()
+                output.replace(",", ", ")
+                output.substringBefore('#')
+
                 try {
                     for (i in 1..1000) { // Device indexes
                         if (json.has(i.toString())) { // Existing indexes
