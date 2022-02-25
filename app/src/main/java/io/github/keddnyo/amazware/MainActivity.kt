@@ -218,7 +218,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar, menu)
-        inflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -232,11 +231,9 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 builder.setNegativeButton(android.R.string.no) { _: DialogInterface?, _: Int ->
-                    builder.setNegativeButton(android.R.string.yes) { _: DialogInterface?, _: Int ->
-                        DialogInterface.BUTTON_NEGATIVE
-                    }
-                    builder.show()
+                    DialogInterface.BUTTON_NEGATIVE
                 }
+                builder.show()
             }
         }
         return super.onOptionsItemSelected(item)
