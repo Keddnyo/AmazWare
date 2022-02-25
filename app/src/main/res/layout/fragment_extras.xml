@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -13,71 +14,59 @@
         android:orientation="vertical"
         android:padding="10sp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/deviceSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/device_source"
+            android:inputType="number"
+            android:maxLength="2"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/productionSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/production_source"
+            android:inputType="number"
+            android:maxLength="3"
+            tools:ignore="Autofill" />
+
+        <RadioGroup
+            android:id="@+id/appRadioGroup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/deviceSource"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/device_source"
-                android:inputType="number"
-                android:maxLength="2"/>
-
-            <EditText
-                android:id="@+id/productionSource"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/production_source"
-                android:inputType="number"
-                android:maxLength="3"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/appRadioGroup"
-                android:layout_width="fill_parent"
+            <RadioButton
+                android:id="@+id/radioMiFit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:padding="5dp"
+                android:minHeight="40dp"
+                android:text="@string/mifit_appname" />
 
-                <RadioButton
-                    android:id="@+id/radioMiFit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="5dp"
-                    android:text="@string/mifit_appname" />
+            <RadioButton
+                android:id="@+id/radioZepp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:padding="5dp"
+                android:text="@string/zepp_appname" />
 
-                <RadioButton
-                    android:id="@+id/radioZepp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="40dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/zepp_appname" />
+            <EditText
+                android:id="@+id/appVersion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:digits="0123456789."
+                android:hint="@string/app_version_number"
+                android:inputType="number"
+                android:maxLength="7"
+                tools:ignore="Autofill" />
 
-                <EditText
-                    android:id="@+id/appVersion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:digits="0123456789."
-                    android:hint="@string/app_version_number"
-                    android:inputType="number"
-                    android:maxLength="7"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
+        </RadioGroup>
 
         <EditText
             android:id="@+id/appName"
@@ -85,7 +74,8 @@
             android:layout_height="wrap_content"
             android:digits="0123456789."
             android:enabled="false"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:ignore="Autofill,TextFields" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -98,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:paddingEnd="12dp"
+                android:padding="12dp"
                 android:text="@string/play_postfix_checkbox"
                 android:visibility="gone" />
 
@@ -108,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/app_build_number"
                 android:inputType="number"
-                android:maxLength="7"/>
+                android:maxLength="7"
+                tools:ignore="Autofill"/>
 
         </LinearLayout>
 
@@ -125,7 +116,8 @@
                 android:layout_marginEnd="12dp"
                 android:backgroundTint="@color/secondary"
                 android:text="@string/resetButton"
-                android:textColor="@color/secondary_background"/>
+                android:textColor="@color/secondary_background"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/buttonSubmit"
@@ -134,37 +126,24 @@
                 android:backgroundTint="@color/secondary"
                 android:enabled="false"
                 android:text="@string/submitButton"
-                android:textColor="@color/secondary_background"/>
+                android:textColor="@color/secondary_background"
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
         <ListView
+            android:id="@+id/responseList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:ignore="NestedScrolling" />
+
+        <TextView
+            android:id="@+id/responseField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:choiceMode="singleChoice"
-            android:visibility="invisible"/>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|center_horizontal"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/responseList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/responseField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textIsSelectable="true"
-                android:visibility="gone"/>
-
-        </LinearLayout>
+            android:textIsSelectable="true"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

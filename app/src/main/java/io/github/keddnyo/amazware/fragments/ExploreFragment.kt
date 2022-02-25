@@ -1,23 +1,19 @@
 package io.github.keddnyo.amazware.fragments
 
 import android.annotation.SuppressLint
-import android.app.DownloadManager
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.URLUtil
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import io.github.keddnyo.amazware.DownloadProvider
 import io.github.keddnyo.amazware.R
 import java.util.*
 
@@ -36,7 +32,7 @@ class ExploreFragment : Fragment() {
 
         requireActivity().title = getString(R.string.explore) // New title
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext()) // Shared Preferences
         val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
 
         // Setting WebView
@@ -119,35 +115,8 @@ class ExploreFragment : Fragment() {
         }
 
         // Downloading code
-        when {
-            sharedPreferences.getBoolean("download_provider", true) -> {
-                webView.setDownloadListener { url, _, contentDisposition, mimeType, _ ->
-                    val request = DownloadManager.Request(Uri.parse(url))
-                    request.setDescription(getString(R.string.downloading))
-                    request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType))
-                    request.allowScanningByMediaScanner()
-                    // Notification depending on preference
-                    when {
-                        sharedPreferences.getBoolean("download_notification", true) -> {
-                            request.setNotificationVisibility(1)
-                        }
-                        else -> {
-                            request.setNotificationVisibility(0)
-                        }
-                    }
-                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimeType))
-                    val dm = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    dm.enqueue(request)
-                    Toast.makeText(activity, getString(R.string.downloading), Toast.LENGTH_LONG).show()
-                }
-            } else -> {
-            webView.setDownloadListener { url, _, _, _, _ ->
-                run {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    )}
-                }
-            }
+        webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ ->
+            context?.let { DownloadProvider().download(it, fileUrl, contentDisposition, mimeType) }
         }
 
         // Pull refresh

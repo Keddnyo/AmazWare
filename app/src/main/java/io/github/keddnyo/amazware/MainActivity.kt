@@ -2,14 +2,19 @@ package io.github.keddnyo.amazware
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.fragments.*
 import java.io.IOException
@@ -27,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        selectFragment()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
 
@@ -131,6 +138,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            try {
+                Handler().postDelayed({
+                    when (it.itemId) {
+                        R.id.Feed -> replaceFragment(feedFragment)
+                        R.id.Explore -> replaceFragment(cloudFragment)
+                        R.id.Extras -> replaceFragment(advancedFragment)
+                        R.id.Telegram -> replaceFragment(telegramFragment)
+                        R.id.Settings -> replaceFragment(settingsFragment)
+                    }
+                }, 500)
+            } catch (e: IOException) {
+            }
+            true
+        }
+    }
+
+    // Fragment replacing code
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
+    }
+
+    override fun onBackPressed() {
+        selectFragment()
+    }
+
+    private fun selectFragment() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
+        val bottomNavigation = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+
         // Select fragment
         when (sharedPreferences.getString("default_tab", "3")) {
             "1" -> {
@@ -154,28 +193,29 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.selectedItemId = R.id.Feed
             }
         }
-
-        bottomNavigation.setOnNavigationItemSelectedListener {
-            try {
-                Handler().postDelayed({
-                    when (it.itemId) {
-                        R.id.Feed -> replaceFragment(feedFragment)
-                        R.id.Explore -> replaceFragment(cloudFragment)
-                        R.id.Extras -> replaceFragment(advancedFragment)
-                        R.id.Telegram -> replaceFragment(telegramFragment)
-                        R.id.Settings -> replaceFragment(settingsFragment)
-                    }
-                }, 500)
-            } catch (e: IOException) {
-            }
-            true
-        }
     }
 
-    // Fragment replacing code
-    private fun replaceFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.commit()
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.exit -> {
+                val builder = AlertDialog.Builder(this)
+                    .setTitle(R.string.exit)
+                    .setMessage(getString(R.string.exit_message))
+                builder.setPositiveButton(android.R.string.yes) { _: DialogInterface?, _: Int ->
+                    finish()
+                }
+                builder.setNegativeButton(android.R.string.yes) { _: DialogInterface?, _: Int ->
+                    DialogInterface.BUTTON_NEGATIVE
+                }
+                builder.show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

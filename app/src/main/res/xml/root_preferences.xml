@@ -18,10 +18,10 @@
             app:title="@string/download_provider" />
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:icon="@drawable/ic_extras"
             app:key="simple_response"
-            app:summary=""
+            app:summary="@string/simple_response_summary"
             app:title="@string/simple_response"/>
 
     </PreferenceCategory>
@@ -82,12 +82,10 @@
             app:title="@string/app_name"/>
 
         <Preference
+            app:icon="@drawable/ic_explore"
             app:key="info2"
-            app:summary="@string/logic_credits"/>
-
-        <Preference
-            app:key="info3"
-            app:summary="@string/support_credits"/>
+            app:summary="@string/logic_credits"
+            app:title="@string/firmwarehouse"/>
 
     </PreferenceCategory>
 
