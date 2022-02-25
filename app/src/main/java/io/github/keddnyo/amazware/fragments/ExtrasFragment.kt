@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.Adapter
+import io.github.keddnyo.amazware.DownloadProvider
 import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
@@ -196,21 +197,21 @@ class ExtrasFragment : Fragment() {
 
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
+                    val none = getString(R.string.none)
 
-                    when (sharedPreferences.getBoolean("simple_response", false)) {
-                        true -> {
+                    when (sharedPreferences.getBoolean("simple_response", true)) {
+                        false -> {
                             responseField.post {
                                 responseField.visibility = View.VISIBLE
                                 responseField.text = json.toString()
                             }
                         }
-                        false -> {
+                        true -> {
                             responseList.post {
                                 responseList.visibility = View.VISIBLE
 
                                 if (json.has("firmwareVersion")) {
                                     val firmwareVersion = json.getString("firmwareVersion") // Firmware
-                                    val firmwareUrl = json.getString("firmwareUrl") // Firmware Url
                                     val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
                                     list.add(
                                         Adapter(
@@ -219,10 +220,17 @@ class ExtrasFragment : Fragment() {
                                         )
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.firmwareVersion) + ": " + none,
+                                            "MD5: $none"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
                                 }
                                 if (json.has("resourceVersion")) {
                                     val resourceVersion = json.getString("resourceVersion") // Resources
-                                    val resourceUrl = json.getString("resourceUrl") // Resources Url
                                     val resourceMd5 = json.getString("resourceMd5") // Resources MD5
                                     list.add(
                                         Adapter(
@@ -231,10 +239,17 @@ class ExtrasFragment : Fragment() {
                                         )
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.resourceVersion) + ": " + none,
+                                            "MD5: $none"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
                                 }
                                 if (json.has("baseResourceVersion")) {
                                     val baseResourceVersion = json.getString("baseResourceVersion") // Base resources
-                                    val baseResourceUrl = json.getString("baseResourceUrl") // Base resources Url
                                     val baseResourceMd5 = json.getString("baseResourceMd5") // Base resources MD5
                                     list.add(
                                         Adapter(
@@ -243,10 +258,17 @@ class ExtrasFragment : Fragment() {
                                         )
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.baseResourceVersion) + ": " + none,
+                                            "MD5: $none"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
                                 }
                                 if (json.has("fontVersion")) {
                                     val fontVersion = json.getString("fontVersion") // Font
-                                    val fontUrl = json.getString("fontUrl") // Font Url
                                     val fontMd5 = json.getString("fontMd5") // Font MD5
                                     list.add(
                                         Adapter(
@@ -255,15 +277,48 @@ class ExtrasFragment : Fragment() {
                                         )
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.fontVersion) + ": " + none,
+                                            "MD5: $none"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
                                 }
                                 if (json.has("gpsVersion")) {
                                     val gpsVersion = json.getString("gpsVersion") // gpsVersion
-                                    val gpsUrl = json.getString("gpsUrl") // gpsVersion
                                     val gpsMd5 = json.getString("gpsMd5") // gpsVersion
                                     list.add(
                                         Adapter(
                                             getString(R.string.gpsVersion) + ": " + gpsVersion,
                                             "MD5: $gpsMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.gpsVersion) + ": " + none,
+                                            "MD5: $none"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("gpsVersion")) {
+                                    val lang = json.getString("lang") // Languages
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.lang),
+                                            lang
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                } else {
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.lang),
+                                            none
                                         )
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
@@ -288,8 +343,49 @@ class ExtrasFragment : Fragment() {
                             }
 
                             responseList.onItemClickListener =
-                                OnItemClickListener { parent, view, position, id ->
-                                    Toast.makeText(context, "$position $id", Toast.LENGTH_SHORT).show()
+                                OnItemClickListener { _, _, position, _ ->
+                                    when (position) {
+                                        0 -> {
+                                            if (json.has("firmwareUrl")) {
+                                                val fileUrl = json.getString("firmwareUrl")
+                                                context?.let { DownloadProvider().download(it, fileUrl, "firmware", "application/zip") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                        1 -> {
+                                            if (json.has("resourceUrl")) {
+                                                val fileUrl = json.getString("resourceUrl")
+                                                context?.let { DownloadProvider().download(it, fileUrl, "resource", "application/zip") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                        2 -> {
+                                            if (json.has("baseResourceUrl")) {
+                                                val fileUrl = json.getString("baseResourceUrl")
+                                                context?.let { DownloadProvider().download(it, fileUrl, "base_resource", "application/zip") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                        3 -> {
+                                            if (json.has("fontUrl")) {
+                                                val fileUrl = json.getString("fontUrl")
+                                                context?.let { DownloadProvider().download(it, fileUrl, "font", "application/zip") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                        4 -> {
+                                            if (json.has("gpsUrl")) {
+                                                val fileUrl = json.getString("gpsUrl")
+                                                context?.let { DownloadProvider().download(it, fileUrl, "gps", "application/zip") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }
                                 }
                         }
                     }
