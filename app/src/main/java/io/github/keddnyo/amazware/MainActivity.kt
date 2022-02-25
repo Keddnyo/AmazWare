@@ -43,29 +43,25 @@ class MainActivity : AppCompatActivity() {
         val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
 
         // Set dark mode
-        when (sharedPreferences.getBoolean("dark_mode", false)) {
-            true -> {
-                when (sharedPreferences.getBoolean("dark_mode_auto", false)) {
-                    true -> {
-                        when (currentNightMode) {
-                            Configuration.UI_MODE_NIGHT_YES -> {
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
-                            }
-                            Configuration.UI_MODE_NIGHT_NO -> {
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
-                            }
-                            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                            }
-                        }
-                    }
-                    false -> {
+        when (sharedPreferences.getString("dark_mode", "1")) {
+            "1" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
+            }
+            "2" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
+            }
+            "3" -> {
+                when (currentNightMode) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
                     }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
+                    }
+                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
                 }
-            }
-            false -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
             }
         }
 

@@ -5,7 +5,7 @@
         <ListPreference
             app:defaultValue="3"
             app:entries="@array/tabs_entries"
-            app:entryValues="@array/entryvalues"
+            app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_feed"
             app:key="default_tab"
             app:title="@string/default_tab"
@@ -21,7 +21,8 @@
             app:defaultValue="false"
             app:icon="@drawable/ic_extras"
             app:key="simple_response"
-            app:title="@string/simple_response" />
+            app:summary=""
+            app:title="@string/simple_response"/>
 
     </PreferenceCategory>
 
@@ -38,23 +39,19 @@
 
     <PreferenceCategory app:title="@string/appearance">
 
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/dark_mode_entries"
+            app:entryValues="@array/dark_mode_entry_values"
             app:icon="@drawable/ic_dark_mode"
             app:key="dark_mode"
-            app:title="@string/dark_mode" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:icon="@drawable/ic_dark_mode"
-            app:dependency="dark_mode"
-            app:key="dark_mode_auto"
-            app:title="@string/dark_mode_auto" />
+            app:title="@string/gui_mode"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/accent_colors"
-            app:entryValues="@array/entryvalues"
+            app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_palette"
             app:key="accent_color"
             app:title="@string/accent_color"

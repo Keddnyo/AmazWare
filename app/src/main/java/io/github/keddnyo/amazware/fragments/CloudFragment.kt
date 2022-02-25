@@ -46,36 +46,45 @@ class CloudFragment : Fragment() {
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            webSettings.forceDark = WebSettings.FORCE_DARK_ON
-        }
         webView.clearHistory()
 
-        // Loading WebView
-        val theme = when (sharedPreferences.getBoolean("dark_mode", false)) {
-            true -> {
-                when (sharedPreferences.getBoolean("dark_mode_auto", false)) {
-                    true -> {
-                        when (currentNightMode) {
-                            Configuration.UI_MODE_NIGHT_YES -> {
-                                "dark"
-                            }
-                            Configuration.UI_MODE_NIGHT_NO -> {
-                                "light"
-                            }
-                            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                                "light"
-                            }
-                        }
-                    }
-                    false -> {
-                        "dark"
-                    }
-                }
+        // Set dark mode
+        val theme = when (sharedPreferences.getString("dark_mode", "1")) {
+            "1" -> {
+                "light"
+            }
+            "2" -> {
                 "dark"
             }
-            false -> {
-                "light"
+            "3" -> {
+                "auto" // Dummy (not matter)
+            }
+            else -> {
+                "auto" // Dummy (not matter)
+            }
+        }
+        when (sharedPreferences.getString("dark_mode", "1")) {
+            "1" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            "2" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
+            }
+            "3" -> {
+                when (currentNightMode) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
+                    }
+                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                }
+            }
+            else -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
 
@@ -90,6 +99,7 @@ class CloudFragment : Fragment() {
             .appendQueryParameter("theme", theme)
             .appendQueryParameter("lang", lang)
 
+        // Loading WebView
         webView.loadUrl(url.toString())
         webView.webViewClient = object : WebViewClient() {
             // Override loading

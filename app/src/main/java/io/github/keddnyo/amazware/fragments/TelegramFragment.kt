@@ -39,7 +39,6 @@ class TelegramFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             webSettings.forceDark = WebSettings.FORCE_DARK_OFF
         }
-        webView.clearHistory()
 
         // Loading WebView
         webView.loadUrl(url)
