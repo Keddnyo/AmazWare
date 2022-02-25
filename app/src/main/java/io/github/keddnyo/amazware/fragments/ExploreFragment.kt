@@ -6,14 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -23,14 +21,13 @@ import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 import java.util.*
 
-class CloudFragment : Fragment() {
-
+class ExploreFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_cloud, container, false)
+        return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 
     @SuppressLint("SetJavaScriptEnabled")

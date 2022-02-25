@@ -13,7 +13,7 @@
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
-            app:icon="@drawable/ic_cloud"
+            app:icon="@drawable/ic_explore"
             app:key="download_provider"
             app:title="@string/download_provider" />
 

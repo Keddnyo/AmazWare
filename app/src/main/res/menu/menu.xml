@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/Explore"
-        android:icon="@drawable/ic_cloud"
+        android:icon="@drawable/ic_explore"
         android:title="@string/explore" />
 
     <item

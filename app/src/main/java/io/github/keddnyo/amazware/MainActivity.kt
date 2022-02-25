@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     // Fragments list
     private val feedFragment = FeedFragment()
-    private val cloudFragment = CloudFragment()
+    private val cloudFragment = ExploreFragment()
     private val advancedFragment = ExtrasFragment()
     private val telegramFragment = TelegramFragment()
     private val settingsFragment = SettingsFragment()
