@@ -17,6 +17,12 @@
             app:key="download_provider"
             app:title="@string/download_provider" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_extras"
+            app:key="simple_response"
+            app:title="@string/simple_response" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/indication">

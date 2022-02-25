@@ -51,10 +51,10 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
             }
             "2" -> {
-                theme.applyStyle(R.style.Blue, true)
+                theme.applyStyle(R.style.Red, true)
                 when (sharedPreferences.getBoolean("colorize_icons", false)) {
                     true -> {
-                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.blue)
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.red)
                     }
                     false -> {
                         bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 when (sharedPreferences.getBoolean("colorize_titles", false)) {
                     true -> {
-                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.blue)
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.red)
                     }
                     false -> {
                         bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)
@@ -89,10 +89,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             "4" -> {
-                theme.applyStyle(R.style.Red, true)
+                theme.applyStyle(R.style.Blue, true)
                 when (sharedPreferences.getBoolean("colorize_icons", false)) {
                     true -> {
-                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.red)
+                        bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.blue)
                     }
                     false -> {
                         bottomNavigation.itemIconTintList = this.resources.getColorStateList(R.color.white)
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 when (sharedPreferences.getBoolean("colorize_titles", false)) {
                     true -> {
-                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.red)
+                        bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.blue)
                     }
                     false -> {
                         bottomNavigation.itemTextColor = this.resources.getColorStateList(R.color.white)

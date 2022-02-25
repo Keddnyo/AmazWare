@@ -17,9 +17,10 @@
     <string name="colorize_titles">Colorize titles</string>
     <string name="behaviour">Behaviour</string>
     <string name="default_tab">Default tab</string>
+    <string name="download_provider">Built-in download provider</string>
+    <string name="simple_response">Simple extras response</string>
     <string name="indication">Indication</string>
     <string name="download_notification">Show download notification</string>
-    <string name="download_provider">Built-in download provider</string>
 
     <string name="firmwareVersion">Firmware version</string>
     <string name="firmwareUrl">Firmware Url</string>
@@ -52,9 +53,9 @@
     </string-array>
     <string-array name="accent_colors">
         <item>White</item>
-        <item>Blue</item>
-        <item>Green</item>
         <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
     </string-array>
     <string-array name="entryvalues">
         <item>1</item>

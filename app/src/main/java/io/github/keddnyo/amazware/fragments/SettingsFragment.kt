@@ -22,7 +22,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val about = findPreference<Preference>("info")
         val cloud = findPreference<Preference>("info2")
-        val support = findPreference<Preference>("info3")
         about?.title = getString(R.string.app_name) + " " + "v" + BuildConfig.VERSION_NAME
 
         about!!.setOnPreferenceClickListener {
@@ -34,12 +33,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         cloud!!.setOnPreferenceClickListener {
             startActivity(
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://4pda.to/forum/index.php?showuser=243484"))
-            )
-            true
-        }
-        support!!.setOnPreferenceClickListener {
-            startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://mibandnotify.com"))
             )
             true
         }

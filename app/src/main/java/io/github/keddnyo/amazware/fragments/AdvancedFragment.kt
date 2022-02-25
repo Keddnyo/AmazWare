@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.Adapter
 import io.github.keddnyo.amazware.R
 import okhttp3.*
@@ -33,6 +35,8 @@ class AdvancedFragment : Fragment() {
         requireActivity().title = getString(R.string.extras) // New Title
 
         // Variables
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity()) // Shared Preferences
+
         val deviceSource =  requireActivity().findViewById<EditText>(R.id.deviceSource)
         val productionSource =  requireActivity().findViewById<EditText>(R.id.productionSource)
         val appName =  requireActivity().findViewById<EditText>(R.id.appName)
@@ -44,6 +48,8 @@ class AdvancedFragment : Fragment() {
         val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
+        val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
+        val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
 
         appRadioGroup.setOnCheckedChangeListener { _, checkedId -> // find which radio button is selected
             if (checkedId == R.id.radioZepp) {
@@ -78,8 +84,6 @@ class AdvancedFragment : Fragment() {
             }
         })
 
-        val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
-
         // Setting adapter
         val list = ArrayList<Adapter>()
         val adapter = SimpleAdapter(
@@ -110,12 +114,18 @@ class AdvancedFragment : Fragment() {
 
             responseList.visibility = View.GONE
 
+            list.clear()
+            responseField.visibility = View.GONE
+            responseField.text = ""
+
             deviceSource.requestFocus()
         }
 
         buttonSubmit.setOnClickListener {
             // Clear for a new list
             list.clear()
+            responseField.visibility = View.GONE
+            responseField.text = ""
 
             val okHttpClient = OkHttpClient()
             val requestHost = "api-mifit-ru.huami.com"
@@ -126,36 +136,6 @@ class AdvancedFragment : Fragment() {
                 .appendPath("devices")
                 .appendPath("ALL")
                 .appendPath("hasNewVersion")
-
-                /**.appendQueryParameter("productId", "12")
-                .appendQueryParameter("vendorSource", "1")
-                .appendQueryParameter("resourceVersion", "0")
-                .appendQueryParameter("firmwareFlag", "0")
-                .appendQueryParameter("vendorId", "0")
-                .appendQueryParameter("resourceFlag", "0")
-                .appendQueryParameter("productionSource", "256")
-                .appendQueryParameter("userid", "0")
-                .appendQueryParameter("userId", "0")
-                .appendQueryParameter("deviceSource", "")
-                .appendQueryParameter("fontVersion", "0")
-                .appendQueryParameter("fontFlag", "0")
-                .appendQueryParameter("appVersion", "6.1.4-play_100440")
-                .appendQueryParameter("appid", "0")
-                .appendQueryParameter("callid", "0")
-                .appendQueryParameter("channel", "0")
-                .appendQueryParameter("country", "0")
-                .appendQueryParameter("cv", "0")
-                .appendQueryParameter("device", "")
-                .appendQueryParameter("deviceType", "ALL")
-                .appendQueryParameter("device_type", "0")
-                .appendQueryParameter("firmwareVersion", "0")
-                .appendQueryParameter("hardwareVersion", "0")
-                .appendQueryParameter("lang", "0")
-                .appendQueryParameter("support8Bytes", "true")
-                .appendQueryParameter("timezone", "0")
-                .appendQueryParameter("v", "0")
-                .appendQueryParameter("gpsVersion", "0")
-                .appendQueryParameter("baseResourceVersion", "0")**/
 
                 .appendQueryParameter("productId", "0")
                 .appendQueryParameter("vendorSource", "1")
@@ -217,80 +197,100 @@ class AdvancedFragment : Fragment() {
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
 
-                    responseList.post {
-                        responseList.visibility = View.VISIBLE
+                    when (sharedPreferences.getBoolean("simple_response", false)) {
+                        true -> {
+                            responseField.post {
+                                responseField.visibility = View.VISIBLE
+                                responseField.text = json.toString()
+                            }
+                        }
+                        false -> {
+                            responseList.post {
+                                responseList.visibility = View.VISIBLE
 
-                        if (json.has("firmwareVersion")) {
-                            val firmwareVersion = json.getString("firmwareVersion") // Firmware
-                            val firmwareUrl = json.getString("firmwareUrl") // Firmware Url
-                            val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
-                            list.add(
-                                Adapter(
-                                    getString(R.string.firmwareVersion) + ": " + firmwareVersion,
-                                    "MD5: $firmwareMd5"
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (json.has("resourceVersion")) {
-                            val resourceVersion = json.getString("resourceVersion") // Resources
-                            val resourceUrl = json.getString("resourceUrl") // Resources Url
-                            val resourceMd5 = json.getString("resourceMd5") // Resources MD5
-                            list.add(
-                                Adapter(
-                                    getString(R.string.resourceVersion) + ": " + resourceVersion,
-                                    "MD5: $resourceMd5"
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (json.has("baseResourceVersion")) {
-                            val baseResourceVersion = json.getString("baseResourceVersion") // Base resources
-                            val baseResourceUrl = json.getString("baseResourceUrl") // Base resources Url
-                            val baseResourceMd5 = json.getString("baseResourceMd5") // Base resources MD5
-                            list.add(
-                                Adapter(
-                                    getString(R.string.baseResourceVersion) + ": " + baseResourceVersion,
-                                    "MD5: $baseResourceMd5"
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (json.has("fontVersion")) {
-                            val fontVersion = json.getString("fontVersion") // Font
-                            val fontUrl = json.getString("fontUrl") // Font Url
-                            val fontMd5 = json.getString("fontMd5") // Font MD5
-                            list.add(
-                                Adapter(
-                                    getString(R.string.fontVersion) + ": " + fontVersion,
-                                    "MD5: $fontMd5"
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (json.has("gpsVersion")) {
-                            val gpsVersion = json.getString("gpsVersion") // gpsVersion
-                            val gpsMd5 = json.getString("gpsMd5") // gpsVersion
-                            list.add(
-                                Adapter(
-                                    getString(R.string.gpsVersion) + ": " + gpsVersion,
-                                    "MD5: $gpsMd5"
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (json.has("changeLog")) {
-                            val changelog = json.getString("changeLog") // changeLog
-                            list.add(
-                                Adapter(
-                                    getString(R.string.changeLog),
-                                    changelog
-                                )
-                            )
-                            adapter.notifyDataSetChanged() // Commit changes
-                        }
-                        if (!json.has("firmwareVersion") || !json.has("resourceVersion") || !json.has("fontVersion")) {
-                            Toast.makeText(context, getString(R.string.firmware_not_found), Toast.LENGTH_SHORT).show()
+                                if (json.has("firmwareVersion")) {
+                                    val firmwareVersion = json.getString("firmwareVersion") // Firmware
+                                    val firmwareUrl = json.getString("firmwareUrl") // Firmware Url
+                                    val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.firmwareVersion) + ": " + firmwareVersion,
+                                            "MD5: $firmwareMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("resourceVersion")) {
+                                    val resourceVersion = json.getString("resourceVersion") // Resources
+                                    val resourceUrl = json.getString("resourceUrl") // Resources Url
+                                    val resourceMd5 = json.getString("resourceMd5") // Resources MD5
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.resourceVersion) + ": " + resourceVersion,
+                                            "MD5: $resourceMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("baseResourceVersion")) {
+                                    val baseResourceVersion = json.getString("baseResourceVersion") // Base resources
+                                    val baseResourceUrl = json.getString("baseResourceUrl") // Base resources Url
+                                    val baseResourceMd5 = json.getString("baseResourceMd5") // Base resources MD5
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.baseResourceVersion) + ": " + baseResourceVersion,
+                                            "MD5: $baseResourceMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("fontVersion")) {
+                                    val fontVersion = json.getString("fontVersion") // Font
+                                    val fontUrl = json.getString("fontUrl") // Font Url
+                                    val fontMd5 = json.getString("fontMd5") // Font MD5
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.fontVersion) + ": " + fontVersion,
+                                            "MD5: $fontMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("gpsVersion")) {
+                                    val gpsVersion = json.getString("gpsVersion") // gpsVersion
+                                    val gpsUrl = json.getString("gpsUrl") // gpsVersion
+                                    val gpsMd5 = json.getString("gpsMd5") // gpsVersion
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.gpsVersion) + ": " + gpsVersion,
+                                            "MD5: $gpsMd5"
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (json.has("changeLog")) {
+                                    val changelog = json.getString("changeLog") // changeLog
+                                    list.add(
+                                        Adapter(
+                                            getString(R.string.changeLog),
+                                            changelog
+                                        )
+                                    )
+                                    adapter.notifyDataSetChanged() // Commit changes
+                                }
+                                if (!json.has("firmwareVersion") || !json.has("resourceVersion") || !json.has("fontVersion")) {
+                                    responseField.post {
+                                        responseField.visibility = View.VISIBLE
+                                        responseField.text = json.toString()
+                                    }
+                                    Toast.makeText(context, getString(R.string.firmware_not_found), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            responseList.onItemClickListener =
+                                OnItemClickListener { parent, view, position, id ->
+                                    Toast.makeText(context, "$position $id", Toast.LENGTH_SHORT).show()
+                                }
                         }
                     }
                 }
