@@ -305,7 +305,7 @@ class ExtrasFragment : Fragment() {
                                     )
                                     adapter.notifyDataSetChanged() // Commit changes
                                 }
-                                if (json.has("gpsVersion")) {
+                                if (json.has("lang")) {
                                     val lang = json.getString("lang") // Languages
                                     list.add(
                                         Adapter(
@@ -348,7 +348,7 @@ class ExtrasFragment : Fragment() {
                                         0 -> {
                                             if (json.has("firmwareUrl")) {
                                                 val fileUrl = json.getString("firmwareUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "firmware", "application/zip") }
+                                                context?.let { DownloadProvider().download(it, fileUrl, "firmware", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -356,7 +356,7 @@ class ExtrasFragment : Fragment() {
                                         1 -> {
                                             if (json.has("resourceUrl")) {
                                                 val fileUrl = json.getString("resourceUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "resource", "application/zip") }
+                                                context?.let { DownloadProvider().download(it, fileUrl, "resource", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -364,7 +364,7 @@ class ExtrasFragment : Fragment() {
                                         2 -> {
                                             if (json.has("baseResourceUrl")) {
                                                 val fileUrl = json.getString("baseResourceUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "base_resource", "application/zip") }
+                                                context?.let { DownloadProvider().download(it, fileUrl, "base_resource", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -372,7 +372,7 @@ class ExtrasFragment : Fragment() {
                                         3 -> {
                                             if (json.has("fontUrl")) {
                                                 val fileUrl = json.getString("fontUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "font", "application/zip") }
+                                                context?.let { DownloadProvider().download(it, fileUrl, "font", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -380,7 +380,15 @@ class ExtrasFragment : Fragment() {
                                         4 -> {
                                             if (json.has("gpsUrl")) {
                                                 val fileUrl = json.getString("gpsUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "gps", "application/zip") }
+                                                context?.let { DownloadProvider().download(it, fileUrl, "gps", "?") }
+                                            } else {
+                                                Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                        5 -> {
+                                            if (json.has("lang")) {
+                                                val lang = json.getString("lang")
+                                                Toast.makeText(context, lang, Toast.LENGTH_SHORT).show()
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
