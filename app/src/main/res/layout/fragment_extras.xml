@@ -123,16 +123,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="12dp"
+                android:backgroundTint="@color/secondary"
                 android:text="@string/resetButton"
-                android:textColor="#FFFFFF"/>
+                android:textColor="@color/secondary_background"/>
 
             <Button
                 android:id="@+id/buttonSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/secondary"
                 android:enabled="false"
                 android:text="@string/submitButton"
-                android:textColor="#FFFFFF"/>
+                android:textColor="@color/secondary_background"/>
 
         </LinearLayout>
 

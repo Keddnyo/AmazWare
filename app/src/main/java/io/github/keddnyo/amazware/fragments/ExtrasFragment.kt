@@ -19,13 +19,13 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class AdvancedFragment : Fragment() {
+class ExtrasFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_advanced, container, false)
+        return inflater.inflate(R.layout.fragment_extras, container, false)
     }
 
     @SuppressLint("SetTextI18n")

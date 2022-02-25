@@ -38,6 +38,19 @@
 
     <PreferenceCategory app:title="@string/appearance">
 
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_dark_mode"
+            app:key="dark_mode"
+            app:title="@string/dark_mode" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_dark_mode"
+            app:dependency="dark_mode"
+            app:key="dark_mode_auto"
+            app:title="@string/dark_mode_auto" />
+
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/accent_colors"

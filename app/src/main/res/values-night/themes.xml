@@ -1,8 +1,8 @@
 <resources>
-    <style name="Theme.AmazWare" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/gray</item>
-        <item name="colorAccent">@color/black</item>
+    <style name="Theme.AmazWare" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="Blue">

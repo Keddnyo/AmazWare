@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
@@ -38,6 +40,7 @@ class CloudFragment : Fragment() {
         requireActivity().title = getString(R.string.explore) // New title
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+        val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
 
         // Setting WebView
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
@@ -49,6 +52,33 @@ class CloudFragment : Fragment() {
         webView.clearHistory()
 
         // Loading WebView
+        val theme = when (sharedPreferences.getBoolean("dark_mode", false)) {
+            true -> {
+                when (sharedPreferences.getBoolean("dark_mode_auto", false)) {
+                    true -> {
+                        when (currentNightMode) {
+                            Configuration.UI_MODE_NIGHT_YES -> {
+                                "dark"
+                            }
+                            Configuration.UI_MODE_NIGHT_NO -> {
+                                "light"
+                            }
+                            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                                "light"
+                            }
+                        }
+                    }
+                    false -> {
+                        "dark"
+                    }
+                }
+                "dark"
+            }
+            false -> {
+                "light"
+            }
+        }
+
         val lang = Locale.getDefault().language.toString()
 
         // Build url
@@ -57,6 +87,7 @@ class CloudFragment : Fragment() {
             .authority("schakal.ru")
             .appendPath("fw")
             .appendPath("firmwares_list.htm")
+            .appendQueryParameter("theme", theme)
             .appendQueryParameter("lang", lang)
 
         webView.loadUrl(url.toString())

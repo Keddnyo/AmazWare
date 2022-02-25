@@ -25,7 +25,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_telegram"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/secondary_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
