@@ -4,15 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -33,9 +30,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Set dark mode
+        ThemeSwitcher().switch(this, resources)
         selectFragment()
 
-        val sharedPreferences =
+        val sp =
             PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
 
         // Permissions
@@ -70,11 +69,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Set dark mode
-        ThemeSwitcher().switch(this, resources)
-
         // Select accent color
-        when (sharedPreferences.getString("accent_color", "1")) {
+        when (sp.getString("accent_color", "1")) {
             "1" -> {
                 theme.applyStyle(R.style.Theme_AmazWare, true)
                 bottomNavigation.itemIconTintList =
@@ -83,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
             "2" -> {
                 theme.applyStyle(R.style.Red, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.red)
@@ -93,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.red)
@@ -106,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
             "3" -> {
                 theme.applyStyle(R.style.Green, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.green)
@@ -116,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.green)
@@ -129,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             }
             "4" -> {
                 theme.applyStyle(R.style.Blue, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.blue)
@@ -139,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.blue)

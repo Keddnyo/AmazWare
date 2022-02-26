@@ -9,6 +9,7 @@ import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
 import io.github.keddnyo.amazware.Adapter
 import io.github.keddnyo.amazware.Device
+import io.github.keddnyo.amazware.Extras
 import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject
@@ -78,7 +79,7 @@ class FeedFragment : Fragment() {
                                 json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
                             val languages =
                                 json.getJSONObject(i.toString()).getString("languages").toString() // Languages
-                            val languageNames = ExtrasFragment().replace(requireActivity(), languages)
+                            val languageNames = Extras().renameLang(requireActivity(), languages)
                             var changelog =
                                 json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
                             changelog = changelog.substringBefore('#')
