@@ -31,6 +31,7 @@
     <string name="gpsVersion">Версия GPS</string>
     <string name="lang">Языки</string>
     <string name="changeLog">Список изменений</string>
+    <string name="date">Дата выхода</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 

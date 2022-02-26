@@ -32,7 +32,8 @@
     <string name="fontVersion">Font version</string>
     <string name="gpsVersion">GPS version</string>
     <string name="lang">Languages</string>
-    <string name="changeLog">changeLog</string>
+    <string name="changeLog">Changelog</string>
+    <string name="date">Release date</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Firmware not found</string>
 

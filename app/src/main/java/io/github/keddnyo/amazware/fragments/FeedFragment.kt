@@ -61,21 +61,26 @@ class FeedFragment : Fragment() {
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
 
-                val output = json.toString()
-                output.replace(",", ", ")
-                output.substringBefore('#')
-
                 try {
                     for (i in 1..1000) { // Device indexes
                         if (json.has(i.toString())) { // Existing indexes
+                            // Resource strings
+                            val firmwareString = getString(R.string.firmwareVersion)
+                            val languagesString = getString(R.string.lang)
+                            val changelogString = getString(R.string.changeLog)
+                            val dateString = getString(R.string.date)
+
+                            // Values
                             val deviceName =
                                 Device().name(i.toString()) // Device name
                             val firmware =
                                 json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
                             val languages =
                                 json.getJSONObject(i.toString()).getString("languages").toString() // Languages
-                            val changelog =
+                            val languageNames = ExtrasFragment().replace(languages)
+                            var changelog =
                                 json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
+                            changelog = changelog.substringBefore('#')
                             val date =
                                 json.getJSONObject(i.toString()).getString("date").toString() // Date
 
@@ -84,14 +89,14 @@ class FeedFragment : Fragment() {
                                     list.add(
                                         Adapter(
                                             deviceName,
-                                            "Firmware: $firmware\nLanguages: $languages\n\nDate: $date\n"
+                                            "$firmwareString: $firmware\n$languagesString: $languageNames\n\n$dateString: $date\n"
                                         )
                                     )
                                 } else { // A non-empty changelog will be shown
                                     list.add(
                                         Adapter(
                                             deviceName,
-                                            "Firmware: $firmware\nLanguages: $languages\n\nChangelog:\n$changelog\n\nDate: $date\n"
+                                            "$firmwareString: $firmware\n$languagesString: $languageNames\n\n$changelogString:\n$changelog\n\n$dateString: $date\n"
                                         )
                                     )
                                 }
