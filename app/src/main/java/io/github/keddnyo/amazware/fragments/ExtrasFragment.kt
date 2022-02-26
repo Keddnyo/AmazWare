@@ -42,24 +42,11 @@ class ExtrasFragment : Fragment() {
         val productionSource =  requireActivity().findViewById<EditText>(R.id.productionSource)
         val appName =  requireActivity().findViewById<EditText>(R.id.appName)
         val appVersion =  requireActivity().findViewById<EditText>(R.id.appVersion)
-        val channelPlay =  requireActivity().findViewById<CheckBox>(R.id.channelPlay)
         val buttonReset =  requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit =  requireActivity().findViewById<Button>(R.id.buttonSubmit)
         val deviceSpinner = requireActivity().findViewById<Spinner>(R.id.deviceList)
         val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
-
-        appVersion.addTextChangedListener (object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                buttonSubmit.isEnabled = deviceSource.text.isNotEmpty() && productionSource.text.isNotEmpty() && appName.text.isNotEmpty() && appVersion.text.isNotEmpty()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
 
         val devList = ArrayList<String>()
         val devAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
@@ -116,7 +103,6 @@ class ExtrasFragment : Fragment() {
                                 } else if (selectedItem == getString(R.string.manual_input)) {
                                     deviceSource.isEnabled = true
                                     productionSource.isEnabled = true
-                                    buttonSubmit.isEnabled
                                 }
                             }
                         }
@@ -144,9 +130,6 @@ class ExtrasFragment : Fragment() {
         buttonReset.setOnClickListener {
             // Clear views
 
-            channelPlay.isEnabled = false
-            channelPlay.visibility = View.GONE
-
             deviceSource.setText("")
             productionSource.setText("")
             appName.setText("")
@@ -164,7 +147,6 @@ class ExtrasFragment : Fragment() {
             productionSource.isEnabled = true
 
             deviceSpinner.setSelection(0)
-            buttonSubmit.isEnabled = false
         }
 
         buttonSubmit.setOnClickListener {
@@ -642,6 +624,8 @@ class ExtrasFragment : Fragment() {
                 language = language.replace("yi",". yi .")
                 language = language.replace("yo",". yo .")
                 language = language.replace("za",". za .")
+                language = language.replace("in",". in .")
+                language = language.replace("iw",". iw .")
 
 
                 language = language.replace(". ab .",". Abkhaz .")
@@ -826,6 +810,8 @@ class ExtrasFragment : Fragment() {
                 language = language.replace(". yi .",". Yiddish .")
                 language = language.replace(". yo .",". Yoruba .")
                 language = language.replace(". za .",". Zhuang .")
+                language = language.replace(". in .",". former Indonesian .")
+                language = language.replace(". iw .",". former Hebrew .")
                 language = language.replace(". ","")
                 language = language.replace(" .","")
                 language = language.replace(" , ",", ")

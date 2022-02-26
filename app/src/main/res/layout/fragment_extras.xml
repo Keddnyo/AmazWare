@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:orientation="vertical"
-        android:padding="10sp">
+        android:padding="5sp">
 
         <Spinner
             android:id="@+id/deviceList"
@@ -20,29 +20,11 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/deviceSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/device_source"
-            android:inputType="number"
-            android:maxLength="2"
-            tools:ignore="Autofill" />
-
-        <EditText
-            android:id="@+id/productionSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/production_source"
-            android:inputType="number"
-            android:maxLength="3"
-            tools:ignore="Autofill" />
-
-        <EditText
             android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/response_app_name"
-            tools:ignore="Autofill,TextFields"/>
+            tools:ignore="Autofill,TextFields" />
 
         <EditText
             android:id="@+id/appVersion"
@@ -53,55 +35,62 @@
             android:maxLength="17"
             tools:ignore="Autofill" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:stretchColumns="*">
 
-            <CheckBox
-                android:id="@+id/channelPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:padding="12dp"
-                android:text="@string/play_postfix_checkbox"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonReset"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="12dp"
-                android:backgroundTint="@color/secondary"
-                android:text="@string/resetButton"
-                android:textColor="@color/secondary_background"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/buttonSubmit"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/secondary"
-                android:enabled="false"
-                android:text="@string/submitButton"
-                android:textColor="@color/secondary_background"
-                tools:ignore="ButtonStyle" />
+                android:layout_height="match_parent" >
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/deviceSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/device_source"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    tools:ignore="Autofill" />
+
+                <EditText
+                    android:id="@+id/productionSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/production_source"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    tools:ignore="Autofill" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/buttonReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/resetButton"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/buttonSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/submitButton"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle" />
+            </TableRow>
+        </TableLayout>
 
         <ListView
             android:id="@+id/responseList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="5dp"
             android:visibility="gone"
             tools:ignore="NestedScrolling" />

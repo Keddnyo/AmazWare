@@ -39,7 +39,6 @@ class ExploreFragment : Fragment() {
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
-        webView.clearHistory()
 
         // Set dark mode
         val theme = when (sharedPreferences.getString("theme", "1")) {
@@ -56,7 +55,6 @@ class ExploreFragment : Fragment() {
                 "auto" // Dummy (not matter)
             }
         }
-        ThemeSwitcher().switch(requireContext(), resources)
 
         val lang = Locale.getDefault().language.toString()
 
