@@ -77,7 +77,7 @@ class FeedFragment : Fragment() {
                                 json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
                             val languages =
                                 json.getJSONObject(i.toString()).getString("languages").toString() // Languages
-                            val languageNames = ExtrasFragment().replace(languages)
+                            val languageNames = ExtrasFragment().replace(requireActivity(), languages)
                             var changelog =
                                 json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
                             changelog = changelog.substringBefore('#')

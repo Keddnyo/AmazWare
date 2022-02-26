@@ -5,7 +5,7 @@
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
     <string name="feed">Лента</string>
-    <string name="explore">Облако</string>
+    <string name="explore">Браузер</string>
     <string name="extras">Экстра</string>
     <string name="About">О приложении</string>
     <string name="exit">Выход</string>
@@ -14,8 +14,11 @@
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
     <string name="download_provider">Встроенный загрузчик</string>
-    <string name="simple_response">Удобный список</string>
     <string name="simple_response_summary">Удобный результат во вкладке Экстра</string>
+    <string name="server_response">Server response</string>
+    <string name="simple_response">Удобный список</string>
+    <string name="lang_formatted">Названия языков</string>
+    <string name="lang_formatted_summary">Отображать названия языков вместо кодов</string>
     <string name="indication">Индикация</string>
     <string name="download_notification">Уведомление о загрузке</string>
     <string name="appearance">Внешний вид</string>

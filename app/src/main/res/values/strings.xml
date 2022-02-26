@@ -16,8 +16,11 @@
     <string name="behaviour">Behaviour</string>
     <string name="default_tab">Default tab</string>
     <string name="download_provider">Built-in download provider</string>
-    <string name="simple_response">Convenient response</string>
     <string name="simple_response_summary">Convenient response in Extras tab</string>
+    <string name="server_response">Server response</string>
+    <string name="simple_response">Convenient response</string>
+    <string name="lang_formatted">Languages names</string>
+    <string name="lang_formatted_summary">Show languages names instead of codes</string>
     <string name="indication">Indication</string>
     <string name="download_notification">Show download notification</string>
     <string name="appearance">Appearance</string>
