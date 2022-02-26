@@ -68,6 +68,11 @@ class ExtrasFragment : Fragment() {
         val urlMain = "https://schakal.ru/fw/dev_apps.json"
         val requestMain = Request.Builder().url(urlMain).build()
 
+        deviceSpinner.post{
+            devList.add(getString(R.string.manual_input))
+            devAdapter.notifyDataSetChanged()
+        }
+
         okHttpClient.newCall(requestMain).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
             }
@@ -77,11 +82,6 @@ class ExtrasFragment : Fragment() {
                 val output = json.toString()
                 output.replace(",", ", ")
                 output.substringBefore('#')
-
-                deviceSpinner.post{
-                    devList.add(getString(R.string.manual_input))
-                    devAdapter.notifyDataSetChanged()
-                }
                 for (i in 1..1000) {
                     if (json.has(i.toString())) {
                         deviceSpinner.post{
