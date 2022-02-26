@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import io.github.keddnyo.amazware.BuildConfig
 import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.ThemeSwitcher
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -37,5 +39,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             )
             true
         }
+
+        /**theme!!.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, _ ->
+                ThemeSwitcher().switch(requireContext(), resources)
+                true
+            }**/
     }
 }

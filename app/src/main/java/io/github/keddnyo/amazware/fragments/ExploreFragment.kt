@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.DownloadProvider
 import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.ThemeSwitcher
 import java.util.*
 
 class ExploreFragment : Fragment() {
@@ -33,7 +34,6 @@ class ExploreFragment : Fragment() {
         requireActivity().title = getString(R.string.explore) // New title
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext()) // Shared Preferences
-        val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
 
         // Setting WebView
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
@@ -56,30 +56,7 @@ class ExploreFragment : Fragment() {
                 "auto" // Dummy (not matter)
             }
         }
-        when (sharedPreferences.getString("theme", "1")) {
-            "1" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-            "2" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
-            }
-            "3" -> {
-                when (currentNightMode) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
-                    }
-                    Configuration.UI_MODE_NIGHT_NO -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
-                    }
-                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
-                }
-            }
-            else -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
+        ThemeSwitcher().switch(requireContext(), resources)
 
         val lang = Locale.getDefault().language.toString()
 
