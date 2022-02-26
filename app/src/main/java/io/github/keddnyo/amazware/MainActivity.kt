@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
 
         // Set dark mode
-        when (sharedPreferences.getString("dark_mode", "1")) {
+        when (sharedPreferences.getString("theme", "1")) {
             "1" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
             }

@@ -64,6 +64,12 @@ class FeedFragment : Fragment() {
                 try {
                     for (i in 1..1000) { // Device indexes
                         if (json.has(i.toString())) { // Existing indexes
+
+                            val obj = json.getString("date")
+                            val array = json.toJSONArray(json.getJSONObject(i.toString()).names())
+
+
+
                             // Resource strings
                             val firmwareString = getString(R.string.firmwareVersion)
                             val languagesString = getString(R.string.lang)
@@ -89,14 +95,14 @@ class FeedFragment : Fragment() {
                                     list.add(
                                         Adapter(
                                             deviceName,
-                                            "$firmwareString: $firmware\n$languagesString: $languageNames\n\n$dateString: $date\n"
+                                            "$firmwareString: $firmware\n\n$languagesString: $languageNames\n\n$dateString: $date\n"
                                         )
                                     )
                                 } else { // A non-empty changelog will be shown
                                     list.add(
                                         Adapter(
                                             deviceName,
-                                            "$firmwareString: $firmware\n$languagesString: $languageNames\n\n$changelogString:\n$changelog\n\n$dateString: $date\n"
+                                            "$firmwareString: $firmware\n\n$languagesString: $languageNames\n\n$changelogString:\n$changelog\n\n$dateString: $date\n"
                                         )
                                     )
                                 }

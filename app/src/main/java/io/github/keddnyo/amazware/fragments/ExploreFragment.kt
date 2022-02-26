@@ -42,7 +42,7 @@ class ExploreFragment : Fragment() {
         webView.clearHistory()
 
         // Set dark mode
-        val theme = when (sharedPreferences.getString("dark_mode", "1")) {
+        val theme = when (sharedPreferences.getString("theme", "1")) {
             "1" -> {
                 "light"
             }
@@ -56,7 +56,7 @@ class ExploreFragment : Fragment() {
                 "auto" // Dummy (not matter)
             }
         }
-        when (sharedPreferences.getString("dark_mode", "1")) {
+        when (sharedPreferences.getString("theme", "1")) {
             "1" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
