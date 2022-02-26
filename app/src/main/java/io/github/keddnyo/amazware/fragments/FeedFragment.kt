@@ -65,11 +65,6 @@ class FeedFragment : Fragment() {
                     for (i in 1..1000) { // Device indexes
                         if (json.has(i.toString())) { // Existing indexes
 
-                            val obj = json.getString("date")
-                            val array = json.toJSONArray(json.getJSONObject(i.toString()).names())
-
-
-
                             // Resource strings
                             val firmwareString = getString(R.string.firmwareVersion)
                             val languagesString = getString(R.string.lang)
