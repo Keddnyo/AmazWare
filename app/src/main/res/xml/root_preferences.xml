@@ -16,6 +16,9 @@
             app:icon="@drawable/ic_explore"
             app:key="download_provider"
             app:title="@string/download_provider" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/server_response">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -23,6 +26,14 @@
             app:key="simple_response"
             app:summary="@string/simple_response_summary"
             app:title="@string/simple_response"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_lang"
+            app:key="lang_formatted"
+            app:dependency="simple_response"
+            app:summary="@string/lang_formatted_summary"
+            app:title="@string/lang_formatted"/>
 
     </PreferenceCategory>
 

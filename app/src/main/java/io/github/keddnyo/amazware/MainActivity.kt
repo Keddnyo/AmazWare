@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     // Fragments list
     private val feedFragment = FeedFragment()
-    private val cloudFragment = ExploreFragment()
+    private val exploreFragment = ExploreFragment()
     private val advancedFragment = ExtrasFragment()
     private val telegramFragment = TelegramFragment()
     private val settingsFragment = SettingsFragment()
@@ -52,30 +53,25 @@ class MainActivity : AppCompatActivity() {
         // Bottom bar logic
         val bottomNavigation =
             findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
-        val currentNightMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)
+
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            try {
+                Handler().postDelayed({
+                    when (it.itemId) {
+                        R.id.Feed -> replaceFragment(feedFragment)
+                        R.id.Extras -> replaceFragment(advancedFragment)
+                        R.id.Explore -> replaceFragment(exploreFragment)
+                        R.id.Telegram -> replaceFragment(telegramFragment)
+                        R.id.Settings -> replaceFragment(settingsFragment)
+                    }
+                }, 500)
+            } catch (e: IOException) {
+            }
+            true
+        }
 
         // Set dark mode
-        when (sharedPreferences.getString("dark_mode", "1")) {
-            "1" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
-            }
-            "2" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
-            }
-            "3" -> {
-                when (currentNightMode) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
-                    }
-                    Configuration.UI_MODE_NIGHT_NO -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
-                    }
-                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
-                }
-            }
-        }
+        ThemeSwitcher().switch(this, resources)
 
         // Select accent color
         when (sharedPreferences.getString("accent_color", "1")) {
@@ -155,33 +151,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        bottomNavigation.setOnNavigationItemSelectedListener {
-            try {
-                Handler().postDelayed({
-                    when (it.itemId) {
-                        R.id.Feed -> replaceFragment(feedFragment)
-                        R.id.Explore -> replaceFragment(cloudFragment)
-                        R.id.Extras -> replaceFragment(advancedFragment)
-                        R.id.Telegram -> replaceFragment(telegramFragment)
-                        R.id.Settings -> replaceFragment(settingsFragment)
-                    }
-                }, 500)
-            } catch (e: IOException) {
-            }
-            true
-        }
     }
 
     // Fragment replacing code
     private fun replaceFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.commit()
-    }
+        runOnUiThread {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.commit()
 
-    override fun onBackPressed() {
-        selectFragment()
+        }
     }
 
     private fun selectFragment() {
@@ -201,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.selectedItemId = R.id.Extras
             }
             "3" -> {
-                replaceFragment(cloudFragment)
+                replaceFragment(exploreFragment)
                 bottomNavigation.selectedItemId = R.id.Explore
             }
             "4" -> {
@@ -213,6 +192,10 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.selectedItemId = R.id.Feed
             }
         }
+    }
+
+    override fun onBackPressed() {
+        selectFragment()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

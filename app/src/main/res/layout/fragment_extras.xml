@@ -12,129 +12,85 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:orientation="vertical"
-        android:padding="10sp">
+        android:padding="5sp">
 
-        <EditText
-            android:id="@+id/deviceSource"
+        <Spinner
+            android:id="@+id/deviceList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/device_source"
-            android:inputType="number"
-            android:maxLength="2"
-            tools:ignore="Autofill" />
-
-        <EditText
-            android:id="@+id/productionSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/production_source"
-            android:inputType="number"
-            android:maxLength="3"
-            tools:ignore="Autofill" />
-
-        <RadioGroup
-            android:id="@+id/appRadioGroup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioMiFit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:padding="5dp"
-                android:text="@string/mifit_appname" />
-
-            <RadioButton
-                android:id="@+id/radioZepp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:padding="5dp"
-                android:text="@string/zepp_appname" />
-
-            <EditText
-                android:id="@+id/appVersion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:digits="0123456789."
-                android:hint="@string/app_version_number"
-                android:inputType="number"
-                android:maxLength="7"
-                tools:ignore="Autofill" />
-
-        </RadioGroup>
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="0123456789."
-            android:enabled="false"
-            android:visibility="gone"
+            android:hint="@string/response_app_name"
             tools:ignore="Autofill,TextFields" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <EditText
+            android:id="@+id/appVersion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:hint="@string/app_version"
+            android:inputType="text"
+            android:maxLength="17"
+            tools:ignore="Autofill" />
 
-            <CheckBox
-                android:id="@+id/channelPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:padding="12dp"
-                android:text="@string/play_postfix_checkbox"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/appVersionBuild"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/app_build_number"
-                android:inputType="number"
-                android:maxLength="7"
-                tools:ignore="Autofill"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|center_horizontal"
-            android:orientation="horizontal">
+            android:stretchColumns="*">
 
-            <Button
-                android:id="@+id/buttonReset"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="12dp"
-                android:backgroundTint="@color/secondary"
-                android:text="@string/resetButton"
-                android:textColor="@color/secondary_background"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/buttonSubmit"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/secondary"
-                android:enabled="false"
-                android:text="@string/submitButton"
-                android:textColor="@color/secondary_background"
-                tools:ignore="ButtonStyle" />
+                android:layout_height="match_parent" >
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/deviceSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/device_source"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    tools:ignore="Autofill" />
+
+                <EditText
+                    android:id="@+id/productionSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/production_source"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    tools:ignore="Autofill" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/buttonReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/resetButton"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/buttonSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/secondary"
+                    android:text="@string/submitButton"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle" />
+            </TableRow>
+        </TableLayout>
 
         <ListView
             android:id="@+id/responseList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="5dp"
             android:visibility="gone"
             tools:ignore="NestedScrolling" />
