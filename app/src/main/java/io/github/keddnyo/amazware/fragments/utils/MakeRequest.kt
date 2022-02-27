@@ -2,7 +2,6 @@ package io.github.keddnyo.amazware.fragments.utils
 
 import android.content.Context
 import android.net.Uri
-import android.widget.EditText
 import androidx.preference.PreferenceManager
 import okhttp3.Request
 import java.util.*

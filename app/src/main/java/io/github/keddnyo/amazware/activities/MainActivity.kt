@@ -2,19 +2,18 @@ package io.github.keddnyo.amazware.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.fragments.*
+import io.github.keddnyo.amazware.fragments.Explore
+import io.github.keddnyo.amazware.fragments.Extras
+import io.github.keddnyo.amazware.fragments.Feed
+import io.github.keddnyo.amazware.fragments.Settings
 import io.github.keddnyo.amazware.fragments.utils.Theme
 import java.io.IOException
 

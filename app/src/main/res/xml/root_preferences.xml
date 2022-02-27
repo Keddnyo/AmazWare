@@ -25,15 +25,15 @@
             app:icon="@drawable/ic_extras"
             app:key="simple_response"
             app:summary="@string/simple_response_summary"
-            app:title="@string/simple_response"/>
+            app:title="@string/simple_response" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:dependency="simple_response"
             app:icon="@drawable/ic_lang"
             app:key="lang_formatted"
-            app:dependency="simple_response"
             app:summary="@string/lang_formatted_summary"
-            app:title="@string/lang_formatted"/>
+            app:title="@string/lang_formatted" />
 
     </PreferenceCategory>
 
@@ -44,7 +44,7 @@
             app:dependency="download_provider"
             app:icon="@drawable/ic_notification"
             app:key="download_notification"
-            app:title="@string/download_notification"/>
+            app:title="@string/download_notification" />
 
     </PreferenceCategory>
 
@@ -90,13 +90,13 @@
             app:icon="@drawable/ic_info"
             app:key="info"
             app:summary="@string/keddnyo"
-            app:title="@string/app_name"/>
+            app:title="@string/app_name" />
 
         <Preference
             app:icon="@drawable/ic_explore"
             app:key="info2"
             app:summary="@string/schakal"
-            app:title="@string/firmwarehouse"/>
+            app:title="@string/firmwarehouse" />
 
     </PreferenceCategory>
 
