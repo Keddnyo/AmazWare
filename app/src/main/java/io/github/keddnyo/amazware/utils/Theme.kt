@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware
+package io.github.keddnyo.amazware.utils
 
 import android.content.Context
 import android.content.res.Configuration
@@ -6,7 +6,7 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 
-class ThemeSwitcher {
+class Theme {
     fun switch(context: Context, resources: Resources) {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences

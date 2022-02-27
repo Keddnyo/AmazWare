@@ -8,8 +8,8 @@ import android.widget.ListView
 import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
 import io.github.keddnyo.amazware.Adapter
-import io.github.keddnyo.amazware.Device
-import io.github.keddnyo.amazware.Extras
+import io.github.keddnyo.amazware.utils.Device
+import io.github.keddnyo.amazware.utils.Extras
 import io.github.keddnyo.amazware.R
 import okhttp3.*
 import org.json.JSONObject

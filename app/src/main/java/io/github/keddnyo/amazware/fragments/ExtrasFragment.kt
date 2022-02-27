@@ -1,20 +1,18 @@
 package io.github.keddnyo.amazware.fragments
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.Adapter
-import io.github.keddnyo.amazware.DownloadProvider
+import io.github.keddnyo.amazware.utils.Download
+import io.github.keddnyo.amazware.utils.Extras
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.Extras
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -318,7 +316,7 @@ class ExtrasFragment : Fragment() {
                                         0 -> {
                                             if (json.has("firmwareUrl")) {
                                                 val fileUrl = json.getString("firmwareUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "firmware", "?") }
+                                                context?.let { Download().run(it, fileUrl, "firmware", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -326,7 +324,7 @@ class ExtrasFragment : Fragment() {
                                         1 -> {
                                             if (json.has("resourceUrl")) {
                                                 val fileUrl = json.getString("resourceUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "resource", "?") }
+                                                context?.let { Download().run(it, fileUrl, "resource", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -334,7 +332,7 @@ class ExtrasFragment : Fragment() {
                                         2 -> {
                                             if (json.has("baseResourceUrl")) {
                                                 val fileUrl = json.getString("baseResourceUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "base_resource", "?") }
+                                                context?.let { Download().run(it, fileUrl, "base_resource", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -342,7 +340,7 @@ class ExtrasFragment : Fragment() {
                                         3 -> {
                                             if (json.has("fontUrl")) {
                                                 val fileUrl = json.getString("fontUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "font", "?") }
+                                                context?.let { Download().run(it, fileUrl, "font", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }
@@ -350,7 +348,7 @@ class ExtrasFragment : Fragment() {
                                         4 -> {
                                             if (json.has("gpsUrl")) {
                                                 val fileUrl = json.getString("gpsUrl")
-                                                context?.let { DownloadProvider().download(it, fileUrl, "gps", "?") }
+                                                context?.let { Download().run(it, fileUrl, "gps", "?") }
                                             } else {
                                                 Toast.makeText(context, R.string.none, Toast.LENGTH_SHORT).show()
                                             }

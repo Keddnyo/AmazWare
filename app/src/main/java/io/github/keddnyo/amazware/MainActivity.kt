@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.fragments.*
+import io.github.keddnyo.amazware.utils.Theme
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Set dark mode
-        ThemeSwitcher().switch(this, resources)
+        Theme().switch(this, resources)
         selectFragment()
 
         val sp =

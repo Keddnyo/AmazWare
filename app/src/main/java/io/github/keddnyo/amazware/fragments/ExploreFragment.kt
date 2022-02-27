@@ -2,7 +2,6 @@ package io.github.keddnyo.amazware.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import io.github.keddnyo.amazware.DownloadProvider
+import io.github.keddnyo.amazware.utils.Download
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.ThemeSwitcher
 import java.util.*
 
 class ExploreFragment : Fragment() {
@@ -91,7 +88,7 @@ class ExploreFragment : Fragment() {
 
         // Downloading code
         webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ ->
-            context?.let { DownloadProvider().download(it, fileUrl, contentDisposition, mimeType) }
+            context?.let { Download().run(it, fileUrl, contentDisposition, mimeType) }
         }
 
         // Pull refresh
