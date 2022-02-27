@@ -3,7 +3,6 @@
     <style name="Theme.AmazWare" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/gray</item>
-        <item name="colorAccent">@color/red</item>
     </style>
 
     <style name="textBlack">

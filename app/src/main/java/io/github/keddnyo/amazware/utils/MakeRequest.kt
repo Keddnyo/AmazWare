@@ -12,18 +12,12 @@ class MakeRequest {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
         val url: Uri.Builder = Uri.Builder()
-        val theme = when (sharedPreferences.getString("theme", "1")) { // Set theme
-            "1" -> {
-                "auto" // Dummy (not matter)
-            }
-            "2" -> {
-                "light"
-            }
-            "3" -> {
+        val theme = when (sharedPreferences.getBoolean("dark_mode", false)) { // Set theme
+            true -> {
                 "dark"
             }
-            else -> {
-                "auto" // Dummy (not matter)
+            false -> {
+                "light"
             }
         }
 

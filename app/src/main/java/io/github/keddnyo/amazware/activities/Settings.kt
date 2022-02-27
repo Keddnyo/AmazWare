@@ -32,7 +32,7 @@ class Settings : AppCompatActivity() {
 
             val about = findPreference<Preference>("info")
             val cloud = findPreference<Preference>("info2")
-            about!!.title = getString(R.string.app_name) + " " + "v" + BuildConfig.VERSION_NAME
+            about!!.title = getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME
 
             about.setOnPreferenceClickListener {
                 startActivity(

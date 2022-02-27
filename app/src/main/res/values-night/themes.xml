@@ -3,7 +3,6 @@
     <style name="Theme.AmazWare" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/red</item>
     </style>
 
 </resources>

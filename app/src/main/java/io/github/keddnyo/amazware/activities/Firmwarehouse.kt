@@ -12,7 +12,6 @@ import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.app.ActivityCompat
-import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.Download
@@ -25,9 +24,6 @@ class Firmwarehouse : AppCompatActivity() {
         setContentView(R.layout.activity_explore)
 
         title = getString(R.string.firmwarehouse) // New title
-
-        val sp =
-            PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
 
         DarkMode().switch(this) // Set theme
 
