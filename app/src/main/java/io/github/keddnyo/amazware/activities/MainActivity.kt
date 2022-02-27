@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private val feedFragment = Feed()
     private val exploreFragment = Explore()
     private val advancedFragment = Extras()
-    private val telegramFragment = Telegram()
     private val settingsFragment = Settings()
 
     @SuppressLint("UseCompatLoadingForColorStateLists", "UseCompatLoadingForDrawables")
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                         R.id.Feed -> replaceFragment(feedFragment)
                         R.id.Extras -> replaceFragment(advancedFragment)
                         R.id.Explore -> replaceFragment(exploreFragment)
-                        R.id.Telegram -> replaceFragment(telegramFragment)
                         R.id.Settings -> replaceFragment(settingsFragment)
                     }
                 }, 500)
@@ -177,10 +175,6 @@ class MainActivity : AppCompatActivity() {
             "3" -> {
                 replaceFragment(advancedFragment)
                 bottomNavigation.selectedItemId = R.id.Extras
-            }
-            "4" -> {
-                replaceFragment(telegramFragment)
-                bottomNavigation.selectedItemId = R.id.Telegram
             }
             else -> {
                 replaceFragment(feedFragment)

@@ -53,7 +53,7 @@
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/dark_mode_entries"
-            app:entryValues="@array/dark_mode_entry_values"
+            app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_dark_mode"
             app:key="theme"
             app:title="@string/theme"
@@ -62,7 +62,7 @@
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/accent_colors"
-            app:entryValues="@array/entry_values"
+            app:entryValues="@array/accent_colors_entry_values"
             app:icon="@drawable/ic_palette"
             app:key="accent_color"
             app:title="@string/accent_color"

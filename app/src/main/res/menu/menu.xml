@@ -17,11 +17,6 @@
         android:title="@string/extras" />
 
     <item
-        android:id="@+id/Telegram"
-        android:icon="@drawable/ic_telegram"
-        android:title="@string/telegram" />
-
-    <item
         android:id="@+id/Settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings" />

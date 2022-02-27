@@ -76,6 +76,9 @@ class Lang {
                 l = l.replace(". sr .-latn-rs","sr-latn-rs")
 
                 l = l.replace("sr-latn-rs",". sr-latn-rs .")
+
+                l = l.replace(". ca .-es","ca-es")
+
                 l = l.replace("ca-es",". ca-es .")
                 l = l.replace("fi",". fi .")
                 l = l.replace("no",". no .")

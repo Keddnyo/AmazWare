@@ -80,8 +80,8 @@
         <item>Синий</item>
     </string-array>
     <string-array name="dark_mode_entries">
+        <item>Следовать системе</item>
         <item>Светлая тема</item>
         <item>Тёмная тема</item>
-        <item>Следовать системе</item>
     </string-array>
 </resources>
