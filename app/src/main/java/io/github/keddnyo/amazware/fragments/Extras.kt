@@ -312,6 +312,7 @@ class Extras : Fragment() {
                                 }
                                 if (!json.has("firmwareVersion")) {
                                     responseField.post {
+                                        responseList.visibility = View.GONE
                                         responseField.text = json.toString()
                                     }
                                     Toast.makeText(

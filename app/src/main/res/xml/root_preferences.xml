@@ -3,7 +3,7 @@
     <PreferenceCategory app:title="@string/behaviour">
 
         <ListPreference
-            app:defaultValue="3"
+            app:defaultValue="1"
             app:entries="@array/tabs_entries"
             app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_feed"

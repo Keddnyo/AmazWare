@@ -11,7 +11,7 @@
     <string name="default_tab">Главная вкладка</string>
     <string name="download_provider">Встроенный загрузчик</string>
     <string name="simple_response_summary">Удобный результат во вкладке Экстра</string>
-    <string name="server_response">Результаты сервера</string>
+    <string name="server_response">Ответ сервера</string>
     <string name="simple_response">Удобный список</string>
     <string name="lang_formatted">Названия языков</string>
     <string name="lang_formatted_summary">Отображать названия языков вместо кодов</string>

@@ -165,18 +165,18 @@ class MainActivity : AppCompatActivity() {
             findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         // Select fragment
-        when (sharedPreferences.getString("default_tab", "3")) {
+        when (sharedPreferences.getString("default_tab", "1")) {
             "1" -> {
                 replaceFragment(feedFragment)
                 bottomNavigation.selectedItemId = R.id.Feed
             }
             "2" -> {
-                replaceFragment(advancedFragment)
-                bottomNavigation.selectedItemId = R.id.Extras
-            }
-            "3" -> {
                 replaceFragment(exploreFragment)
                 bottomNavigation.selectedItemId = R.id.Explore
+            }
+            "3" -> {
+                replaceFragment(advancedFragment)
+                bottomNavigation.selectedItemId = R.id.Extras
             }
             "4" -> {
                 replaceFragment(telegramFragment)

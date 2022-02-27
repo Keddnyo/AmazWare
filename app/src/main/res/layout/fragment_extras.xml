@@ -19,22 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/appName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/request_app_name"
-            tools:ignore="Autofill,TextFields" />
-
-        <EditText
-            android:id="@+id/appVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/request_app_version"
-            android:inputType="text"
-            android:maxLength="17"
-            tools:ignore="Autofill" />
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,6 +29,15 @@
                 android:layout_height="match_parent" >
 
                 <EditText
+                    android:id="@+id/appVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/request_app_version"
+                    android:inputType="text"
+                    android:maxLength="17"
+                    tools:ignore="Autofill" />
+
+                <EditText
                     android:id="@+id/deviceSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,6 +45,19 @@
                     android:inputType="number"
                     android:maxLength="2"
                     tools:ignore="Autofill" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <EditText
+                    android:id="@+id/appName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/request_app_name"
+                    tools:ignore="Autofill,TextFields" />
 
                 <EditText
                     android:id="@+id/productionSource"
