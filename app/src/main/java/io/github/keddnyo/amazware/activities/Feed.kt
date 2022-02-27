@@ -1,43 +1,38 @@
-package io.github.keddnyo.amazware.fragments
+package io.github.keddnyo.amazware.activities
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.SimpleAdapter
-import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import io.github.keddnyo.amazware.fragments.utils.Adapter
-import io.github.keddnyo.amazware.fragments.utils.Device
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.fragments.utils.Lang
-import io.github.keddnyo.amazware.fragments.utils.MakeRequest
-import okhttp3.*
+import io.github.keddnyo.amazware.utils.Adapter
+import io.github.keddnyo.amazware.utils.Device
+import io.github.keddnyo.amazware.utils.Lang
+import io.github.keddnyo.amazware.utils.MakeRequest
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class Feed : Fragment() {
+class Feed : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_feed)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_feed, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         init()
     }
 
     private fun init() {
-        requireActivity().title = getString(R.string.feed) // New title
+        title = getString(R.string.feed) // New title
 
         val okHttpClient = OkHttpClient()
-        val deviceIndex = requireActivity().findViewById<ListView>(R.id.feedView)
-        val feedRefresh = requireActivity().findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+        val deviceIndex = findViewById<ListView>(R.id.feedView)
+        val feedRefresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
         val firmwareString = getString(R.string.firmware_version)
         val languagesString = getString(R.string.lang)
         val changelogString = getString(R.string.change_log)
@@ -46,7 +41,7 @@ class Feed : Fragment() {
 
         val list = ArrayList<Adapter>() // Setting adapter
         val adapter = SimpleAdapter(
-            activity,
+            this,
             list,
             android.R.layout.simple_list_item_2,
             arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
@@ -58,7 +53,7 @@ class Feed : Fragment() {
 
         okHttpClient.newCall(request).enqueue(object : Callback { // Creating request
             override fun onFailure(call: Call, e: IOException) { // Error
-                requireActivity().title = getString(R.string.error)
+                title = getString(R.string.error)
             }
 
             override fun onResponse(call: Call, response: Response) { // Success
@@ -74,7 +69,7 @@ class Feed : Fragment() {
                                 .toString() // Firmware
                             val languages = json.getJSONObject(i).getString("languages")
                                 .toString() // Languages
-                            val languageNames = activity?.let { Lang().rename(it, languages) }
+                            val languageNames = Lang().rename(this@Feed, languages)
                             var changelog = json.getJSONObject(i).getString("changelog")
                                 .toString() // Changelog
                             changelog = changelog.substringBefore('#')
@@ -102,7 +97,7 @@ class Feed : Fragment() {
                         }
                     }
                 } catch (e: IOException) {
-                    activity!!.title = getString(R.string.error)
+                    title = getString(R.string.error)
                 }
             }
         })
@@ -128,4 +123,10 @@ class Feed : Fragment() {
             else            -> value
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }

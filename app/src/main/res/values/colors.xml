@@ -4,8 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#FF888888</color>
     <color name="red">@android:color/holo_red_dark</color>
-    <color name="green">@android:color/holo_green_dark</color>
-    <color name="blue">@android:color/holo_blue_dark</color>
 
     <color name="secondary">@color/black</color>
     <color name="secondary_background">@color/white</color>

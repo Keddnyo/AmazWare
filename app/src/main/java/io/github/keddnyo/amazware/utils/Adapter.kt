@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware.fragments.utils
+package io.github.keddnyo.amazware.utils
 
 class Adapter(name: String?, description: String?) :
     HashMap<String?, String?>() {
