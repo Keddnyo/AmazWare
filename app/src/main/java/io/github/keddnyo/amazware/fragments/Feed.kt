@@ -14,6 +14,7 @@ import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.fragments.utils.Lang
 import io.github.keddnyo.amazware.fragments.utils.MakeRequest
 import okhttp3.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
@@ -62,20 +63,22 @@ class Feed : Fragment() {
 
             override fun onResponse(call: Call, response: Response) { // Success
                 val json = JSONObject(response.body()!!.string())
+                val array = json.toMap()
+                val keys = array.keys
 
                 try {
-                    for (i in 1..1000) { // Device indexes
-                        if (json.has(i.toString())) { // Existing indexes
-                            val deviceName = Device().name(i.toString()) // Device name
-                            val firmware = json.getJSONObject(i.toString()).getString("fw")
+                    for (i in keys) { // Device indexes
+                        if (json.has(i)) { // Existing indexes
+                            val deviceName = Device().name(i) // Device name
+                            val firmware = json.getJSONObject(i).getString("fw")
                                 .toString() // Firmware
-                            val languages = json.getJSONObject(i.toString()).getString("languages")
+                            val languages = json.getJSONObject(i).getString("languages")
                                 .toString() // Languages
                             val languageNames = Lang().rename(requireActivity(), languages)
-                            var changelog = json.getJSONObject(i.toString()).getString("changelog")
+                            var changelog = json.getJSONObject(i).getString("changelog")
                                 .toString() // Changelog
                             changelog = changelog.substringBefore('#')
-                            val date = json.getJSONObject(i.toString()).getString("date")
+                            val date = json.getJSONObject(i).getString("date")
                                 .toString() // Date
 
                             deviceIndex.post {
@@ -109,6 +112,20 @@ class Feed : Fragment() {
             adapter.notifyDataSetChanged()
             init()
             feedRefresh.isRefreshing = false
+        }
+    }
+
+    private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
+        when (val value = this[it])
+        {
+            is JSONArray ->
+            {
+                val map = (0 until value.length()).associate { Pair(it.toString(), value[it]) }
+                JSONObject(map).toMap().values.toList()
+            }
+            is JSONObject -> value.toMap()
+            JSONObject.NULL -> null
+            else            -> value
         }
     }
 }
