@@ -282,7 +282,8 @@ class Extras : Fragment() {
                                 }
                                 if (json.has("lang")) {
                                     val lang = json.getString("lang") // Languages
-                                    val language = Lang().rename(requireActivity(), lang)
+                                    val language =
+                                        activity?.let { it1 -> Lang().rename(it1, lang) }
                                     list.add(
                                         Adapter(
                                             getString(R.string.lang),

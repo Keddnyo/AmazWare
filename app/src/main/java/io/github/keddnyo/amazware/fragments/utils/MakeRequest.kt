@@ -14,13 +14,13 @@ class MakeRequest {
         val url: Uri.Builder = Uri.Builder()
         val theme = when (sharedPreferences.getString("theme", "1")) { // Set theme
             "1" -> {
-                "light"
+                "auto" // Dummy (not matter)
             }
             "2" -> {
-                "dark"
+                "light"
             }
             "3" -> {
-                "auto" // Dummy (not matter)
+                "dark"
             }
             else -> {
                 "auto" // Dummy (not matter)
