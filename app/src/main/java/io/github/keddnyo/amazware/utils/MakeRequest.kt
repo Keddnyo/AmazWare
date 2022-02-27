@@ -33,6 +33,8 @@ class MakeRequest {
 
     fun directDevice(ps: String, ds: String, av: String, an: String): Request {
         val requestHost = "api-mifit-ru.huami.com"
+        // val requestHost = "api-mifit-us2.huami.com"
+        // val requestHost = "api.amazfit.com"
 
         val uriBuilder: Uri.Builder = Uri.Builder()
         uriBuilder.scheme("https")

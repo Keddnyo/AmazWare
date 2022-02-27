@@ -47,7 +47,7 @@ class Extras : AppCompatActivity() {
         val devAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, devList)
         val deviceList = MakeRequest().getDevices()
-        val context = Extras()
+        val context = this@Extras
 
         devList.add(getString(R.string.manual_input))
         devAdapter.notifyDataSetChanged()
