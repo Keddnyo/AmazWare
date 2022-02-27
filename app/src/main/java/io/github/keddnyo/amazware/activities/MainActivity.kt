@@ -32,12 +32,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set dark mode
-        Theme().switch(this, resources)
-        selectFragment()
-
         val sp =
             PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
+        val bottomNavigation =
+            findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+
+        Theme().switch(this, resources) // Set theme
+        selectFragment()
 
         // Permissions
         val permissionCheck = ActivityCompat.checkSelfPermission(
@@ -50,10 +51,6 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
             )
         }
-
-        // Bottom bar logic
-        val bottomNavigation =
-            findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {

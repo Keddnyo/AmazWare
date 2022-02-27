@@ -12,7 +12,7 @@ import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.fragments.utils.Adapter
 import io.github.keddnyo.amazware.fragments.utils.Download
 import io.github.keddnyo.amazware.fragments.utils.Lang
-import io.github.keddnyo.amazware.fragments.utils.Requests
+import io.github.keddnyo.amazware.fragments.utils.MakeRequest
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -153,7 +153,7 @@ class Extras : Fragment() {
             responseField.text = null
 
             val request =
-                Requests().directDevice(productionSource, deviceSource, appVersion, appName)
+                MakeRequest().directDevice(productionSource, deviceSource, appVersion, appName)
 
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {

@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.fragments.utils.Adapter
 import io.github.keddnyo.amazware.fragments.utils.Device
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.fragments.utils.Lang
+import io.github.keddnyo.amazware.fragments.utils.MakeRequest
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -32,14 +34,16 @@ class Feed : Fragment() {
     private fun init() {
         requireActivity().title = getString(R.string.feed) // New title
 
-        // Variables
         val okHttpClient = OkHttpClient()
-        val urlMain = "https://schakal.ru/fw/latest.json"
-        val requestMain = Request.Builder().url(urlMain).build()
         val deviceIndex = requireActivity().findViewById<ListView>(R.id.feedView)
+        val feedRefresh = requireActivity().findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+        val firmwareString = getString(R.string.firmware_version)
+        val languagesString = getString(R.string.lang)
+        val changelogString = getString(R.string.change_log)
+        val dateString = getString(R.string.date)
+        val request = MakeRequest().latest()
 
-        // Setting adapter
-        val list = ArrayList<Adapter>()
+        val list = ArrayList<Adapter>() // Setting adapter
         val adapter = SimpleAdapter(
             activity,
             list,
@@ -51,43 +55,31 @@ class Feed : Fragment() {
         )
         deviceIndex.adapter = adapter
 
-        // Creating request
-        okHttpClient.newCall(requestMain).enqueue(object : Callback {
-            // Error
-            override fun onFailure(call: Call, e: IOException) {
+        okHttpClient.newCall(request).enqueue(object : Callback { // Creating request
+            override fun onFailure(call: Call, e: IOException) { // Error
                 requireActivity().title = getString(R.string.error)
             }
 
-            // Success
-            override fun onResponse(call: Call, response: Response) {
+            override fun onResponse(call: Call, response: Response) { // Success
                 val json = JSONObject(response.body()!!.string())
 
                 try {
                     for (i in 1..1000) { // Device indexes
                         if (json.has(i.toString())) { // Existing indexes
-
-                            // Resource strings
-                            val firmwareString = getString(R.string.firmware_version)
-                            val languagesString = getString(R.string.lang)
-                            val changelogString = getString(R.string.change_log)
-                            val dateString = getString(R.string.date)
-
-                            // Values
-                            val deviceName =
-                                Device().name(i.toString()) // Device name
-                            val firmware =
-                                json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
-                            val languages =
-                                json.getJSONObject(i.toString()).getString("languages").toString() // Languages
+                            val deviceName = Device().name(i.toString()) // Device name
+                            val firmware = json.getJSONObject(i.toString()).getString("fw")
+                                .toString() // Firmware
+                            val languages = json.getJSONObject(i.toString()).getString("languages")
+                                .toString() // Languages
                             val languageNames = Lang().rename(requireActivity(), languages)
-                            var changelog =
-                                json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
+                            var changelog = json.getJSONObject(i.toString()).getString("changelog")
+                                .toString() // Changelog
                             changelog = changelog.substringBefore('#')
-                            val date =
-                                json.getJSONObject(i.toString()).getString("date").toString() // Date
+                            val date = json.getJSONObject(i.toString()).getString("date")
+                                .toString() // Date
 
                             deviceIndex.post {
-                                if (changelog == "") { // An empty changelog won't be shown
+                                if (changelog.isEmpty()) { // An empty changelog won't be shown
                                     list.add(
                                         Adapter(
                                             deviceName,
@@ -112,10 +104,7 @@ class Feed : Fragment() {
             }
         })
 
-        // Pull refresh
-        val feedRefresh =
-            requireActivity().findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.feed_refresh)
-        feedRefresh.setOnRefreshListener {
+        feedRefresh.setOnRefreshListener { // Pull refresh
             list.clear()
             adapter.notifyDataSetChanged()
             init()

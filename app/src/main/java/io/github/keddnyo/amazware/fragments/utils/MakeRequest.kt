@@ -4,7 +4,7 @@ import android.net.Uri
 import android.widget.EditText
 import okhttp3.Request
 
-class Requests {
+class MakeRequest {
     fun directDevice(ps: EditText, ds: EditText, av: EditText, an: EditText): Request {
         val requestHost = "api-mifit-ru.huami.com"
 
@@ -64,5 +64,10 @@ class Requests {
             .addHeader("accept-encoding", "gzip")
             .addHeader("accept", "*/*")
             .build()
+    }
+
+    fun latest(): Request {
+        val url = "https://schakal.ru/fw/latest.json"
+        return Request.Builder().url(url).build()
     }
 }

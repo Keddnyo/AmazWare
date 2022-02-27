@@ -11,6 +11,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.fragments.utils.Download
 import io.github.keddnyo.amazware.R
 import java.util.*
@@ -27,17 +28,19 @@ class Explore : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         requireActivity().title = getString(R.string.explore) // New title
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext()) // Shared Preferences
-
-        // Setting WebView
+        val lang = Locale.getDefault().language.toString()
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(requireContext()) // Shared Preferences
+        val refresh =
+            requireActivity().findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
+
         val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
 
-        // Set dark mode
+        // Set theme
         val theme = when (sharedPreferences.getString("theme", "1")) {
             "1" -> {
                 "light"
@@ -53,9 +56,7 @@ class Explore : Fragment() {
             }
         }
 
-        val lang = Locale.getDefault().language.toString()
-
-        // Build url
+        // Loading WebView
         val url: Uri.Builder = Uri.Builder()
         url.scheme("https")
             .authority("schakal.ru")
@@ -63,9 +64,8 @@ class Explore : Fragment() {
             .appendPath("firmwares_list.htm")
             .appendQueryParameter("theme", theme)
             .appendQueryParameter("lang", lang)
-
-        // Loading WebView
         webView.loadUrl(url.toString())
+
         webView.webViewClient = object : WebViewClient() {
             // Override loading
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
@@ -80,7 +80,12 @@ class Explore : Fragment() {
                 }
             }
             // Error
-            override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
+            override fun onReceivedError(
+                webView: WebView,
+                errorCode: Int,
+                description: String,
+                failingUrl: String
+            ) {
                 webView.loadUrl("about:blank")
                 requireActivity().title = getString(R.string.error)
             }
@@ -92,11 +97,10 @@ class Explore : Fragment() {
         }
 
         // Pull refresh
-        val cloudRefresh = requireActivity().findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.cloud_refresh)
-        cloudRefresh.setOnRefreshListener {
+        refresh.setOnRefreshListener {
             requireActivity().title = getString(R.string.explore)
             webView.reload()
-            cloudRefresh.isRefreshing = false
+            refresh.isRefreshing = false
         }
     }
 }
