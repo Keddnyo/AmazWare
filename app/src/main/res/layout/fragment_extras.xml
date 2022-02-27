@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,22 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/appName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/response_app_name"
-            tools:ignore="Autofill,TextFields" />
-
-        <EditText
-            android:id="@+id/appVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/app_version"
-            android:inputType="text"
-            android:maxLength="17"
-            tools:ignore="Autofill" />
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,22 +25,44 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/appVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/request_app_version"
+                    android:inputType="text"
+                    android:maxLength="17"
+                    tools:ignore="Autofill" />
 
                 <EditText
                     android:id="@+id/deviceSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/device_source"
+                    android:hint="@string/request_device_source"
                     android:inputType="number"
                     android:maxLength="2"
                     tools:ignore="Autofill" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/appName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/request_app_name"
+                    tools:ignore="Autofill,TextFields" />
 
                 <EditText
                     android:id="@+id/productionSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/production_source"
+                    android:hint="@string/request_production_source"
                     android:inputType="number"
                     android:maxLength="3"
                     tools:ignore="Autofill" />
@@ -65,14 +70,14 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/buttonReset"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/secondary"
-                    android:text="@string/resetButton"
+                    android:text="@string/button_reset"
                     android:textColor="@color/secondary_background"
                     tools:ignore="ButtonStyle" />
 
@@ -81,7 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/secondary"
-                    android:text="@string/submitButton"
+                    android:longClickable="true"
+                    android:text="@string/button_submit"
                     android:textColor="@color/secondary_background"
                     tools:ignore="ButtonStyle" />
             </TableRow>
@@ -92,15 +98,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:visibility="gone"
             tools:ignore="NestedScrolling" />
 
         <TextView
             android:id="@+id/responseField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:visibility="gone"/>
+            android:padding="5dp"
+            android:textIsSelectable="true" />
 
     </LinearLayout>
 

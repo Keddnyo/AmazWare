@@ -1,58 +1,54 @@
-package io.github.keddnyo.amazware
+package io.github.keddnyo.amazware.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.FrameLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import io.github.keddnyo.amazware.fragments.*
+import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.fragments.Explore
+import io.github.keddnyo.amazware.fragments.Extras
+import io.github.keddnyo.amazware.fragments.Feed
+import io.github.keddnyo.amazware.fragments.Settings
+import io.github.keddnyo.amazware.fragments.utils.Theme
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
     // Fragments list
-    private val feedFragment = FeedFragment()
-    private val exploreFragment = ExploreFragment()
-    private val advancedFragment = ExtrasFragment()
-    private val telegramFragment = TelegramFragment()
-    private val settingsFragment = SettingsFragment()
+    private val feedFragment = Feed()
+    private val exploreFragment = Explore()
+    private val advancedFragment = Extras()
+    private val settingsFragment = Settings()
 
     @SuppressLint("UseCompatLoadingForColorStateLists", "UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        selectFragment()
-
-        val sharedPreferences =
+        val sp =
             PreferenceManager.getDefaultSharedPreferences(this) // Shared Preferences
+        val bottomNavigation =
+            findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+
+        Theme().switch(this, resources) // Set theme
+        selectFragment()
 
         // Permissions
         val permissionCheck = ActivityCompat.checkSelfPermission(
-            this@MainActivity,
+            this,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                this@MainActivity,
+                this,
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
             )
         }
-
-        // Bottom bar logic
-        val bottomNavigation =
-            findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             try {
@@ -61,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                         R.id.Feed -> replaceFragment(feedFragment)
                         R.id.Extras -> replaceFragment(advancedFragment)
                         R.id.Explore -> replaceFragment(exploreFragment)
-                        R.id.Telegram -> replaceFragment(telegramFragment)
                         R.id.Settings -> replaceFragment(settingsFragment)
                     }
                 }, 500)
@@ -70,11 +65,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Set dark mode
-        ThemeSwitcher().switch(this, resources)
-
         // Select accent color
-        when (sharedPreferences.getString("accent_color", "1")) {
+        when (sp.getString("accent_color", "1")) {
             "1" -> {
                 theme.applyStyle(R.style.Theme_AmazWare, true)
                 bottomNavigation.itemIconTintList =
@@ -83,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
             "2" -> {
                 theme.applyStyle(R.style.Red, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.red)
@@ -93,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.red)
@@ -106,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             }
             "3" -> {
                 theme.applyStyle(R.style.Green, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.green)
@@ -116,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.green)
@@ -129,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             }
             "4" -> {
                 theme.applyStyle(R.style.Blue, true)
-                when (sharedPreferences.getBoolean("colorize_icons", false)) {
+                when (sp.getBoolean("colorize_icons", false)) {
                     true -> {
                         bottomNavigation.itemIconTintList =
                             this.resources.getColorStateList(R.color.blue)
@@ -139,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                             this.resources.getColorStateList(R.color.secondary)
                     }
                 }
-                when (sharedPreferences.getBoolean("colorize_titles", false)) {
+                when (sp.getBoolean("colorize_titles", false)) {
                     true -> {
                         bottomNavigation.itemTextColor =
                             this.resources.getColorStateList(R.color.blue)
@@ -170,55 +162,23 @@ class MainActivity : AppCompatActivity() {
             findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
 
         // Select fragment
-        when (sharedPreferences.getString("default_tab", "3")) {
+        when (sharedPreferences.getString("default_tab", "1")) {
             "1" -> {
                 replaceFragment(feedFragment)
                 bottomNavigation.selectedItemId = R.id.Feed
             }
             "2" -> {
-                replaceFragment(advancedFragment)
-                bottomNavigation.selectedItemId = R.id.Extras
-            }
-            "3" -> {
                 replaceFragment(exploreFragment)
                 bottomNavigation.selectedItemId = R.id.Explore
             }
-            "4" -> {
-                replaceFragment(telegramFragment)
-                bottomNavigation.selectedItemId = R.id.Telegram
+            "3" -> {
+                replaceFragment(advancedFragment)
+                bottomNavigation.selectedItemId = R.id.Extras
             }
             else -> {
                 replaceFragment(feedFragment)
                 bottomNavigation.selectedItemId = R.id.Feed
             }
         }
-    }
-
-    override fun onBackPressed() {
-        selectFragment()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.exit -> {
-                val builder = AlertDialog.Builder(this)
-                    .setTitle(R.string.exit)
-                    .setMessage(getString(R.string.exit_message))
-                builder.setPositiveButton(android.R.string.yes) { _: DialogInterface?, _: Int ->
-                    finish()
-                }
-                builder.setNegativeButton(android.R.string.no) { _: DialogInterface?, _: Int ->
-                    DialogInterface.BUTTON_NEGATIVE
-                }
-                builder.show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

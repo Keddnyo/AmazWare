@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import io.github.keddnyo.amazware.BuildConfig
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.ThemeSwitcher
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class Settings : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)

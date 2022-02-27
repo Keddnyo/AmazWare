@@ -7,19 +7,14 @@
         android:title="@string/feed" />
 
     <item
-        android:id="@+id/Extras"
-        android:icon="@drawable/ic_extras"
-        android:title="@string/extras" />
-
-    <item
         android:id="@+id/Explore"
         android:icon="@drawable/ic_explore"
         android:title="@string/explore" />
 
     <item
-        android:id="@+id/Telegram"
-        android:icon="@drawable/ic_telegram"
-        android:title="@string/telegram" />
+        android:id="@+id/Extras"
+        android:icon="@drawable/ic_extras"
+        android:title="@string/extras" />
 
     <item
         android:id="@+id/Settings"

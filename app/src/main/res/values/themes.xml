@@ -1,4 +1,5 @@
 <resources>
+
     <style name="Theme.AmazWare" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/gray</item>
@@ -20,4 +21,5 @@
     <style name="textBlack">
         <item name="android:textColor">@color/black</item>
     </style>
+
 </resources>

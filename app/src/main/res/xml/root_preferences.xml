@@ -3,7 +3,7 @@
     <PreferenceCategory app:title="@string/behaviour">
 
         <ListPreference
-            app:defaultValue="3"
+            app:defaultValue="1"
             app:entries="@array/tabs_entries"
             app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_feed"
@@ -25,15 +25,15 @@
             app:icon="@drawable/ic_extras"
             app:key="simple_response"
             app:summary="@string/simple_response_summary"
-            app:title="@string/simple_response"/>
+            app:title="@string/simple_response" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
+            app:dependency="simple_response"
             app:icon="@drawable/ic_lang"
             app:key="lang_formatted"
-            app:dependency="simple_response"
             app:summary="@string/lang_formatted_summary"
-            app:title="@string/lang_formatted"/>
+            app:title="@string/lang_formatted" />
 
     </PreferenceCategory>
 
@@ -44,7 +44,7 @@
             app:dependency="download_provider"
             app:icon="@drawable/ic_notification"
             app:key="download_notification"
-            app:title="@string/download_notification"/>
+            app:title="@string/download_notification" />
 
     </PreferenceCategory>
 
@@ -53,7 +53,7 @@
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/dark_mode_entries"
-            app:entryValues="@array/dark_mode_entry_values"
+            app:entryValues="@array/entry_values"
             app:icon="@drawable/ic_dark_mode"
             app:key="theme"
             app:title="@string/theme"
@@ -62,7 +62,7 @@
         <ListPreference
             app:defaultValue="1"
             app:entries="@array/accent_colors"
-            app:entryValues="@array/entry_values"
+            app:entryValues="@array/accent_colors_entry_values"
             app:icon="@drawable/ic_palette"
             app:key="accent_color"
             app:title="@string/accent_color"
@@ -89,14 +89,14 @@
         <Preference
             app:icon="@drawable/ic_info"
             app:key="info"
-            app:summary="@string/app_credits"
-            app:title="@string/app_name"/>
+            app:summary="@string/keddnyo"
+            app:title="@string/app_name" />
 
         <Preference
             app:icon="@drawable/ic_explore"
             app:key="info2"
-            app:summary="@string/logic_credits"
-            app:title="@string/firmwarehouse"/>
+            app:summary="@string/schakal"
+            app:title="@string/firmwarehouse" />
 
     </PreferenceCategory>
 

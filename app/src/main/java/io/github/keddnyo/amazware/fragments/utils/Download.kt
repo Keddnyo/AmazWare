@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware
+package io.github.keddnyo.amazware.fragments.utils
 
 import android.app.DownloadManager
 import android.content.Context
@@ -8,20 +8,17 @@ import android.os.Environment
 import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.preference.PreferenceManager
+import io.github.keddnyo.amazware.R
 
-class DownloadProvider {
-    fun download (context: Context, fileUrl: String, contentDisposition: String, mimeType: String) {
+class Download {
+    fun run (context: Context, fileUrl: String, contentDisposition: String, mimeType: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
-
-        // Downloading code
         when {
             sharedPreferences.getBoolean("download_provider", true) -> {
                 val request = DownloadManager.Request(Uri.parse(fileUrl))
-
                 request.setDescription(context.getString(R.string.downloading))
                 request.setTitle(URLUtil.guessFileName(fileUrl, contentDisposition, mimeType))
                 request.allowScanningByMediaScanner()
-                // Notification depending on preference
                 when {
                     sharedPreferences.getBoolean("download_notification", true) -> {
                         request.setNotificationVisibility(1)

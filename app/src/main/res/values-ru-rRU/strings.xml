@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_credits">Разработал Keddnyo</string>
-    <string name="logic_credits">Разработал Schakal</string>
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
     <string name="feed">Лента</string>
     <string name="explore">Браузер</string>
     <string name="extras">Экстра</string>
     <string name="About">О приложении</string>
-    <string name="exit">Выход</string>
-    <string name="exit_message">Вы уверены что хотите выйти?</string>
     <string name="settings">Настройки</string>
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
     <string name="download_provider">Встроенный загрузчик</string>
     <string name="simple_response_summary">Удобный результат во вкладке Экстра</string>
-    <string name="server_response">Результаты сервера</string>
+    <string name="server_response">Ответ сервера</string>
     <string name="simple_response">Удобный список</string>
     <string name="lang_formatted">Названия языков</string>
     <string name="lang_formatted_summary">Отображать названия языков вместо кодов</string>
@@ -24,38 +20,68 @@
     <string name="appearance">Внешний вид</string>
     <string name="theme">Тема</string>
     <string name="accent_color">Цвет акцента</string>
-    <string name="colorize_icons">Окрашивать иконки</string>
-    <string name="colorize_titles">Окрашивать заголовки</string>
+    <string name="colorize_icons">Цветные иконки</string>
+    <string name="colorize_titles">Цветные заголовки</string>
 
-    <string name="firmwareVersion">Версия прошивки</string>
-    <string name="resourceVersion">Версия ресурсов</string>
-    <string name="baseResourceVersion">Версия базовых ресурсов</string>
-    <string name="fontVersion">Версия шрифта</string>
-    <string name="gpsVersion">Версия GPS</string>
+    <string name="firmware_version">Версия прошивки</string>
+    <string name="resource_version">Версия ресурсов</string>
+    <string name="base_resource_version">Версия базовых ресурсов</string>
+    <string name="font_version">Версия шрифта</string>
+    <string name="gps_version">Версия GPS</string>
     <string name="lang">Языки</string>
-    <string name="changeLog">Список изменений</string>
+    <string name="change_log">Список изменений</string>
     <string name="date">Дата выхода</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 
     <string name="manual_input">Вручную</string>
-    <string name="submitButton">Отправить</string>
-    <string name="resetButton">Сброс</string>
-    <string name="device_source">Код устройства</string>
-    <string name="production_source">Код продукции</string>
-    <string name="response_app_name">Имя приложения</string>
-    <string name="app_version">Версия приложения</string>
-    <string name="play_postfix_checkbox">Постфикс play</string>
+    <string name="button_submit">Отправить</string>
+    <string name="button_reset">Сброс</string>
+
+    <string name="lang_zh">китайский</string>
+    <string name="lang_en">английский</string>
+    <string name="lang_es">испанский</string>
+    <string name="lang_ru">русский</string>
+    <string name="lang_fr">французский</string>
+    <string name="lang_de">немецкий</string>
+    <string name="lang_it">итальянский</string>
+    <string name="lang_tr">турецкий</string>
+    <string name="lang_pt_br">бразильский (португальский)</string>
+    <string name="lang_pl">польский</string>
+    <string name="lang_ja">японский</string>
+    <string name="lang_ko">корейский</string>
+    <string name="lang_th">тайский</string>
+    <string name="lang_id">индонезийский (id)</string>
+    <string name="lang_ar">арабский</string>
+    <string name="lang_he">иврит</string>
+    <string name="lang_vi">вьетнамский</string>
+    <string name="lang_uk">украинский</string>
+    <string name="lang_cs">чешский</string>
+    <string name="lang_el">греческий</string>
+    <string name="lang_sr">сербский</string>
+    <string name="lang_sr_latn_rs">сербский (латинский)</string>
+    <string name="lang_ca_es">каталонский</string>
+    <string name="lang_fi">финский</string>
+    <string name="lang_no">норвежский</string>
+    <string name="lang_da">датский</string>
+    <string name="lang_sv">щведский</string>
+    <string name="lang_pt">португальский</string>
+    <string name="lang_ro">румынский</string>
+    <string name="lang_ms">малайский</string>
+    <string name="lang_in">индонезийский (in)</string>
+    <string name="lang_ca">каталонский</string>
+    <string name="lang_iw">иврит (уст.)</string>
+    <string name="lang_nl">нидерландский</string>
 
     <string-array name="accent_colors">
         <item>По умолчанию</item>
         <item>Красный</item>
         <item>Зелёный</item>
-        <item>Голубой</item>
+        <item>Синий</item>
     </string-array>
     <string-array name="dark_mode_entries">
+        <item>Следовать системе</item>
         <item>Светлая тема</item>
         <item>Тёмная тема</item>
-        <item>Следовать системе</item>
     </string-array>
 </resources>
