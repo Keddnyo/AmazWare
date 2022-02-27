@@ -27,20 +27,20 @@
     <string name="colorize_icons">Окрашивать иконки</string>
     <string name="colorize_titles">Окрашивать заголовки</string>
 
-    <string name="firmwareVersion">Версия прошивки</string>
-    <string name="resourceVersion">Версия ресурсов</string>
-    <string name="baseResourceVersion">Версия базовых ресурсов</string>
-    <string name="fontVersion">Версия шрифта</string>
-    <string name="gpsVersion">Версия GPS</string>
+    <string name="firmware_version">Версия прошивки</string>
+    <string name="resource_version">Версия ресурсов</string>
+    <string name="base_resource_version">Версия базовых ресурсов</string>
+    <string name="font_version">Версия шрифта</string>
+    <string name="gps_version">Версия GPS</string>
     <string name="lang">Языки</string>
-    <string name="changeLog">Список изменений</string>
+    <string name="change_log">Список изменений</string>
     <string name="date">Дата выхода</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 
     <string name="manual_input">Вручную</string>
-    <string name="submitButton">Отправить</string>
-    <string name="resetButton">Сброс</string>
+    <string name="button_submit">Отправить</string>
+    <string name="button_reset">Сброс</string>
     <string name="device_source">Код устройства</string>
     <string name="production_source">Код продукции</string>
     <string name="response_app_name">Имя приложения</string>

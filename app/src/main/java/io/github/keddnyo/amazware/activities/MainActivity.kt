@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware
+package io.github.keddnyo.amazware.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,18 +13,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.fragments.*
-import io.github.keddnyo.amazware.utils.Theme
+import io.github.keddnyo.amazware.fragments.utils.Theme
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
     // Fragments list
-    private val feedFragment = FeedFragment()
-    private val exploreFragment = ExploreFragment()
-    private val advancedFragment = ExtrasFragment()
-    private val telegramFragment = TelegramFragment()
-    private val settingsFragment = SettingsFragment()
+    private val feedFragment = Feed()
+    private val exploreFragment = Explore()
+    private val advancedFragment = Extras()
+    private val telegramFragment = Telegram()
+    private val settingsFragment = Settings()
 
     @SuppressLint("UseCompatLoadingForColorStateLists", "UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         // Permissions
         val permissionCheck = ActivityCompat.checkSelfPermission(
-            this@MainActivity,
+            this,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                this@MainActivity,
+                this,
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
             )
         }

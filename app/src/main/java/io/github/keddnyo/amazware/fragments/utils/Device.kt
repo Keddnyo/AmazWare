@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware.utils
+package io.github.keddnyo.amazware.fragments.utils
 
 class Device {
     fun name(name: String): String {

@@ -9,7 +9,7 @@ import androidx.preference.PreferenceFragmentCompat
 import io.github.keddnyo.amazware.BuildConfig
 import io.github.keddnyo.amazware.R
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class Settings : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)

@@ -11,11 +11,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import io.github.keddnyo.amazware.utils.Download
+import io.github.keddnyo.amazware.fragments.utils.Download
 import io.github.keddnyo.amazware.R
 import java.util.*
 
-class ExploreFragment : Fragment() {
+class Explore : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

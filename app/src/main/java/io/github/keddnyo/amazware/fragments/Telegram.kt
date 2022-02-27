@@ -14,7 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import io.github.keddnyo.amazware.R
 
-class TelegramFragment : Fragment() {
+class Telegram : Fragment() {
 
     private val name = "firmwarehouse"
     private val url = "https://xn--r1a.website/s/$name"

@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
-import io.github.keddnyo.amazware.Adapter
-import io.github.keddnyo.amazware.utils.Device
-import io.github.keddnyo.amazware.utils.Extras
+import io.github.keddnyo.amazware.fragments.utils.Adapter
+import io.github.keddnyo.amazware.fragments.utils.Device
 import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.fragments.utils.Lang
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-class FeedFragment : Fragment() {
+class Feed : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,9 +67,9 @@ class FeedFragment : Fragment() {
                         if (json.has(i.toString())) { // Existing indexes
 
                             // Resource strings
-                            val firmwareString = getString(R.string.firmwareVersion)
+                            val firmwareString = getString(R.string.firmware_version)
                             val languagesString = getString(R.string.lang)
-                            val changelogString = getString(R.string.changeLog)
+                            val changelogString = getString(R.string.change_log)
                             val dateString = getString(R.string.date)
 
                             // Values
@@ -79,7 +79,7 @@ class FeedFragment : Fragment() {
                                 json.getJSONObject(i.toString()).getString("fw").toString() // Firmware
                             val languages =
                                 json.getJSONObject(i.toString()).getString("languages").toString() // Languages
-                            val languageNames = Extras().renameLang(requireActivity(), languages)
+                            val languageNames = Lang().rename(requireActivity(), languages)
                             var changelog =
                                 json.getJSONObject(i.toString()).getString("changelog").toString() // Changelog
                             changelog = changelog.substringBefore('#')

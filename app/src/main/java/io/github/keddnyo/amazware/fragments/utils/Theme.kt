@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware.utils
+package io.github.keddnyo.amazware.fragments.utils
 
 import android.content.Context
 import android.content.res.Configuration

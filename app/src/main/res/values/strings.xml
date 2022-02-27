@@ -29,20 +29,20 @@
     <string name="colorize_icons">Colorize icons</string>
     <string name="colorize_titles">Colorize titles</string>
 
-    <string name="firmwareVersion">Firmware version</string>
-    <string name="resourceVersion">Resources version</string>
-    <string name="baseResourceVersion">Base resources version</string>
-    <string name="fontVersion">Font version</string>
-    <string name="gpsVersion">GPS version</string>
+    <string name="firmware_version">Firmware version</string>
+    <string name="resource_version">Resources version</string>
+    <string name="base_resource_version">Base resources version</string>
+    <string name="font_version">Font version</string>
+    <string name="gps_version">GPS version</string>
     <string name="lang">Languages</string>
-    <string name="changeLog">Changelog</string>
+    <string name="change_log">Changelog</string>
     <string name="date">Release date</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Firmware not found</string>
 
     <string name="manual_input">Manual</string>
-    <string name="submitButton">Submit</string>
-    <string name="resetButton">Reset</string>
+    <string name="button_submit">Submit</string>
+    <string name="button_reset">Reset</string>
     <string name="device_source">Device source</string>
     <string name="production_source">Production source</string>
     <string name="response_app_name">App name</string>
