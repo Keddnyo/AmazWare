@@ -38,7 +38,7 @@ class MakeRequest {
         return url.toString()
     }
 
-    fun directDevice(ps: EditText, ds: EditText, av: EditText, an: EditText): Request {
+    fun directDevice(ps: String, ds: String, av: String, an: String): Request {
         val requestHost = "api-mifit-ru.huami.com"
 
         val uriBuilder: Uri.Builder = Uri.Builder()
@@ -53,13 +53,13 @@ class MakeRequest {
             .appendQueryParameter("firmwareFlag", "0")
             .appendQueryParameter("vendorId", "0")
             .appendQueryParameter("resourceFlag", "0")
-            .appendQueryParameter("productionSource", "${ps.text}")
+            .appendQueryParameter("productionSource", ps)
             .appendQueryParameter("userid", "0")
             .appendQueryParameter("userId", "0")
-            .appendQueryParameter("deviceSource", "${ds.text}")
+            .appendQueryParameter("deviceSource", ds)
             .appendQueryParameter("fontVersion", "0")
             .appendQueryParameter("fontFlag", "3")
-            .appendQueryParameter("appVersion", "${av.text}")
+            .appendQueryParameter("appVersion", av)
             .appendQueryParameter("appid", "0")
             .appendQueryParameter("callid", "0")
             .appendQueryParameter("channel", "0")
@@ -88,7 +88,7 @@ class MakeRequest {
             .addHeader("channel", "0")
             .addHeader("user-agent", "0")
             .addHeader("cv", "0")
-            .addHeader("appname", "${an.text}")
+            .addHeader("appname", an)
             .addHeader("v", "0")
             .addHeader("apptoken", "0")
             .addHeader("lang", "0")

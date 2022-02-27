@@ -83,7 +83,8 @@
                     android:backgroundTint="@color/secondary"
                     android:text="@string/button_submit"
                     android:textColor="@color/secondary_background"
-                    tools:ignore="ButtonStyle" />
+                    tools:ignore="ButtonStyle"
+                    android:longClickable="true"/>
             </TableRow>
         </TableLayout>
 
@@ -92,15 +93,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:visibility="gone"
             tools:ignore="NestedScrolling" />
 
         <TextView
             android:id="@+id/responseField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:visibility="gone"/>
+            android:textIsSelectable="true"/>
 
     </LinearLayout>
 

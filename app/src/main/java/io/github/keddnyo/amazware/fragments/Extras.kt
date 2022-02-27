@@ -30,32 +30,27 @@ class Extras : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().title = getString(R.string.extras) // New Title
-
-        // Variables
         val okHttpClient = OkHttpClient()
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(requireActivity())
-        val deviceSource = requireActivity().findViewById<EditText>(R.id.deviceSource)
-        val productionSource = requireActivity().findViewById<EditText>(R.id.productionSource)
-        val appName = requireActivity().findViewById<EditText>(R.id.appName)
-        val appVersion = requireActivity().findViewById<EditText>(R.id.appVersion)
+        val deviceSpinner = requireActivity().findViewById<Spinner>(R.id.deviceList)
+        val productionSource: EditText = requireActivity().findViewById(R.id.productionSource)
+        val deviceSource: EditText = requireActivity().findViewById(R.id.deviceSource)
+        val appVersion: EditText = requireActivity().findViewById(R.id.appVersion)
+        val appName: EditText = requireActivity().findViewById(R.id.appName)
         val buttonReset = requireActivity().findViewById<Button>(R.id.buttonReset)
         val buttonSubmit = requireActivity().findViewById<Button>(R.id.buttonSubmit)
-        val deviceSpinner = requireActivity().findViewById<Spinner>(R.id.deviceList)
         val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
         val none = getString(R.string.none)
+
         val devList = ArrayList<String>()
         val devAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
         val deviceList = MakeRequest().getDevices()
-        val serverResponse =
-            MakeRequest().directDevice(productionSource, deviceSource, appVersion, appName)
 
-        deviceSpinner.post {
-            devList.add(getString(R.string.manual_input))
-            devAdapter.notifyDataSetChanged()
-        }
+        devList.add(getString(R.string.manual_input))
+        devAdapter.notifyDataSetChanged()
 
         okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -63,11 +58,6 @@ class Extras : Fragment() {
 
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
-
-                val output = json.toString()
-                output.replace(",", ", ")
-                output.replace("\\", "")
-                output.substringBefore('#')
                 for (i in 1..1000) {
                     if (json.has(i.toString())) {
                         deviceSpinner.post {
@@ -86,8 +76,6 @@ class Extras : Fragment() {
                         pos: Int,
                         id: Long
                     ) {
-                        responseList.visibility = View.GONE
-
                         val selectedItem = deviceSpinner.selectedItem.toString()
 
                         for (i in 1..1000) {
@@ -122,8 +110,7 @@ class Extras : Fragment() {
         })
         deviceSpinner.adapter = devAdapter
 
-        // Setting response adapter
-        val list = ArrayList<Adapter>()
+        val list = ArrayList<Adapter>() // Setting response adapter
         val adapter = SimpleAdapter(
             activity,
             list,
@@ -136,8 +123,9 @@ class Extras : Fragment() {
         responseList.adapter = adapter
 
         buttonReset.setOnClickListener {
-            responseField.visibility = View.GONE
             responseList.visibility = View.GONE
+            responseField.text = null
+            list.clear()
             deviceSpinner.setSelection(0)
             productionSource.text.clear()
             deviceSource.text.clear()
@@ -145,12 +133,37 @@ class Extras : Fragment() {
             appName.text.clear()
         }
 
+        buttonSubmit.setOnLongClickListener {
+            list.clear()
+            responseList.visibility = View.GONE
+
+            // Init serverRequest val here because we're communicate with EditText
+            val serverRequest =
+                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+
+            okHttpClient.newCall(serverRequest).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    requireActivity().title = getString(R.string.error)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    responseField.post {
+                        responseField.text = serverRequest.toString()
+                    }
+                }
+            })
+            true
+        }
+
         buttonSubmit.setOnClickListener {
             list.clear() // Clear for a new list
-            responseField.visibility = View.GONE
             responseField.text = null
 
-            okHttpClient.newCall(serverResponse).enqueue(object : Callback {
+            // Init serverRequest val here because we're communicate with EditText
+            val serverRequest =
+                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+
+            okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     requireActivity().title = getString(R.string.error)
                 }
@@ -161,7 +174,6 @@ class Extras : Fragment() {
                     when (sharedPreferences.getBoolean("simple_response", true)) {
                         false -> {
                             responseField.post {
-                                responseField.visibility = View.VISIBLE
                                 responseField.text = json.toString()
                             }
                         }
@@ -300,8 +312,6 @@ class Extras : Fragment() {
                                 }
                                 if (!json.has("firmwareVersion")) {
                                     responseField.post {
-                                        responseList.visibility = View.GONE
-                                        responseField.visibility = View.VISIBLE
                                         responseField.text = json.toString()
                                     }
                                     Toast.makeText(
@@ -309,6 +319,7 @@ class Extras : Fragment() {
                                         getString(R.string.firmware_not_found),
                                         Toast.LENGTH_SHORT
                                     ).show()
+                                    requireActivity().title = getString(R.string.error)
                                 }
                             }
 
