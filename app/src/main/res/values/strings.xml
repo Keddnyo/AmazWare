@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">AmazWare</string>
-    <string name="app_credits">Created by Keddnyo</string>
+    <string name="keddnyo" translatable="false">Keddnyo</string>
     <string name="firmwarehouse" translatable="false">Firmwarehouse</string>
-    <string name="logic_credits">Created by Schakal</string>
+    <string name="schakal" translatable="false">Schakal</string>
     <string name="downloading">Downloading file</string>
     <string name="error">Error</string>
     <string name="feed">Feed</string>
@@ -10,8 +10,6 @@
     <string name="extras">Extras</string>
     <string name="telegram" translatable="false">Telegram</string>
     <string name="About">About</string>
-    <string name="exit">Exit</string>
-    <string name="exit_message">Are you sure you want to exit?</string>
     <string name="settings">Settings</string>
     <string name="behaviour">Behaviour</string>
     <string name="default_tab">Default tab</string>
@@ -43,10 +41,10 @@
     <string name="manual_input">Manual</string>
     <string name="button_submit">Submit</string>
     <string name="button_reset">Reset</string>
-    <string name="device_source">Device source</string>
-    <string name="production_source">Production source</string>
-    <string name="response_app_name">App name</string>
-    <string name="app_version">App version</string>
+    <string name="request_device_source" translatable="false">deviceSource</string>
+    <string name="request_production_source" translatable="false">productionSource</string>
+    <string name="request_app_name" translatable="false">appname</string>
+    <string name="request_app_version" translatable="false">appVersion</string>
 
     <string-array name="tabs_entries">
         <item>@string/feed</item>

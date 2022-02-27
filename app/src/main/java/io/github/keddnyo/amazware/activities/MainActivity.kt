@@ -188,32 +188,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onBackPressed() {
-        selectFragment()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.exit -> {
-                val builder = AlertDialog.Builder(this)
-                    .setTitle(R.string.exit)
-                    .setMessage(getString(R.string.exit_message))
-                builder.setPositiveButton(android.R.string.yes) { _: DialogInterface?, _: Int ->
-                    finish()
-                }
-                builder.setNegativeButton(android.R.string.no) { _: DialogInterface?, _: Int ->
-                    DialogInterface.BUTTON_NEGATIVE
-                }
-                builder.show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

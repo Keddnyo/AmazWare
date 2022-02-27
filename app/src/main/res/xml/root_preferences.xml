@@ -89,13 +89,13 @@
         <Preference
             app:icon="@drawable/ic_info"
             app:key="info"
-            app:summary="@string/app_credits"
+            app:summary="@string/keddnyo"
             app:title="@string/app_name"/>
 
         <Preference
             app:icon="@drawable/ic_explore"
             app:key="info2"
-            app:summary="@string/logic_credits"
+            app:summary="@string/schakal"
             app:title="@string/firmwarehouse"/>
 
     </PreferenceCategory>

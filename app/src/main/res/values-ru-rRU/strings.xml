@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_credits">Разработал Keddnyo</string>
-    <string name="logic_credits">Разработал Schakal</string>
     <string name="downloading">Загрузка файла</string>
     <string name="error">Ошибка</string>
     <string name="feed">Лента</string>
     <string name="explore">Браузер</string>
     <string name="extras">Экстра</string>
     <string name="About">О приложении</string>
-    <string name="exit">Выход</string>
-    <string name="exit_message">Вы уверены что хотите выйти?</string>
     <string name="settings">Настройки</string>
     <string name="behaviour">Поведение</string>
     <string name="default_tab">Главная вкладка</string>
@@ -24,8 +20,8 @@
     <string name="appearance">Внешний вид</string>
     <string name="theme">Тема</string>
     <string name="accent_color">Цвет акцента</string>
-    <string name="colorize_icons">Окрашивать иконки</string>
-    <string name="colorize_titles">Окрашивать заголовки</string>
+    <string name="colorize_icons">Цветные иконки</string>
+    <string name="colorize_titles">Цветные заголовки</string>
 
     <string name="firmware_version">Версия прошивки</string>
     <string name="resource_version">Версия ресурсов</string>
@@ -41,17 +37,12 @@
     <string name="manual_input">Вручную</string>
     <string name="button_submit">Отправить</string>
     <string name="button_reset">Сброс</string>
-    <string name="device_source">Код устройства</string>
-    <string name="production_source">Код продукции</string>
-    <string name="response_app_name">Имя приложения</string>
-    <string name="app_version">Версия приложения</string>
-    <string name="play_postfix_checkbox">Постфикс play</string>
 
     <string-array name="accent_colors">
         <item>По умолчанию</item>
         <item>Красный</item>
         <item>Зелёный</item>
-        <item>Голубой</item>
+        <item>Синий</item>
     </string-array>
     <string-array name="dark_mode_entries">
         <item>Светлая тема</item>

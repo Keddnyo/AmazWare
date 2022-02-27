@@ -23,14 +23,14 @@
             android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/response_app_name"
+            android:hint="@string/request_app_name"
             tools:ignore="Autofill,TextFields" />
 
         <EditText
             android:id="@+id/appVersion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/app_version"
+            android:hint="@string/request_app_version"
             android:inputType="text"
             android:maxLength="17"
             tools:ignore="Autofill" />
@@ -48,7 +48,7 @@
                     android:id="@+id/deviceSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/device_source"
+                    android:hint="@string/request_device_source"
                     android:inputType="number"
                     android:maxLength="2"
                     tools:ignore="Autofill" />
@@ -57,7 +57,7 @@
                     android:id="@+id/productionSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/production_source"
+                    android:hint="@string/request_production_source"
                     android:inputType="number"
                     android:maxLength="3"
                     tools:ignore="Autofill" />

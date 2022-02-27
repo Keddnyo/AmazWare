@@ -32,9 +32,9 @@ class Extras : Fragment() {
         requireActivity().title = getString(R.string.extras) // New Title
 
         // Variables
+        val okHttpClient = OkHttpClient()
         val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(requireActivity()) // Shared Preferences
-
+            PreferenceManager.getDefaultSharedPreferences(requireActivity())
         val deviceSource = requireActivity().findViewById<EditText>(R.id.deviceSource)
         val productionSource = requireActivity().findViewById<EditText>(R.id.productionSource)
         val appName = requireActivity().findViewById<EditText>(R.id.appName)
@@ -45,21 +45,19 @@ class Extras : Fragment() {
         val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
         val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
         val none = getString(R.string.none)
-
         val devList = ArrayList<String>()
         val devAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
-
-        val okHttpClient = OkHttpClient()
-        val urlMain = "https://schakal.ru/fw/dev_apps.json"
-        val requestMain = Request.Builder().url(urlMain).build()
+        val deviceList = MakeRequest().getDevices()
+        val serverResponse =
+            MakeRequest().directDevice(productionSource, deviceSource, appVersion, appName)
 
         deviceSpinner.post {
             devList.add(getString(R.string.manual_input))
             devAdapter.notifyDataSetChanged()
         }
 
-        okHttpClient.newCall(requestMain).enqueue(object : Callback {
+        okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
             }
 
@@ -68,6 +66,7 @@ class Extras : Fragment() {
 
                 val output = json.toString()
                 output.replace(",", ", ")
+                output.replace("\\", "")
                 output.substringBefore('#')
                 for (i in 1..1000) {
                     if (json.has(i.toString())) {
@@ -147,15 +146,11 @@ class Extras : Fragment() {
         }
 
         buttonSubmit.setOnClickListener {
-            // Clear for a new list
-            list.clear()
+            list.clear() // Clear for a new list
             responseField.visibility = View.GONE
             responseField.text = null
 
-            val request =
-                MakeRequest().directDevice(productionSource, deviceSource, appVersion, appName)
-
-            okHttpClient.newCall(request).enqueue(object : Callback {
+            okHttpClient.newCall(serverResponse).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     requireActivity().title = getString(R.string.error)
                 }

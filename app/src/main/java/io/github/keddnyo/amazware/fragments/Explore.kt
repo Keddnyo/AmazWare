@@ -10,11 +10,10 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.fragments.utils.Download
 import io.github.keddnyo.amazware.R
-import java.util.*
+import io.github.keddnyo.amazware.fragments.utils.MakeRequest
 
 class Explore : Fragment() {
 
@@ -30,45 +29,18 @@ class Explore : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().title = getString(R.string.explore) // New title
 
-        val lang = Locale.getDefault().language.toString()
         val webView = requireActivity().findViewById<WebView>(R.id.webView)
-        val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(requireContext()) // Shared Preferences
+        val webSettings = webView?.settings
         val refresh =
             requireActivity().findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
 
-        val webSettings = webView?.settings
         webSettings!!.javaScriptEnabled = true
-
-        // Set theme
-        val theme = when (sharedPreferences.getString("theme", "1")) {
-            "1" -> {
-                "light"
-            }
-            "2" -> {
-                "dark"
-            }
-            "3" -> {
-                "auto" // Dummy (not matter)
-            }
-            else -> {
-                "auto" // Dummy (not matter)
-            }
-        }
-
-        // Loading WebView
-        val url: Uri.Builder = Uri.Builder()
-        url.scheme("https")
-            .authority("schakal.ru")
-            .appendPath("fw")
-            .appendPath("firmwares_list.htm")
-            .appendQueryParameter("theme", theme)
-            .appendQueryParameter("lang", lang)
-        webView.loadUrl(url.toString())
-
+        webView.loadUrl(MakeRequest().openExplorePage(requireContext())) // Loading WebView
         webView.webViewClient = object : WebViewClient() {
-            // Override loading
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                url: String
+            ): Boolean { // Override loading
                 return if (url.startsWith("tg:")) {
                     startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -79,8 +51,8 @@ class Explore : Fragment() {
                     false
                 }
             }
-            // Error
-            override fun onReceivedError(
+
+            override fun onReceivedError( // Error
                 webView: WebView,
                 errorCode: Int,
                 description: String,
@@ -91,13 +63,11 @@ class Explore : Fragment() {
             }
         }
 
-        // Downloading code
-        webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ ->
+        webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ -> // Downloading code
             context?.let { Download().run(it, fileUrl, contentDisposition, mimeType) }
         }
 
-        // Pull refresh
-        refresh.setOnRefreshListener {
+        refresh.setOnRefreshListener { // Pull refresh
             requireActivity().title = getString(R.string.explore)
             webView.reload()
             refresh.isRefreshing = false

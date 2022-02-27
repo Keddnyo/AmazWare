@@ -41,7 +41,7 @@ class Feed : Fragment() {
         val languagesString = getString(R.string.lang)
         val changelogString = getString(R.string.change_log)
         val dateString = getString(R.string.date)
-        val request = MakeRequest().latest()
+        val request = MakeRequest().getLatest()
 
         val list = ArrayList<Adapter>() // Setting adapter
         val adapter = SimpleAdapter(

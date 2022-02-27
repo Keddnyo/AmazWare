@@ -1,10 +1,43 @@
 package io.github.keddnyo.amazware.fragments.utils
 
+import android.content.Context
 import android.net.Uri
 import android.widget.EditText
+import androidx.preference.PreferenceManager
 import okhttp3.Request
+import java.util.*
 
 class MakeRequest {
+    fun openExplorePage(context: Context): String {
+        val lang = Locale.getDefault().language.toString()
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+        val url: Uri.Builder = Uri.Builder()
+        val theme = when (sharedPreferences.getString("theme", "1")) { // Set theme
+            "1" -> {
+                "light"
+            }
+            "2" -> {
+                "dark"
+            }
+            "3" -> {
+                "auto" // Dummy (not matter)
+            }
+            else -> {
+                "auto" // Dummy (not matter)
+            }
+        }
+
+        url.scheme("https")
+            .authority("schakal.ru")
+            .appendPath("fw")
+            .appendPath("firmwares_list.htm")
+            .appendQueryParameter("theme", theme)
+            .appendQueryParameter("lang", lang)
+
+        return url.toString()
+    }
+
     fun directDevice(ps: EditText, ds: EditText, av: EditText, an: EditText): Request {
         val requestHost = "api-mifit-ru.huami.com"
 
@@ -66,7 +99,12 @@ class MakeRequest {
             .build()
     }
 
-    fun latest(): Request {
+    fun getDevices(): Request {
+        val url = "https://schakal.ru/fw/dev_apps.json"
+        return Request.Builder().url(url).build()
+    }
+
+    fun getLatest(): Request {
         val url = "https://schakal.ru/fw/latest.json"
         return Request.Builder().url(url).build()
     }
