@@ -123,6 +123,7 @@ class Extras : AppCompatActivity() {
         responseList.adapter = adapter
 
         buttonReset.setOnClickListener {
+            title = getString(R.string.extras)
             responseList.visibility = View.GONE
             responseField.text = null
             list.clear()
@@ -158,6 +159,7 @@ class Extras : AppCompatActivity() {
         buttonSubmit.setOnClickListener {
             list.clear() // Clear for a new list
             responseField.text = null
+            title = getString(R.string.extras)
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =

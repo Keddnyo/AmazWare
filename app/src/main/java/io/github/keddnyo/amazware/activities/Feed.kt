@@ -107,6 +107,8 @@ class Feed : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             init()
             feedRefresh.isRefreshing = false
+
+            title = getString(R.string.feed)
         }
     }
 

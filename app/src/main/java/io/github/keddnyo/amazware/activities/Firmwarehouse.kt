@@ -84,6 +84,8 @@ class Firmwarehouse : AppCompatActivity() {
             title = getString(R.string.firmwarehouse)
             webView.reload()
             refresh.isRefreshing = false
+
+            title = getString(R.string.firmwarehouse)
         }
     }
 
