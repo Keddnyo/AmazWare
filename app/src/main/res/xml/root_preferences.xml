@@ -1,43 +1,40 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/behaviour">
-
-        <ListPreference
-            app:defaultValue="1"
-            app:entries="@array/tabs_entries"
-            app:entryValues="@array/entry_values"
-            app:icon="@drawable/ic_feed"
-            app:key="default_tab"
-            app:title="@string/default_tab"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="@string/appearance">
 
         <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:icon="@drawable/ic_explore"
-            app:key="download_provider"
-            app:title="@string/download_provider" />
+            app:defaultValue="false"
+            app:icon="@drawable/ic_dark_mode"
+            app:key="dark_mode"
+            app:title="@string/dark_mode"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/server_response">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
-            app:icon="@drawable/ic_extras"
-            app:key="simple_response"
-            app:summary="@string/simple_response_summary"
-            app:title="@string/simple_response" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
             app:dependency="simple_response"
             app:icon="@drawable/ic_lang"
             app:key="lang_formatted"
-            app:summary="@string/lang_formatted_summary"
-            app:title="@string/lang_formatted" />
+            app:title="@string/full_lang_names" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_extras"
+            app:key="simple_response"
+            app:title="@string/list_style_response" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/indication">
+    <PreferenceCategory app:title="@string/download">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_download"
+            app:key="download_provider"
+            app:title="@string/download_provider" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -45,42 +42,6 @@
             app:icon="@drawable/ic_notification"
             app:key="download_notification"
             app:title="@string/download_notification" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/appearance">
-
-        <ListPreference
-            app:defaultValue="1"
-            app:entries="@array/dark_mode_entries"
-            app:entryValues="@array/entry_values"
-            app:icon="@drawable/ic_dark_mode"
-            app:key="theme"
-            app:title="@string/theme"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="1"
-            app:entries="@array/accent_colors"
-            app:entryValues="@array/accent_colors_entry_values"
-            app:icon="@drawable/ic_palette"
-            app:key="accent_color"
-            app:title="@string/accent_color"
-            app:useSimpleSummaryProvider="true" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:dependency="accent_color"
-            app:icon="@drawable/ic_icon"
-            app:key="colorize_icons"
-            app:title="@string/colorize_icons" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:dependency="accent_color"
-            app:icon="@drawable/ic_title"
-            app:key="colorize_titles"
-            app:title="@string/colorize_titles" />
 
     </PreferenceCategory>
 
@@ -93,7 +54,7 @@
             app:title="@string/app_name" />
 
         <Preference
-            app:icon="@drawable/ic_explore"
+            app:icon="@drawable/ic_download"
             app:key="info2"
             app:summary="@string/schakal"
             app:title="@string/firmwarehouse" />

@@ -1,9 +1,11 @@
-package io.github.keddnyo.amazware.fragments.utils
+package io.github.keddnyo.amazware.utils
 
 import android.content.Context
 import android.net.Uri
 import androidx.preference.PreferenceManager
 import okhttp3.Request
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class MakeRequest {
@@ -12,18 +14,12 @@ class MakeRequest {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
         val url: Uri.Builder = Uri.Builder()
-        val theme = when (sharedPreferences.getString("theme", "1")) { // Set theme
-            "1" -> {
-                "auto" // Dummy (not matter)
-            }
-            "2" -> {
-                "light"
-            }
-            "3" -> {
+        val theme = when (sharedPreferences.getBoolean("dark_mode", false)) { // Set theme
+            true -> {
                 "dark"
             }
-            else -> {
-                "auto" // Dummy (not matter)
+            false -> {
+                "light"
             }
         }
 
@@ -39,6 +35,8 @@ class MakeRequest {
 
     fun directDevice(ps: String, ds: String, av: String, an: String): Request {
         val requestHost = "api-mifit-ru.huami.com"
+        // val requestHost = "api-mifit-us2.huami.com"
+        // val requestHost = "api.amazfit.com"
 
         val uriBuilder: Uri.Builder = Uri.Builder()
         uriBuilder.scheme("https")

@@ -1,53 +1,54 @@
-package io.github.keddnyo.amazware.fragments
+package io.github.keddnyo.amazware.activities
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.fragments.utils.Adapter
-import io.github.keddnyo.amazware.fragments.utils.Download
-import io.github.keddnyo.amazware.fragments.utils.Lang
-import io.github.keddnyo.amazware.fragments.utils.MakeRequest
-import okhttp3.*
+import io.github.keddnyo.amazware.utils.Adapter
+import io.github.keddnyo.amazware.utils.Download
+import io.github.keddnyo.amazware.utils.Lang
+import io.github.keddnyo.amazware.utils.MakeRequest
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class Extras : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_extras, container, false)
+class Extras : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_extras)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
-        requireActivity().title = getString(R.string.extras) // New Title
+        title = getString(R.string.extras) // New Title
+
         val okHttpClient = OkHttpClient()
         val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(requireActivity())
-        val deviceSpinner = requireActivity().findViewById<Spinner>(R.id.deviceList)
-        val productionSource: EditText = requireActivity().findViewById(R.id.productionSource)
-        val deviceSource: EditText = requireActivity().findViewById(R.id.deviceSource)
-        val appVersion: EditText = requireActivity().findViewById(R.id.appVersion)
-        val appName: EditText = requireActivity().findViewById(R.id.appName)
-        val buttonReset = requireActivity().findViewById<Button>(R.id.buttonReset)
-        val buttonSubmit = requireActivity().findViewById<Button>(R.id.buttonSubmit)
-        val responseList = requireActivity().findViewById<ListView>(R.id.responseList)
-        val responseField = requireActivity().findViewById<TextView>(R.id.responseField)
+            PreferenceManager.getDefaultSharedPreferences(this)
+        val deviceSpinner = findViewById<Spinner>(R.id.deviceList)
+        val productionSource: EditText = findViewById(R.id.productionSource)
+        val deviceSource: EditText = findViewById(R.id.deviceSource)
+        val appVersion: EditText = findViewById(R.id.appVersion)
+        val appName: EditText = findViewById(R.id.appName)
+        val buttonReset = findViewById<Button>(R.id.buttonReset)
+        val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
+        val responseList = findViewById<ListView>(R.id.responseList)
+        val responseField = findViewById<TextView>(R.id.responseField)
         val none = getString(R.string.none)
 
         val devList = ArrayList<String>()
         val devAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, devList)
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, devList)
         val deviceList = MakeRequest().getDevices()
+        val context = this@Extras
 
         devList.add(getString(R.string.manual_input))
         devAdapter.notifyDataSetChanged()
@@ -58,10 +59,13 @@ class Extras : Fragment() {
 
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
-                for (i in 1..1000) {
+                val array = json.toMap()
+                val keys = array.keys
+
+                for (i in keys) {
                     if (json.has(i.toString())) {
                         deviceSpinner.post {
-                            val name = json.getJSONObject(i.toString())
+                            val name = json.getJSONObject(i)
                                 .getString("name") // Filling dropdown list
                             devList.add(name)
                             devAdapter.notifyDataSetChanged()
@@ -112,7 +116,7 @@ class Extras : Fragment() {
 
         val list = ArrayList<Adapter>() // Setting response adapter
         val adapter = SimpleAdapter(
-            activity,
+            this,
             list,
             android.R.layout.two_line_list_item,
             arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
@@ -123,6 +127,7 @@ class Extras : Fragment() {
         responseList.adapter = adapter
 
         buttonReset.setOnClickListener {
+            title = getString(R.string.extras)
             responseList.visibility = View.GONE
             responseField.text = null
             list.clear()
@@ -139,11 +144,16 @@ class Extras : Fragment() {
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
-                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+                MakeRequest().directDevice(
+                    productionSource.text.toString(),
+                    deviceSource.text.toString(),
+                    appVersion.text.toString(),
+                    appName.text.toString()
+                )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    requireActivity().title = getString(R.string.error)
+                    title = getString(R.string.error)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -158,14 +168,20 @@ class Extras : Fragment() {
         buttonSubmit.setOnClickListener {
             list.clear() // Clear for a new list
             responseField.text = null
+            title = getString(R.string.extras)
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
-                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+                MakeRequest().directDevice(
+                    productionSource.text.toString(),
+                    deviceSource.text.toString(),
+                    appVersion.text.toString(),
+                    appName.text.toString()
+                )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    requireActivity().title = getString(R.string.error)
+                    title = getString(R.string.error)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -187,7 +203,7 @@ class Extras : Fragment() {
                                     val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.firmware_version) + ": " + firmwareVersion,
+                                            "${getString(R.string.firmware_version)}: $firmwareVersion",
                                             "MD5: $firmwareMd5"
                                         )
                                     )
@@ -207,7 +223,7 @@ class Extras : Fragment() {
                                     val resourceMd5 = json.getString("resourceMd5") // Resources MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.resource_version) + ": " + resourceVersion,
+                                            "${getString(R.string.resource_version)}: $resourceVersion",
                                             "MD5: $resourceMd5"
                                         )
                                     )
@@ -228,7 +244,7 @@ class Extras : Fragment() {
                                         json.getString("baseResourceMd5") // Base resources MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.base_resource_version) + ": " + baseResourceVersion,
+                                            "${getString(R.string.base_resource_version)}: $baseResourceVersion",
                                             "MD5: $baseResourceMd5"
                                         )
                                     )
@@ -236,7 +252,7 @@ class Extras : Fragment() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.base_resource_version) + ": " + none,
+                                            "${getString(R.string.base_resource_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -247,7 +263,7 @@ class Extras : Fragment() {
                                     val fontMd5 = json.getString("fontMd5") // Font MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.font_version) + ": " + fontVersion,
+                                            "${getString(R.string.font_version)}: $fontVersion",
                                             "MD5: $fontMd5"
                                         )
                                     )
@@ -255,7 +271,7 @@ class Extras : Fragment() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.font_version) + ": " + none,
+                                            "${getString(R.string.font_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -266,7 +282,7 @@ class Extras : Fragment() {
                                     val gpsMd5 = json.getString("gpsMd5") // gpsVersion
                                     list.add(
                                         Adapter(
-                                            getString(R.string.gps_version) + ": " + gpsVersion,
+                                            "${getString(R.string.gps_version)}: $gpsVersion",
                                             "MD5: $gpsMd5"
                                         )
                                     )
@@ -274,7 +290,7 @@ class Extras : Fragment() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.gps_version) + ": " + none,
+                                            "${getString(R.string.gps_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -283,10 +299,10 @@ class Extras : Fragment() {
                                 if (json.has("lang")) {
                                     val lang = json.getString("lang") // Languages
                                     val language =
-                                        activity?.let { it1 -> Lang().rename(it1, lang) }
+                                        Lang().rename(this@Extras, lang)
                                     list.add(
                                         Adapter(
-                                            getString(R.string.lang),
+                                            "${getString(R.string.lang)}:",
                                             language
                                         )
                                     )
@@ -321,24 +337,22 @@ class Extras : Fragment() {
                                         getString(R.string.firmware_not_found),
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    requireActivity().title = getString(R.string.error)
+                                    title = getString(R.string.error)
                                 }
                             }
 
                             responseList.onItemClickListener =
-                                OnItemClickListener { _, _, position, _ ->
+                                AdapterView.OnItemClickListener { _, _, position, _ ->
                                     when (position) {
                                         0 -> {
                                             if (json.has("firmwareUrl")) {
                                                 val fileUrl = json.getString("firmwareUrl")
-                                                context?.let {
-                                                    Download().run(
-                                                        it,
-                                                        fileUrl,
-                                                        "firmware",
-                                                        "?"
-                                                    )
-                                                }
+                                                Download().run(
+                                                    context,
+                                                    fileUrl,
+                                                    "firmware",
+                                                    "?"
+                                                )
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -350,14 +364,12 @@ class Extras : Fragment() {
                                         1 -> {
                                             if (json.has("resourceUrl")) {
                                                 val fileUrl = json.getString("resourceUrl")
-                                                context?.let {
-                                                    Download().run(
-                                                        it,
-                                                        fileUrl,
-                                                        "resource",
-                                                        "?"
-                                                    )
-                                                }
+                                                Download().run(
+                                                    context,
+                                                    fileUrl,
+                                                    "resource",
+                                                    "?"
+                                                )
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -369,14 +381,12 @@ class Extras : Fragment() {
                                         2 -> {
                                             if (json.has("baseResourceUrl")) {
                                                 val fileUrl = json.getString("baseResourceUrl")
-                                                context?.let {
-                                                    Download().run(
-                                                        it,
-                                                        fileUrl,
-                                                        "base_resource",
-                                                        "?"
-                                                    )
-                                                }
+                                                Download().run(
+                                                    context,
+                                                    fileUrl,
+                                                    "base_resource",
+                                                    "?"
+                                                )
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -388,14 +398,12 @@ class Extras : Fragment() {
                                         3 -> {
                                             if (json.has("fontUrl")) {
                                                 val fileUrl = json.getString("fontUrl")
-                                                context?.let {
-                                                    Download().run(
-                                                        it,
-                                                        fileUrl,
-                                                        "font",
-                                                        "?"
-                                                    )
-                                                }
+                                                Download().run(
+                                                    context,
+                                                    fileUrl,
+                                                    "font",
+                                                    "?"
+                                                )
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -407,14 +415,12 @@ class Extras : Fragment() {
                                         4 -> {
                                             if (json.has("gpsUrl")) {
                                                 val fileUrl = json.getString("gpsUrl")
-                                                context?.let {
-                                                    Download().run(
-                                                        it,
-                                                        fileUrl,
-                                                        "gps",
-                                                        "?"
-                                                    )
-                                                }
+                                                Download().run(
+                                                    context,
+                                                    fileUrl,
+                                                    "gps",
+                                                    "?"
+                                                )
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -443,5 +449,22 @@ class Extras : Fragment() {
                 }
             })
         }
+    }
+
+    private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
+        when (val value = this[it]) {
+            is JSONArray -> {
+                val map = (0 until value.length()).associate { Pair(it.toString(), value[it]) }
+                JSONObject(map).toMap().values.toList()
+            }
+            is JSONObject -> value.toMap()
+            JSONObject.NULL -> null
+            else -> value
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

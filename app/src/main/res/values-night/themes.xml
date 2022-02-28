@@ -3,23 +3,6 @@
     <style name="Theme.AmazWare" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/white</item>
-    </style>
-
-    <style name="Blue">
-        <item name="colorAccent">@color/blue</item>
-    </style>
-
-    <style name="Green">
-        <item name="colorAccent">@color/green</item>
-    </style>
-
-    <style name="Red">
-        <item name="colorAccent">@color/red</item>
-    </style>
-
-    <style name="textBlack">
-        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

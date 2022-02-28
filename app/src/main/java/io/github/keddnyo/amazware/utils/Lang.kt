@@ -1,4 +1,4 @@
-package io.github.keddnyo.amazware.fragments.utils
+package io.github.keddnyo.amazware.utils
 
 import android.content.Context
 import androidx.preference.PreferenceManager
@@ -8,40 +8,40 @@ class Lang {
     fun rename(context: Context, lang: String): String {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
 
-        val langZH = context.getString(R.string.lang_zh )
-        val langEN = context.getString(R.string.lang_en )
-        val langES = context.getString(R.string.lang_es )
-        val langRU = context.getString(R.string.lang_ru )
-        val langFR = context.getString(R.string.lang_fr )
-        val langDE = context.getString(R.string.lang_de )
-        val langIT = context.getString(R.string.lang_it )
-        val langTR = context.getString(R.string.lang_tr )
-        val langPTBR = context.getString(R.string.lang_pt_br )
-        val langPL = context.getString(R.string.lang_pl )
-        val langJA = context.getString(R.string.lang_ja )
-        val langKO = context.getString(R.string.lang_ko )
-        val langTH = context.getString(R.string.lang_th )
-        val langID = context.getString(R.string.lang_id )
-        val langAR = context.getString(R.string.lang_ar )
-        val langHE = context.getString(R.string.lang_he )
-        val langVI = context.getString(R.string.lang_vi )
-        val langUK = context.getString(R.string.lang_uk )
-        val langCS = context.getString(R.string.lang_cs )
-        val langEL = context.getString(R.string.lang_el )
-        val langSR = context.getString(R.string.lang_sr )
-        val langSRLATNRS = context.getString(R.string.lang_sr_latn_rs )
-        val langCAES = context.getString(R.string.lang_ca_es )
-        val langFI = context.getString(R.string.lang_fi )
-        val langNO = context.getString(R.string.lang_no )
-        val langDA = context.getString(R.string.lang_da )
-        val langSV = context.getString(R.string.lang_sv )
-        val langPT = context.getString(R.string.lang_pt )
-        val langRO = context.getString(R.string.lang_ro )
-        val langMS = context.getString(R.string.lang_ms )
-        val langIN = context.getString(R.string.lang_in )
-        val langCA = context.getString(R.string.lang_ca )
-        val langIW = context.getString(R.string.lang_iw )
-        val langNL = context.getString(R.string.lang_nl )
+        val langZH = context.getString(R.string.lang_zh)
+        val langEN = context.getString(R.string.lang_en)
+        val langES = context.getString(R.string.lang_es)
+        val langRU = context.getString(R.string.lang_ru)
+        val langFR = context.getString(R.string.lang_fr)
+        val langDE = context.getString(R.string.lang_de)
+        val langIT = context.getString(R.string.lang_it)
+        val langTR = context.getString(R.string.lang_tr)
+        val langPTBR = context.getString(R.string.lang_pt_br)
+        val langPL = context.getString(R.string.lang_pl)
+        val langJA = context.getString(R.string.lang_ja)
+        val langKO = context.getString(R.string.lang_ko)
+        val langTH = context.getString(R.string.lang_th)
+        val langID = context.getString(R.string.lang_id)
+        val langAR = context.getString(R.string.lang_ar)
+        val langHE = context.getString(R.string.lang_he)
+        val langVI = context.getString(R.string.lang_vi)
+        val langUK = context.getString(R.string.lang_uk)
+        val langCS = context.getString(R.string.lang_cs)
+        val langEL = context.getString(R.string.lang_el)
+        val langSR = context.getString(R.string.lang_sr)
+        val langSRLATNRS = context.getString(R.string.lang_sr_latn_rs)
+        val langCAES = context.getString(R.string.lang_ca_es)
+        val langFI = context.getString(R.string.lang_fi)
+        val langNO = context.getString(R.string.lang_no)
+        val langDA = context.getString(R.string.lang_da)
+        val langSV = context.getString(R.string.lang_sv)
+        val langPT = context.getString(R.string.lang_pt)
+        val langRO = context.getString(R.string.lang_ro)
+        val langMS = context.getString(R.string.lang_ms)
+        val langIN = context.getString(R.string.lang_in)
+        val langCA = context.getString(R.string.lang_ca)
+        val langIW = context.getString(R.string.lang_iw)
+        val langNL = context.getString(R.string.lang_nl)
 
         return when (sharedPreferences.getBoolean("lang_formatted", true)) {
             true -> {
@@ -57,9 +57,8 @@ class Lang {
                 l = l.replace("tr",". tr .")
                 l = l.replace("pt",". pt .")
 
-                l = l.replace(". pt .-br","pt-br")
+                l = l.replace(". pt .-br",". pt-br .")
 
-                l = l.replace("pt-br",". pt-br .")
                 l = l.replace("pl",". pl .")
                 l = l.replace("ja",". ja .")
                 l = l.replace("ko",". ko .")
@@ -73,13 +72,10 @@ class Lang {
                 l = l.replace("el",". el .")
                 l = l.replace("sr",". sr .")
 
-                l = l.replace(". sr .-latn-rs","sr-latn-rs")
+                l = l.replace(". sr .-latn-rs",". sr-latn-rs .")
 
-                l = l.replace("sr-latn-rs",". sr-latn-rs .")
+                l = l.replace(". ca .-es",". ca-es .")
 
-                l = l.replace(". ca .-es","ca-es")
-
-                l = l.replace("ca-es",". ca-es .")
                 l = l.replace("fi",". fi .")
                 l = l.replace("no",". no .")
                 l = l.replace("da",". da .")
