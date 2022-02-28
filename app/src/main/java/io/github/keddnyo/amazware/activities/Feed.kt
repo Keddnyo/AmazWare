@@ -1,9 +1,9 @@
 package io.github.keddnyo.amazware.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.Adapter
@@ -113,16 +113,14 @@ class Feed : AppCompatActivity() {
     }
 
     private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
-        when (val value = this[it])
-        {
-            is JSONArray ->
-            {
+        when (val value = this[it]) {
+            is JSONArray -> {
                 val map = (0 until value.length()).associate { Pair(it.toString(), value[it]) }
                 JSONObject(map).toMap().values.toList()
             }
             is JSONObject -> value.toMap()
             JSONObject.NULL -> null
-            else            -> value
+            else -> value
         }
     }
 

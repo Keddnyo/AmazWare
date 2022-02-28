@@ -27,7 +27,7 @@
     <string name="firmware_not_found">Прошивка не найдена</string>
 
     <string name="manual_input">Вручную</string>
-    <string name="button_submit">Отправить</string>
+    <string name="button_submit">Ответ</string>
     <string name="button_reset">Сброс</string>
 
     <string name="lang_zh">китайский</string>

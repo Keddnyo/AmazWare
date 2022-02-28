@@ -1,9 +1,9 @@
 package io.github.keddnyo.amazware.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.Adapter
@@ -14,6 +14,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
@@ -28,7 +29,7 @@ class Extras : AppCompatActivity() {
         super.onResume()
 
         title = getString(R.string.extras) // New Title
-        
+
         val okHttpClient = OkHttpClient()
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
@@ -58,10 +59,13 @@ class Extras : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val json = JSONObject(response.body()!!.string())
-                for (i in 1..1000) {
+                val array = json.toMap()
+                val keys = array.keys
+
+                for (i in keys) {
                     if (json.has(i.toString())) {
                         deviceSpinner.post {
-                            val name = json.getJSONObject(i.toString())
+                            val name = json.getJSONObject(i)
                                 .getString("name") // Filling dropdown list
                             devList.add(name)
                             devAdapter.notifyDataSetChanged()
@@ -140,7 +144,12 @@ class Extras : AppCompatActivity() {
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
-                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+                MakeRequest().directDevice(
+                    productionSource.text.toString(),
+                    deviceSource.text.toString(),
+                    appVersion.text.toString(),
+                    appName.text.toString()
+                )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -163,7 +172,12 @@ class Extras : AppCompatActivity() {
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
-                MakeRequest().directDevice(productionSource.text.toString(), deviceSource.text.toString(), appVersion.text.toString(), appName.text.toString())
+                MakeRequest().directDevice(
+                    productionSource.text.toString(),
+                    deviceSource.text.toString(),
+                    appVersion.text.toString(),
+                    appName.text.toString()
+                )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -189,7 +203,7 @@ class Extras : AppCompatActivity() {
                                     val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.firmware_version) + ": " + firmwareVersion,
+                                            "${getString(R.string.firmware_version)}: $firmwareVersion",
                                             "MD5: $firmwareMd5"
                                         )
                                     )
@@ -209,7 +223,7 @@ class Extras : AppCompatActivity() {
                                     val resourceMd5 = json.getString("resourceMd5") // Resources MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.resource_version) + ": " + resourceVersion,
+                                            "${getString(R.string.resource_version)}: $resourceVersion",
                                             "MD5: $resourceMd5"
                                         )
                                     )
@@ -230,7 +244,7 @@ class Extras : AppCompatActivity() {
                                         json.getString("baseResourceMd5") // Base resources MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.base_resource_version) + ": " + baseResourceVersion,
+                                            "${getString(R.string.base_resource_version)}: $baseResourceVersion",
                                             "MD5: $baseResourceMd5"
                                         )
                                     )
@@ -238,7 +252,7 @@ class Extras : AppCompatActivity() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.base_resource_version) + ": " + none,
+                                            "${getString(R.string.base_resource_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -249,7 +263,7 @@ class Extras : AppCompatActivity() {
                                     val fontMd5 = json.getString("fontMd5") // Font MD5
                                     list.add(
                                         Adapter(
-                                            getString(R.string.font_version) + ": " + fontVersion,
+                                            "${getString(R.string.font_version)}: $fontVersion",
                                             "MD5: $fontMd5"
                                         )
                                     )
@@ -257,7 +271,7 @@ class Extras : AppCompatActivity() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.font_version) + ": " + none,
+                                            "${getString(R.string.font_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -268,7 +282,7 @@ class Extras : AppCompatActivity() {
                                     val gpsMd5 = json.getString("gpsMd5") // gpsVersion
                                     list.add(
                                         Adapter(
-                                            getString(R.string.gps_version) + ": " + gpsVersion,
+                                            "${getString(R.string.gps_version)}: $gpsVersion",
                                             "MD5: $gpsMd5"
                                         )
                                     )
@@ -276,7 +290,7 @@ class Extras : AppCompatActivity() {
                                 } else {
                                     list.add(
                                         Adapter(
-                                            getString(R.string.gps_version) + ": " + none,
+                                            "${getString(R.string.gps_version)}: $none",
                                             "MD5: $none"
                                         )
                                     )
@@ -288,7 +302,7 @@ class Extras : AppCompatActivity() {
                                         Lang().rename(this@Extras, lang)
                                     list.add(
                                         Adapter(
-                                            getString(R.string.lang),
+                                            "${getString(R.string.lang)}:",
                                             language
                                         )
                                     )
@@ -334,7 +348,7 @@ class Extras : AppCompatActivity() {
                                             if (json.has("firmwareUrl")) {
                                                 val fileUrl = json.getString("firmwareUrl")
                                                 Download().run(
-                                                    Extras(),
+                                                    context,
                                                     fileUrl,
                                                     "firmware",
                                                     "?"
@@ -434,6 +448,18 @@ class Extras : AppCompatActivity() {
                     }
                 }
             })
+        }
+    }
+
+    private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
+        when (val value = this[it]) {
+            is JSONArray -> {
+                val map = (0 until value.length()).associate { Pair(it.toString(), value[it]) }
+                JSONObject(map).toMap().values.toList()
+            }
+            is JSONObject -> value.toMap()
+            JSONObject.NULL -> null
+            else -> value
         }
     }
 
