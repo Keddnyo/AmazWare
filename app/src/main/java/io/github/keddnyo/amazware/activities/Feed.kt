@@ -53,7 +53,9 @@ class Feed : AppCompatActivity() {
 
         okHttpClient.newCall(request).enqueue(object : Callback { // Creating request
             override fun onFailure(call: Call, e: IOException) { // Error
-                title = getString(R.string.error)
+                runOnUiThread {
+                    title = getString(R.string.error)
+                }
             }
 
             override fun onResponse(call: Call, response: Response) { // Success

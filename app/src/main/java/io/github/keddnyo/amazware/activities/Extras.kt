@@ -55,6 +55,9 @@ class Extras : AppCompatActivity() {
 
         okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    title = getString(R.string.error)
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -63,7 +66,7 @@ class Extras : AppCompatActivity() {
                 val keys = array.keys
 
                 for (i in keys) {
-                    if (json.has(i.toString())) {
+                    if (json.has(i)) {
                         deviceSpinner.post {
                             val name = json.getJSONObject(i)
                                 .getString("name") // Filling dropdown list
@@ -153,7 +156,9 @@ class Extras : AppCompatActivity() {
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    title = getString(R.string.error)
+                    runOnUiThread {
+                        title = getString(R.string.error)
+                    }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
