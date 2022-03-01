@@ -21,7 +21,6 @@ import java.io.IOException
 class Feed : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.setTheme(R.style.dialog)
         setContentView(R.layout.activity_feed)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

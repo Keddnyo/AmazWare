@@ -26,11 +26,11 @@
         </activity>
         <activity
             android:name=".activities.Feed"
-            android:exported="false"
-            android:theme="@android:style/Theme.Dialog" />
+            android:exported="false" />
         <activity
             android:name=".activities.ExtrasDialog"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".activities.Settings"
             android:exported="false" />
