@@ -24,15 +24,13 @@ class Feed : AppCompatActivity() {
         setContentView(R.layout.activity_feed)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        init()
+        title = getString(R.string.feed) // New title
     }
 
-    private fun init() {
-        title = getString(R.string.feed) // New title
-
+    override fun onResume() {
+        super.onResume()
         val okHttpClient = OkHttpClient()
         val deviceIndex = findViewById<ListView>(R.id.feedView)
-        val feedRefresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
         val firmwareString = getString(R.string.firmware_version)
         val languagesString = getString(R.string.lang)
         val changelogString = getString(R.string.change_log)
@@ -103,15 +101,6 @@ class Feed : AppCompatActivity() {
                 }
             }
         })
-
-        feedRefresh.setOnRefreshListener { // Pull refresh
-            list.clear()
-            adapter.notifyDataSetChanged()
-            init()
-            feedRefresh.isRefreshing = false
-
-            title = getString(R.string.feed)
-        }
     }
 
     private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->

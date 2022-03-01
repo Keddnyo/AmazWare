@@ -76,8 +76,8 @@ class Firmwarehouse : AppCompatActivity() {
             }
         }
 
-        webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ -> // Downloading code
-            Download().run(this, fileUrl, contentDisposition, mimeType)
+        webView.setDownloadListener { fileUrl, _, _, _, _ -> // Downloading code
+            Download().run(this, fileUrl)
         }
 
         refresh.setOnRefreshListener { // Pull refresh
@@ -101,7 +101,7 @@ class Firmwarehouse : AppCompatActivity() {
                 startActivity(Intent(this, Feed::class.java))
             }
             R.id.extras -> {
-                startActivity(Intent(this, Extras::class.java))
+                startActivity(Intent(this, ExtrasDialog::class.java))
             }
             R.id.settings -> {
                 startActivity(Intent(this, Settings::class.java))

@@ -5,4 +5,7 @@
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 
+    <style name="dialog" parent="Theme.AppCompat.DayNight.Dialog">
+    </style>
+
 </resources>
