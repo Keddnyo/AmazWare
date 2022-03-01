@@ -14,6 +14,7 @@ class ExtrasResponse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_extras_response)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = intent.getStringExtra("title") // New Title
     }
@@ -296,5 +297,10 @@ class ExtrasResponse : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
