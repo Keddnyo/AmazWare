@@ -1,5 +1,6 @@
 package io.github.keddnyo.amazware.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -18,10 +19,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class Extras : AppCompatActivity() {
+class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.setTheme(R.style.dialog)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extras)
+        setContentView(R.layout.activity_extras_dialog)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -38,17 +40,14 @@ class Extras : AppCompatActivity() {
         val deviceSource: EditText = findViewById(R.id.deviceSource)
         val appVersion: EditText = findViewById(R.id.appVersion)
         val appName: EditText = findViewById(R.id.appName)
-        val buttonReset = findViewById<Button>(R.id.buttonReset)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
-        val responseList = findViewById<ListView>(R.id.responseList)
-        val responseField = findViewById<TextView>(R.id.responseField)
         val none = getString(R.string.none)
 
         val devList = ArrayList<String>()
         val devAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, devList)
         val deviceList = MakeRequest().getDevices()
-        val context = this@Extras
+        val context = this@ExtrasDialog
 
         devList.add(getString(R.string.manual_input))
         devAdapter.notifyDataSetChanged()
@@ -117,30 +116,6 @@ class Extras : AppCompatActivity() {
         })
         deviceSpinner.adapter = devAdapter
 
-        val list = ArrayList<Adapter>() // Setting response adapter
-        val adapter = SimpleAdapter(
-            this,
-            list,
-            android.R.layout.two_line_list_item,
-            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
-            intArrayOf(
-                android.R.id.text1, android.R.id.text2
-            )
-        )
-        responseList.adapter = adapter
-
-        buttonReset.setOnClickListener {
-            title = getString(R.string.extras)
-            responseList.visibility = View.GONE
-            responseField.text = null
-            list.clear()
-            deviceSpinner.setSelection(0)
-            productionSource.text.clear()
-            deviceSource.text.clear()
-            appVersion.text.clear()
-            appName.text.clear()
-        }
-
         buttonSubmit.setOnLongClickListener {
             list.clear()
             responseList.visibility = View.GONE
@@ -192,10 +167,14 @@ class Extras : AppCompatActivity() {
                 override fun onResponse(call: Call, response: Response) {
                     val json = JSONObject(response.body()!!.string())
 
+                    val intent = Intent(context, ExtrasResponse::class.java)
+
                     when (sharedPreferences.getBoolean("simple_response", true)) {
                         false -> {
                             responseField.post {
                                 responseField.text = json.toString()
+
+                                intent.putExtra("json", json.toString())
                             }
                         }
                         true -> {
@@ -206,6 +185,12 @@ class Extras : AppCompatActivity() {
                                     val firmwareVersion =
                                         json.getString("firmwareVersion") // Firmware
                                     val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
+                                    val firmwareUrl = json.getString("firmwareUrl")
+
+                                    intent.putExtra("firmwareVersion", firmwareVersion)
+                                    intent.putExtra("firmwareMd5", firmwareMd5)
+                                    intent.putExtra("firmwareUrl", firmwareUrl)
+
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.firmware_version)}: $firmwareVersion",
@@ -226,6 +211,12 @@ class Extras : AppCompatActivity() {
                                     val resourceVersion =
                                         json.getString("resourceVersion") // Resources
                                     val resourceMd5 = json.getString("resourceMd5") // Resources MD5
+                                    val resourceUrl = json.getString("resourceUrl")
+
+                                    intent.putExtra("resourceVersion", resourceVersion)
+                                    intent.putExtra("resourceMd5", resourceMd5)
+                                    intent.putExtra("resourceUrl", resourceUrl)
+
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.resource_version)}: $resourceVersion",
@@ -247,6 +238,12 @@ class Extras : AppCompatActivity() {
                                         json.getString("baseResourceVersion") // Base resources
                                     val baseResourceMd5 =
                                         json.getString("baseResourceMd5") // Base resources MD5
+                                    val baseResourceUrl = json.getString("baseResourceUrl")
+
+                                    intent.putExtra("baseResourceVersion", baseResourceVersion)
+                                    intent.putExtra("baseResourceMd5", baseResourceMd5)
+                                    intent.putExtra("baseResourceUrl", baseResourceUrl)
+
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.base_resource_version)}: $baseResourceVersion",
@@ -266,6 +263,12 @@ class Extras : AppCompatActivity() {
                                 if (json.has("fontVersion")) {
                                     val fontVersion = json.getString("fontVersion") // Font
                                     val fontMd5 = json.getString("fontMd5") // Font MD5
+                                    val fontUrl = json.getString("fontUrl")
+
+                                    intent.putExtra("fontVersion", fontVersion)
+                                    intent.putExtra("fontMd5", fontMd5)
+                                    intent.putExtra("fontUrl", fontUrl)
+
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.font_version)}: $fontVersion",
@@ -285,6 +288,12 @@ class Extras : AppCompatActivity() {
                                 if (json.has("gpsVersion")) {
                                     val gpsVersion = json.getString("gpsVersion") // gpsVersion
                                     val gpsMd5 = json.getString("gpsMd5") // gpsVersion
+                                    val gpsUrl = json.getString("gpsUrl")
+
+                                    intent.putExtra("gpsVersion", gpsVersion)
+                                    intent.putExtra("gpsMd5", gpsMd5)
+                                    intent.putExtra("gpsUrl", gpsUrl)
+
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.gps_version)}: $gpsVersion",
@@ -303,8 +312,11 @@ class Extras : AppCompatActivity() {
                                 }
                                 if (json.has("lang")) {
                                     val lang = json.getString("lang") // Languages
+
+                                    intent.putExtra("lang", lang)
+
                                     val language =
-                                        Lang().rename(this@Extras, lang)
+                                        Lang().rename(this@ExtrasDialog, lang)
                                     list.add(
                                         Adapter(
                                             "${getString(R.string.lang)}:",
@@ -323,6 +335,9 @@ class Extras : AppCompatActivity() {
                                 }
                                 if (json.has("changeLog")) {
                                     var changelog = json.getString("changeLog") // changeLog
+
+                                    intent.putExtra("changelog", changelog)
+
                                     changelog = changelog.substringBefore('#')
                                     list.add(
                                         Adapter(
@@ -343,6 +358,8 @@ class Extras : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     title = getString(R.string.error)
+                                } else {
+                                    startActivity(intent)
                                 }
                             }
 

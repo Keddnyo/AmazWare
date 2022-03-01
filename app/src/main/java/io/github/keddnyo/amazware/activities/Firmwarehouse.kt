@@ -101,7 +101,7 @@ class Firmwarehouse : AppCompatActivity() {
                 startActivity(Intent(this, Feed::class.java))
             }
             R.id.extras -> {
-                startActivity(Intent(this, Extras::class.java))
+                startActivity(Intent(this, ExtrasDialog::class.java))
             }
             R.id.settings -> {
                 startActivity(Intent(this, Settings::class.java))

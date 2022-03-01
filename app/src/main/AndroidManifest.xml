@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.github.keddnyo.amazware">
+    package="io.github.keddnyo.amazware" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
@@ -11,10 +11,13 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AmazWare">
+        android:theme="@style/Theme.AmazWare" >
+        <activity
+            android:name=".activities.ExtrasResponse"
+            android:exported="false" />
         <activity
             android:name=".activities.Firmwarehouse"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +26,10 @@
         </activity>
         <activity
             android:name=".activities.Feed"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".activities.Extras"
+            android:name=".activities.ExtrasDialog"
             android:exported="false" />
         <activity
             android:name=".activities.Settings"

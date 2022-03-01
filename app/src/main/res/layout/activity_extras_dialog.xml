@@ -53,49 +53,15 @@
             android:maxLength="21"
             tools:ignore="Autofill,TextFields" />
 
-        <TableLayout
+        <Button
+            android:id="@+id/buttonSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/buttonReset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/secondary"
-                    android:text="@string/button_reset"
-                    android:textColor="@color/secondary_background"
-                    tools:ignore="ButtonStyle" />
-
-                <Button
-                    android:id="@+id/buttonSubmit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/secondary"
-                    android:longClickable="true"
-                    android:text="@string/button_submit"
-                    android:textColor="@color/secondary_background"
-                    tools:ignore="ButtonStyle" />
-            </TableRow>
-        </TableLayout>
-
-        <ListView
-            android:id="@+id/responseList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            tools:ignore="NestedScrolling" />
-
-        <TextView
-            android:id="@+id/responseField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textIsSelectable="true" />
+            android:backgroundTint="@color/secondary"
+            android:longClickable="true"
+            android:text="@string/button_submit"
+            android:textColor="@color/secondary_background"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
