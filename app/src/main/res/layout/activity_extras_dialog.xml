@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/secondary"
             android:longClickable="true"
-            android:text="@string/button_submit"
+            android:text="@android:string/ok"
             android:textColor="@color/secondary_background"
             tools:ignore="ButtonStyle" />
 

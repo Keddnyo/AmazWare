@@ -204,9 +204,7 @@ class ExtrasResponse : AppCompatActivity() {
                                 if (firmwareUrl != null) {
                                     Download().run(
                                         context,
-                                        firmwareUrl,
-                                        "firmware",
-                                        "?"
+                                        firmwareUrl
                                     )
                                 } else {
                                     Toast.makeText(
@@ -220,9 +218,7 @@ class ExtrasResponse : AppCompatActivity() {
                                 if (resourceUrl != null) {
                                     Download().run(
                                         context,
-                                        resourceUrl,
-                                        "resource",
-                                        "?"
+                                        resourceUrl
                                     )
                                 } else {
                                     Toast.makeText(
@@ -236,9 +232,7 @@ class ExtrasResponse : AppCompatActivity() {
                                 if (baseResourceUrl != null) {
                                     Download().run(
                                         context,
-                                        baseResourceUrl,
-                                        "base_resource",
-                                        "?"
+                                        baseResourceUrl
                                     )
                                 } else {
                                     Toast.makeText(
@@ -252,9 +246,7 @@ class ExtrasResponse : AppCompatActivity() {
                                 if (fontUrl != null) {
                                     Download().run(
                                         context,
-                                        fontUrl,
-                                        "font",
-                                        "?"
+                                        fontUrl
                                     )
                                 } else {
                                     Toast.makeText(
@@ -268,9 +260,7 @@ class ExtrasResponse : AppCompatActivity() {
                                 if (gpsUrl != null) {
                                     Download().run(
                                         context,
-                                        gpsUrl,
-                                        "gps",
-                                        "?"
+                                        gpsUrl
                                     )
                                 } else {
                                     Toast.makeText(

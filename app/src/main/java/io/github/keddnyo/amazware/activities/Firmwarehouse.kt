@@ -76,8 +76,8 @@ class Firmwarehouse : AppCompatActivity() {
             }
         }
 
-        webView.setDownloadListener { fileUrl, _, contentDisposition, mimeType, _ -> // Downloading code
-            Download().run(this, fileUrl, contentDisposition, mimeType)
+        webView.setDownloadListener { fileUrl, _, _, _, _ -> // Downloading code
+            Download().run(this, fileUrl)
         }
 
         refresh.setOnRefreshListener { // Pull refresh

@@ -14,10 +14,12 @@
         android:theme="@style/Theme.AmazWare">
         <activity
             android:name=".activities.ExtrasResponse"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activities.Firmwarehouse"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,14 +28,17 @@
         </activity>
         <activity
             android:name=".activities.Feed"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activities.ExtrasDialog"
             android:exported="false"
+            android:launchMode="singleTask"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".activities.Settings"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
