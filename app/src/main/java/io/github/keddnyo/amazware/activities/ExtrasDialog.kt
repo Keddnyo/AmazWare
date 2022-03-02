@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.MakeRequest
 import okhttp3.Call
@@ -14,6 +15,7 @@ import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+
 
 class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +30,17 @@ class ExtrasDialog : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sharedPreferences.edit()
+
         val okHttpClient = OkHttpClient()
         val deviceSpinner = findViewById<Spinner>(R.id.deviceList)
         val productionSource: EditText = findViewById(R.id.productionSource)
         val deviceSource: EditText = findViewById(R.id.deviceSource)
         val appVersion: EditText = findViewById(R.id.appVersion)
         val appName: EditText = findViewById(R.id.appName)
+        val buttonImport = findViewById<Button>(R.id.buttonImport)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
 
         val devList = ArrayList<String>()
@@ -45,6 +52,22 @@ class ExtrasDialog : AppCompatActivity() {
 
         devList.add(getString(R.string.manual_input))
         devAdapter.notifyDataSetChanged()
+
+        if ((sharedPreferences.getString(
+                "productionSource",
+                ""
+            ) != "") || (sharedPreferences.getString(
+                "deviceSource",
+                ""
+            ) != "") || (sharedPreferences.getString(
+                "appVersion",
+                ""
+            ) != "") || (sharedPreferences.getString("appname", "") != "")
+        ) {
+            buttonImport.visibility = View.VISIBLE
+        } else {
+            buttonImport.visibility = View.GONE
+        }
 
         okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -97,7 +120,7 @@ class ExtrasDialog : AppCompatActivity() {
                                     productionSource.isEnabled = false
                                 } else if (selectedItem == getString(R.string.manual_input)) {
 
-                                    intent.putExtra("title", getString(R.string.server_response))
+                                    intent.putExtra("title", getString(R.string.behaviour))
 
                                     deviceSource.isEnabled = true
                                     productionSource.isEnabled = true
@@ -205,6 +228,33 @@ class ExtrasDialog : AppCompatActivity() {
                     }
                 }
             })
+        }
+
+        buttonImport.setOnClickListener {
+            productionSource.setText(sharedPreferences.getString("productionSource", ""))
+            deviceSource.setText(sharedPreferences.getString("deviceSource", ""))
+            appVersion.setText(sharedPreferences.getString("appVersion", ""))
+            appName.setText(sharedPreferences.getString("appname", ""))
+        }
+
+        buttonImport.setOnLongClickListener {
+            editor.remove("productionSource")
+            editor.remove("deviceSource")
+            editor.remove("appVersion")
+            editor.remove("appname")
+            editor.apply()
+            buttonImport.visibility = View.GONE
+            true
+        }
+
+        buttonSubmit.setOnLongClickListener {
+            editor.putString("productionSource", productionSource.text.toString())
+            editor.putString("deviceSource", deviceSource.text.toString())
+            editor.putString("appVersion", appVersion.text.toString())
+            editor.putString("appname", appName.text.toString())
+            editor.apply()
+            buttonImport.visibility = View.VISIBLE
+            true
         }
     }
 

@@ -4,10 +4,11 @@
     <string name="error">Ошибка</string>
     <string name="feed">Лента</string>
     <string name="extras">Экстра</string>
+    <string name="import_device_values">Импорт</string>
     <string name="About">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="download_provider">Встроенный загрузчик</string>
-    <string name="server_response">Ответ сервера</string>
+    <string name="behaviour">Поведение</string>
     <string name="list_style_response">Ответ списоком в Extras</string>
     <string name="full_lang_names">Полные названия языков</string>
     <string name="download">Загрузка</string>

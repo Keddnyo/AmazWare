@@ -54,15 +54,40 @@
             android:maxLength="20"
             tools:ignore="Autofill,TextFields" />
 
-        <Button
-            android:id="@+id/buttonSubmit"
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondary"
-            android:longClickable="true"
-            android:text="@android:string/ok"
-            android:textColor="@color/secondary_background"
-            tools:ignore="ButtonStyle" />
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buttonImport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:longClickable="true"
+                    android:text="@string/import_device_values"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:longClickable="true"
+                    android:text="@android:string/ok"
+                    android:textColor="@color/secondary_background"
+                    tools:ignore="ButtonStyle" />
+
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 
