@@ -57,7 +57,6 @@ class Lang {
                 l = l.replace("tr",". tr .")
                 l = l.replace("pt",". pt .")
 
-                l = l.replace(". pt ._br",". pt_br .")
                 l = l.replace(". pt .-br",". pt-br .")
 
                 l = l.replace("pl",". pl .")
@@ -96,7 +95,6 @@ class Lang {
                 l = l.replace(". de .",". $langDE .")
                 l = l.replace(". it .",". $langIT .")
                 l = l.replace(". tr .",". $langTR .")
-                l = l.replace(". pt_br .",". $langPTBR .")
                 l = l.replace(". pt-br .",". $langPTBR .")
                 l = l.replace(". pl .",". $langPL .")
                 l = l.replace(". ja .",". $langJA .")
