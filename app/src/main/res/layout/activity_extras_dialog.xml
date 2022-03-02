@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/request_device_source"
             android:inputType="number"
-            android:maxLength="2"
+            android:maxLength="3"
             tools:ignore="Autofill" />
 
         <EditText
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/request_app_name"
-            android:maxLength="21"
+            android:maxLength="20"
             tools:ignore="Autofill,TextFields" />
 
         <Button
