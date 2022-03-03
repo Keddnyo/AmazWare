@@ -35,11 +35,11 @@ class ExtrasDialog : AppCompatActivity() {
         val editor = sharedPreferences.edit()
 
         val okHttpClient = OkHttpClient()
-        val deviceSpinner = findViewById<Spinner>(R.id.deviceList)
+        val deviceSpinner: Spinner = findViewById(R.id.deviceList)
         val productionSource: EditText = findViewById(R.id.productionSource)
         val deviceSource: EditText = findViewById(R.id.deviceSource)
         val appVersion: EditText = findViewById(R.id.appVersion)
-        val appName: EditText = findViewById(R.id.appName)
+        val appName: Spinner = findViewById(R.id.appName)
         val buttonImport = findViewById<Button>(R.id.buttonImport)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
 
@@ -50,8 +50,18 @@ class ExtrasDialog : AppCompatActivity() {
         val context = this@ExtrasDialog
         val intent = Intent(context, ExtrasResponse::class.java)
 
+        val appname = ArrayList<String>()
+        val appSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, appname)
+        val zepp = "com.huami.midong"
+        val mifit = "com.xiaomi.hm.health"
+        appname.add(zepp) // 0
+        appname.add(mifit) // 1
+        appSpinner.notifyDataSetChanged()
+        appName.setSelection(0)
+
         devList.add(getString(R.string.manual_input))
         devAdapter.notifyDataSetChanged()
+        appName.adapter = appSpinner
 
         if ((sharedPreferences.getString(
                 "productionSource",
@@ -113,7 +123,18 @@ class ExtrasDialog : AppCompatActivity() {
 
                                     deviceSource.setText(i.toString())
                                     productionSource.setText(productionSourceResult)
-                                    appName.setText(appnameResult)
+                                    val index = when (appnameResult) {
+                                        zepp -> {
+                                            0 // zepp
+                                        }
+                                        mifit -> {
+                                            1 // mifit
+                                        }
+                                        else -> {
+                                            0 // zepp
+                                        }
+                                    }
+                                    appName.setSelection(index)
                                     appVersion.setText(appVersionResult)
 
                                     deviceSource.isEnabled = false
@@ -144,7 +165,7 @@ class ExtrasDialog : AppCompatActivity() {
                     productionSource.text.toString(),
                     deviceSource.text.toString(),
                     appVersion.text.toString(),
-                    appName.text.toString()
+                    appName.selectedItem.toString()
                 )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
@@ -235,7 +256,7 @@ class ExtrasDialog : AppCompatActivity() {
             productionSource.setText(sharedPreferences.getString("productionSource", ""))
             deviceSource.setText(sharedPreferences.getString("deviceSource", ""))
             appVersion.setText(sharedPreferences.getString("appVersion", ""))
-            appName.setText(sharedPreferences.getString("appname", ""))
+            appName.setSelection(sharedPreferences.getInt("appname", 0))
         }
 
         buttonImport.setOnLongClickListener {
@@ -252,7 +273,7 @@ class ExtrasDialog : AppCompatActivity() {
             editor.putString("productionSource", productionSource.text.toString())
             editor.putString("deviceSource", deviceSource.text.toString())
             editor.putString("appVersion", appVersion.text.toString())
-            editor.putString("appname", appName.text.toString())
+            editor.putInt("appname", appName.selectedItemId.toInt())
             editor.apply()
             buttonImport.visibility = View.VISIBLE
             true
