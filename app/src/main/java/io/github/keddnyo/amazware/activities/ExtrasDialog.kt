@@ -140,7 +140,6 @@ class ExtrasDialog : AppCompatActivity() {
                                     deviceSource.isEnabled = false
                                     productionSource.isEnabled = false
                                 } else if (selectedItem == getString(R.string.manual_input)) {
-
                                     intent.putExtra("title", getString(R.string.server_response))
 
                                     deviceSource.isEnabled = true
@@ -257,6 +256,7 @@ class ExtrasDialog : AppCompatActivity() {
             deviceSource.setText(sharedPreferences.getString("deviceSource", ""))
             appVersion.setText(sharedPreferences.getString("appVersion", ""))
             appName.setSelection(sharedPreferences.getInt("appname", 0))
+            intent.putExtra("title", getString(R.string.server_response))
         }
 
         buttonImport.setOnLongClickListener {
