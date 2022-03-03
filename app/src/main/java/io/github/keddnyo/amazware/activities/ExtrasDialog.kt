@@ -72,7 +72,7 @@ class ExtrasDialog : AppCompatActivity() {
             ) != "") || (sharedPreferences.getString(
                 "appVersion",
                 ""
-            ) != "") || (sharedPreferences.getString("appname", "") != "")
+            ) != "")
         ) {
             buttonImport.visibility = View.VISIBLE
         } else {
