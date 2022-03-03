@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:scrollbars="vertical"
-    android:minWidth="290dp">
+    android:minWidth="290dp"
+    android:scrollbars="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,12 @@
 
         <Spinner
             android:id="@+id/deviceList"
+            style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:prompt="@string/device_prompt"
+            android:spinnerMode="dialog" />
 
         <EditText
             android:id="@+id/productionSource"
@@ -72,8 +76,8 @@
                     android:longClickable="true"
                     android:text="@string/import_device_values"
                     android:textColor="@color/secondary_background"
-                    tools:ignore="ButtonStyle"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/buttonSubmit"

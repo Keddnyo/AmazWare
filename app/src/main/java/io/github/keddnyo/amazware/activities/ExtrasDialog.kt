@@ -120,7 +120,7 @@ class ExtrasDialog : AppCompatActivity() {
                                     productionSource.isEnabled = false
                                 } else if (selectedItem == getString(R.string.manual_input)) {
 
-                                    intent.putExtra("title", getString(R.string.behaviour))
+                                    intent.putExtra("title", getString(R.string.server_response))
 
                                     deviceSource.isEnabled = true
                                     productionSource.isEnabled = true
@@ -231,6 +231,7 @@ class ExtrasDialog : AppCompatActivity() {
         }
 
         buttonImport.setOnClickListener {
+            deviceSpinner.setSelection(0)
             productionSource.setText(sharedPreferences.getString("productionSource", ""))
             deviceSource.setText(sharedPreferences.getString("deviceSource", ""))
             appVersion.setText(sharedPreferences.getString("appVersion", ""))

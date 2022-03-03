@@ -11,7 +11,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/behaviour">
+    <PreferenceCategory app:title="@string/server_response">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"

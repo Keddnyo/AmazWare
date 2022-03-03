@@ -8,13 +8,16 @@
     <string name="About">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="download_provider">Встроенный загрузчик</string>
-    <string name="behaviour">Поведение</string>
+    <string name="server_response">Ответ сервера</string>
     <string name="list_style_response">Ответ списоком в Extras</string>
     <string name="full_lang_names">Полные названия языков</string>
     <string name="download">Загрузка</string>
     <string name="download_notification">Уведомление о загрузке</string>
     <string name="appearance">Внешний вид</string>
     <string name="dark_mode">Тёмная тема</string>
+
+    <string name="device_prompt">Выберите устройство</string>
+    <string name="manual_input">Вручную</string>
 
     <string name="firmware_version">Версия прошивки</string>
     <string name="resource_version">Версия ресурсов</string>
@@ -27,7 +30,6 @@
     <string name="none">None</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
 
-    <string name="manual_input">Вручную</string>
 
     <string name="lang_zh">китайский</string>
     <string name="lang_en">английский</string>

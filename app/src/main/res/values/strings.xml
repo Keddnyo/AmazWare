@@ -11,13 +11,20 @@
     <string name="About">About</string>
     <string name="settings">Settings</string>
     <string name="download_provider">Built-in download provider</string>
-    <string name="behaviour">Behaviour</string>
+    <string name="server_response">Server response</string>
     <string name="list_style_response">List-style Extras response</string>
     <string name="full_lang_names">Full languages names</string>
     <string name="download">Download</string>
     <string name="download_notification">Show download notification</string>
     <string name="appearance">Appearance</string>
     <string name="dark_mode">Dark mode</string>
+
+    <string name="device_prompt">Choose a device</string>
+    <string name="manual_input">Manual</string>
+    <string name="request_device_source" translatable="false">deviceSource</string>
+    <string name="request_production_source" translatable="false">productionSource</string>
+    <string name="request_app_name" translatable="false">appname</string>
+    <string name="request_app_version" translatable="false">appVersion</string>
 
     <string name="firmware_version">Firmware version</string>
     <string name="resource_version">Resources version</string>
@@ -29,12 +36,6 @@
     <string name="date">Release date</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Firmware not found</string>
-
-    <string name="manual_input">Manual</string>
-    <string name="request_device_source" translatable="false">deviceSource</string>
-    <string name="request_production_source" translatable="false">productionSource</string>
-    <string name="request_app_name" translatable="false">appname</string>
-    <string name="request_app_version" translatable="false">appVersion</string>
 
     <string name="lang_zh">Chinese</string>
     <string name="lang_en">English</string>
