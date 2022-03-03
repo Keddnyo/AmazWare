@@ -21,7 +21,7 @@ class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.setTheme(R.style.dialog)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extras_dialog)
+        setContentView(R.layout.extras_dialog)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = getString(R.string.extras) // New Title

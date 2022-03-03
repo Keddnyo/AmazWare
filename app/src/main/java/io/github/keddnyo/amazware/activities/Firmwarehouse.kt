@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
@@ -25,7 +24,7 @@ import io.github.keddnyo.amazware.utils.MakeRequest
 class Firmwarehouse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_firmwarehouse)
+        setContentView(R.layout.firmwarehouse)
 
         title = getString(R.string.firmwarehouse) // New title
 
@@ -62,7 +61,7 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         webSettings!!.javaScriptEnabled = true
-        webView.loadUrl(MakeRequest().openExplorePage(this)) // Loading WebView
+        webView.loadUrl(MakeRequest().openFirmwarehouse(this)) // Loading WebView
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
@@ -103,9 +102,12 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         floatingButton.setOnClickListener {
-            val deviceSource = sharedPreferences.getString("deviceSource", "")
-            val url = "https://schakal.ru/fw/firmwares_list.htm?device=$deviceSource"
-            webView.loadUrl(url)
+            webView.loadUrl(MakeRequest().openFirmwarehouseDevice(this))
+        }
+
+        floatingButton.setOnLongClickListener {
+            webView.loadUrl(MakeRequest().openFirmwarehouse(this))
+            true
         }
     }
 

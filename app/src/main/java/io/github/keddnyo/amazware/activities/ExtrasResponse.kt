@@ -13,7 +13,7 @@ import io.github.keddnyo.amazware.utils.Lang
 class ExtrasResponse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extras_response)
+        setContentView(R.layout.extras_response)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = intent.getStringExtra("title") // New Title

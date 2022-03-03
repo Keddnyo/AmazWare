@@ -17,7 +17,7 @@
     <string name="dark_mode">Тёмная тема</string>
 
     <string name="device_prompt">Выберите устройство</string>
-    <string name="manual_input">Вручную</string>
+    <string name="manual_input">Ручной ввод</string>
 
     <string name="firmware_version">Версия прошивки</string>
     <string name="resource_version">Версия ресурсов</string>

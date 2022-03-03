@@ -9,7 +9,7 @@ import org.json.JSONObject
 import java.util.*
 
 class MakeRequest {
-    fun openExplorePage(context: Context): String {
+    fun openFirmwarehouse(context: Context): String {
         val lang = Locale.getDefault().language.toString()
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
@@ -29,6 +29,31 @@ class MakeRequest {
             .appendPath("firmwares_list.htm")
             .appendQueryParameter("theme", theme)
             .appendQueryParameter("lang", lang)
+
+        return url.toString()
+    }
+    fun openFirmwarehouseDevice(context: Context): String {
+        val lang = Locale.getDefault().language.toString()
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+        val deviceSource = sharedPreferences.getString("deviceSource", "") // Device from Shared Preferences (saved)
+        val url: Uri.Builder = Uri.Builder()
+        val theme = when (sharedPreferences.getBoolean("dark_mode", false)) { // Set theme
+            true -> {
+                "dark"
+            }
+            false -> {
+                "light"
+            }
+        }
+
+        url.scheme("https")
+            .authority("schakal.ru")
+            .appendPath("fw")
+            .appendPath("firmwares_list.htm")
+            .appendQueryParameter("theme", theme)
+            .appendQueryParameter("lang", lang)
+            .appendQueryParameter("device", deviceSource)
 
         return url.toString()
     }

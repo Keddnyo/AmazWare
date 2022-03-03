@@ -21,7 +21,7 @@ import java.io.IOException
 class Feed : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed)
+        setContentView(R.layout.feed)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = getString(R.string.feed) // New title
@@ -29,6 +29,16 @@ class Feed : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        init() // First load
+
+        val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+        refresh.setOnRefreshListener { // Pull refresh
+            init()
+            refresh.isRefreshing = false
+        }
+    }
+
+    private fun init() {
         val okHttpClient = OkHttpClient()
         val deviceIndex = findViewById<ListView>(R.id.feedView)
         val firmwareString = getString(R.string.firmware_version)
