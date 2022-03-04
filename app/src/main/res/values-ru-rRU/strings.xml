@@ -9,27 +9,21 @@
     <string name="settings">Настройки</string>
     <string name="download_provider">Встроенный загрузчик</string>
     <string name="server_response">Ответ сервера</string>
-    <string name="list_style_response">Ответ списоком в Extras</string>
-    <string name="full_lang_names">Полные названия языков</string>
-    <string name="download">Загрузка</string>
-    <string name="download_notification">Уведомление о загрузке</string>
-    <string name="appearance">Внешний вид</string>
+    <string name="extras_list_style_response">Ответ списоком в Экстра</string>
     <string name="dark_mode">Тёмная тема</string>
 
     <string name="device_prompt">Выберите устройство</string>
     <string name="manual_input">Ручной ввод</string>
 
-    <string name="firmware_version">Версия прошивки</string>
-    <string name="resource_version">Версия ресурсов</string>
-    <string name="base_resource_version">Версия базовых ресурсов</string>
-    <string name="font_version">Версия шрифта</string>
-    <string name="gps_version">Версия GPS</string>
+    <string name="firmware">Прошивка</string>
+    <string name="resource">Расширение</string>
+    <string name="base_resource">Базовое расширение</string>
+    <string name="font">Шрифт</string>
     <string name="lang">Языки</string>
     <string name="change_log">Список изменений</string>
-    <string name="date">Дата выхода</string>
-    <string name="none">None</string>
+    <string name="date">Дата</string>
+    <string name="none">Отсутствует</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
-
 
     <string name="lang_zh">китайский</string>
     <string name="lang_en">английский</string>

@@ -19,14 +19,7 @@ class Download {
                 request.setDescription(context.getString(R.string.downloading))
                 request.setTitle(URLUtil.guessFileName(fileUrl, "?", "?"))
                 request.allowScanningByMediaScanner()
-                when {
-                    sharedPreferences.getBoolean("download_notification", true) -> {
-                        request.setNotificationVisibility(1)
-                    }
-                    else -> {
-                        request.setNotificationVisibility(0)
-                    }
-                }
+                request.setNotificationVisibility(1)
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(fileUrl, "?", "?"))
                 val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 dm.enqueue(request)

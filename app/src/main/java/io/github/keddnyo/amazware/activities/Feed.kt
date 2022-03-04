@@ -41,7 +41,7 @@ class Feed : AppCompatActivity() {
     private fun init() {
         val okHttpClient = OkHttpClient()
         val deviceIndex = findViewById<ListView>(R.id.feedView)
-        val firmwareString = getString(R.string.firmware_version)
+        val firmwareString = getString(R.string.firmware)
         val languagesString = getString(R.string.lang)
         val changelogString = getString(R.string.change_log)
         val dateString = getString(R.string.date)

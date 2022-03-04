@@ -76,7 +76,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (firmwareVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.firmware_version)}: $firmwareVersion",
+                            "${getString(R.string.firmware)}: $firmwareVersion",
                             "MD5: $firmwareMd5"
                         )
                     )
@@ -84,7 +84,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.firmware_version) + ": " + none,
+                            getString(R.string.firmware) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -93,7 +93,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (resourceVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.resource_version)}: $resourceVersion",
+                            "${getString(R.string.resource)}: $resourceVersion",
                             "MD5: $resourceMd5"
                         )
                     )
@@ -101,7 +101,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.resource_version) + ": " + none,
+                            getString(R.string.resource) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -110,7 +110,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (baseResourceVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.base_resource_version)}: $baseResourceVersion",
+                            "${getString(R.string.base_resource)}: $baseResourceVersion",
                             "MD5: $baseResourceMd5"
                         )
                     )
@@ -118,7 +118,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.base_resource_version) + ": " + none,
+                            getString(R.string.base_resource) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -127,7 +127,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (fontVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.font_version)}: $fontVersion",
+                            "${getString(R.string.font)}: $fontVersion",
                             "MD5: $fontMd5"
                         )
                     )
@@ -135,7 +135,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.font_version) + ": " + none,
+                            getString(R.string.font) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -144,7 +144,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (gpsVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.gps_version)}: $gpsVersion",
+                            "${getString(R.string.gps)}: $gpsVersion",
                             "MD5: $gpsMd5"
                         )
                     )
@@ -152,7 +152,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.gps_version) + ": " + none,
+                            getString(R.string.gps) + ": " + none,
                             "MD5: $none"
                         )
                     )

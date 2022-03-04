@@ -12,11 +12,7 @@
     <string name="settings">Settings</string>
     <string name="download_provider">Built-in download provider</string>
     <string name="server_response">Server response</string>
-    <string name="list_style_response">List-style Extras response</string>
-    <string name="full_lang_names">Full languages names</string>
-    <string name="download">Download</string>
-    <string name="download_notification">Show download notification</string>
-    <string name="appearance">Appearance</string>
+    <string name="extras_list_style_response">List-style Extras response</string>
     <string name="dark_mode">Dark mode</string>
 
     <string name="device_prompt">Choose a device</string>
@@ -26,14 +22,14 @@
     <string name="request_app_name" translatable="false">appname</string>
     <string name="request_app_version" translatable="false">appVersion</string>
 
-    <string name="firmware_version">Firmware version</string>
-    <string name="resource_version">Resources version</string>
-    <string name="base_resource_version">Base resources version</string>
-    <string name="font_version">Font version</string>
-    <string name="gps_version">GPS version</string>
+    <string name="firmware">Firmware</string>
+    <string name="resource">Resource</string>
+    <string name="base_resource">Base resource</string>
+    <string name="font">Font</string>
+    <string name="gps" translatable="false">GPS</string>
     <string name="lang">Languages</string>
     <string name="change_log">Changelog</string>
-    <string name="date">Release date</string>
+    <string name="date">Date</string>
     <string name="none">None</string>
     <string name="firmware_not_found">Firmware not found</string>
 
