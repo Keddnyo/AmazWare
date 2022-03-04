@@ -206,12 +206,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         firmwareUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             1 -> {
@@ -220,12 +214,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         resourceUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             2 -> {
@@ -234,12 +222,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         baseResourceUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             3 -> {
@@ -248,12 +230,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         fontUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             4 -> {
@@ -262,24 +238,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         gpsUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                            5 -> {
-                                if (lang != null) {
-                                    Toast.makeText(context, lang, Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                         }
