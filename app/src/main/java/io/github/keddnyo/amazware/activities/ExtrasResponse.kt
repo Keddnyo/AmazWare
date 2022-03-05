@@ -2,7 +2,10 @@ package io.github.keddnyo.amazware.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.SimpleAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
@@ -13,7 +16,7 @@ import io.github.keddnyo.amazware.utils.Lang
 class ExtrasResponse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extras_response)
+        setContentView(R.layout.extras_response)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = intent.getStringExtra("title") // New Title
@@ -76,7 +79,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (firmwareVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.firmware_version)}: $firmwareVersion",
+                            "${getString(R.string.firmware_fw)}: $firmwareVersion",
                             "MD5: $firmwareMd5"
                         )
                     )
@@ -84,7 +87,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.firmware_version) + ": " + none,
+                            getString(R.string.firmware_fw) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -93,7 +96,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (resourceVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.resource_version)}: $resourceVersion",
+                            "${getString(R.string.firmware_res)}: $resourceVersion",
                             "MD5: $resourceMd5"
                         )
                     )
@@ -101,7 +104,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.resource_version) + ": " + none,
+                            getString(R.string.firmware_res) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -110,7 +113,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (baseResourceVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.base_resource_version)}: $baseResourceVersion",
+                            "${getString(R.string.firmware_base_res)}: $baseResourceVersion",
                             "MD5: $baseResourceMd5"
                         )
                     )
@@ -118,7 +121,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.base_resource_version) + ": " + none,
+                            getString(R.string.firmware_base_res) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -127,7 +130,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (fontVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.font_version)}: $fontVersion",
+                            "${getString(R.string.firmware_ft)}: $fontVersion",
                             "MD5: $fontMd5"
                         )
                     )
@@ -135,7 +138,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.font_version) + ": " + none,
+                            getString(R.string.firmware_ft) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -144,7 +147,7 @@ class ExtrasResponse : AppCompatActivity() {
                 if (gpsVersion != null) {
                     list.add(
                         Adapter(
-                            "${getString(R.string.gps_version)}: $gpsVersion",
+                            "${getString(R.string.firmware_gps)}: $gpsVersion",
                             "MD5: $gpsMd5"
                         )
                     )
@@ -152,7 +155,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            getString(R.string.gps_version) + ": " + none,
+                            getString(R.string.firmware_gps) + ": " + none,
                             "MD5: $none"
                         )
                     )
@@ -164,7 +167,7 @@ class ExtrasResponse : AppCompatActivity() {
 
                     list.add(
                         Adapter(
-                            "${getString(R.string.lang)}:",
+                            "${getString(R.string.firmware_lang)}:",
                             language
                         )
                     )
@@ -172,7 +175,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            "${getString(R.string.lang)}:",
+                            "${getString(R.string.firmware_lang)}:",
                             none
                         )
                     )
@@ -182,7 +185,7 @@ class ExtrasResponse : AppCompatActivity() {
                     changelog = changelog.substringBefore('#')
                     list.add(
                         Adapter(
-                            "${getString(R.string.change_log)}:",
+                            "${getString(R.string.firmware_change_log)}:",
                             changelog
                         )
                     )
@@ -190,7 +193,7 @@ class ExtrasResponse : AppCompatActivity() {
                 } else {
                     list.add(
                         Adapter(
-                            "${getString(R.string.change_log)}:",
+                            "${getString(R.string.firmware_change_log)}:",
                             none
                         )
                     )
@@ -206,12 +209,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         firmwareUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             1 -> {
@@ -220,12 +217,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         resourceUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             2 -> {
@@ -234,12 +225,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         baseResourceUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             3 -> {
@@ -248,12 +233,6 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         fontUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             4 -> {
@@ -262,31 +241,12 @@ class ExtrasResponse : AppCompatActivity() {
                                         context,
                                         gpsUrl
                                     )
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                            5 -> {
-                                if (lang != null) {
-                                    Toast.makeText(context, lang, Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.none,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                         }
                     }
             }
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

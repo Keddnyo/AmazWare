@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.MakeRequest
 import okhttp3.Call
@@ -15,26 +16,33 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
+
 class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.setTheme(R.style.dialog)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extras_dialog)
+        setContentView(R.layout.extras_dialog)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = getString(R.string.extras) // New Title
+        title = getString(R.string.extras_title) // New Title
     }
 
     override fun onResume() {
         super.onResume()
 
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sharedPreferences.edit()
+
         val okHttpClient = OkHttpClient()
-        val deviceSpinner = findViewById<Spinner>(R.id.deviceList)
+        val deviceSpinner: Spinner = findViewById(R.id.deviceList)
         val productionSource: EditText = findViewById(R.id.productionSource)
         val deviceSource: EditText = findViewById(R.id.deviceSource)
         val appVersion: EditText = findViewById(R.id.appVersion)
-        val appName: EditText = findViewById(R.id.appName)
+        val appName: Spinner = findViewById(R.id.appName)
+        val buttonImport = findViewById<Button>(R.id.buttonImport)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
+        val progressBar = findViewById<LinearLayout>(R.id.progressBar)
 
         val devList = ArrayList<String>()
         val devAdapter =
@@ -43,11 +51,48 @@ class ExtrasDialog : AppCompatActivity() {
         val context = this@ExtrasDialog
         val intent = Intent(context, ExtrasResponse::class.java)
 
-        devList.add(getString(R.string.manual_input))
+        val appname = ArrayList<String>()
+        val appSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, appname)
+        val zepp = "com.huami.midong"
+        val mifit = "com.xiaomi.hm.health"
+
+        appname.add(zepp) // 0
+        appname.add(mifit) // 1
+        appSpinner.notifyDataSetChanged()
+        appName.setSelection(0)
+
+        devList.add(getString(R.string.extras_manual))
         devAdapter.notifyDataSetChanged()
+        appName.adapter = appSpinner
+
+        progressBar.visibility = View.VISIBLE
+
+        if ((sharedPreferences.getString(
+                "productionSource",
+                ""
+            ) != "") || (sharedPreferences.getString(
+                "deviceSource",
+                ""
+            ) != "") || (sharedPreferences.getString(
+                "appVersion",
+                ""
+            ) != "")
+        ) {
+            buttonImport.visibility = View.VISIBLE
+        } else {
+            buttonImport.visibility = View.GONE
+        }
 
         okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                progressBar.post {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        this@ExtrasDialog,
+                        getString(R.string.failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -64,6 +109,10 @@ class ExtrasDialog : AppCompatActivity() {
                             devAdapter.notifyDataSetChanged()
                         }
                     }
+                }
+
+                progressBar.post {
+                    progressBar.visibility = View.GONE
                 }
 
                 deviceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -90,13 +139,23 @@ class ExtrasDialog : AppCompatActivity() {
 
                                     deviceSource.setText(i.toString())
                                     productionSource.setText(productionSourceResult)
-                                    appName.setText(appnameResult)
+                                    val index = when (appnameResult) {
+                                        zepp -> {
+                                            0 // zepp
+                                        }
+                                        mifit -> {
+                                            1 // mifit
+                                        }
+                                        else -> {
+                                            0 // zepp
+                                        }
+                                    }
+                                    appName.setSelection(index)
                                     appVersion.setText(appVersionResult)
 
                                     deviceSource.isEnabled = false
                                     productionSource.isEnabled = false
-                                } else if (selectedItem == getString(R.string.manual_input)) {
-
+                                } else if (selectedItem == getString(R.string.extras_manual)) {
                                     intent.putExtra("title", getString(R.string.server_response))
 
                                     deviceSource.isEnabled = true
@@ -113,7 +172,9 @@ class ExtrasDialog : AppCompatActivity() {
         deviceSpinner.adapter = devAdapter
 
         buttonSubmit.setOnClickListener {
-            title = getString(R.string.extras)
+            progressBar.post {
+                progressBar.visibility = View.VISIBLE
+            }
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
@@ -121,12 +182,19 @@ class ExtrasDialog : AppCompatActivity() {
                     productionSource.text.toString(),
                     deviceSource.text.toString(),
                     appVersion.text.toString(),
-                    appName.text.toString()
+                    appName.selectedItem.toString()
                 )
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    title = getString(R.string.error)
+                    progressBar.post {
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            this@ExtrasDialog,
+                            getString(R.string.failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -203,8 +271,41 @@ class ExtrasDialog : AppCompatActivity() {
                         finish()
                         startActivity(intent)
                     }
+
+                    progressBar.post {
+                        progressBar.visibility = View.GONE
+                    }
                 }
             })
+        }
+
+        buttonImport.setOnClickListener {
+            deviceSpinner.setSelection(0)
+            productionSource.setText(sharedPreferences.getString("productionSource", ""))
+            deviceSource.setText(sharedPreferences.getString("deviceSource", ""))
+            appVersion.setText(sharedPreferences.getString("appVersion", ""))
+            appName.setSelection(sharedPreferences.getInt("appname", 0))
+            intent.putExtra("title", getString(R.string.server_response))
+        }
+
+        buttonImport.setOnLongClickListener {
+            editor.remove("productionSource")
+            editor.remove("deviceSource")
+            editor.remove("appVersion")
+            editor.remove("appname")
+            editor.apply()
+            buttonImport.visibility = View.GONE
+            true
+        }
+
+        buttonSubmit.setOnLongClickListener {
+            editor.putString("productionSource", productionSource.text.toString())
+            editor.putString("deviceSource", deviceSource.text.toString())
+            editor.putString("appVersion", appVersion.text.toString())
+            editor.putInt("appname", appName.selectedItemId.toInt())
+            editor.apply()
+            buttonImport.visibility = View.VISIBLE
+            true
         }
     }
 

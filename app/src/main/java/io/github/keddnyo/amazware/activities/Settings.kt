@@ -12,14 +12,14 @@ import io.github.keddnyo.amazware.R
 class Settings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(R.layout.settings)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = getString(R.string.settings) // New title
+        title = getString(R.string.settings_title) // New title
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {

@@ -5,25 +5,29 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.utils.DarkMode
 import io.github.keddnyo.amazware.utils.Download
 import io.github.keddnyo.amazware.utils.MakeRequest
-import io.github.keddnyo.amazware.utils.DarkMode
 
 class Firmwarehouse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_explore)
+        setContentView(R.layout.firmwarehouse)
 
-        title = getString(R.string.firmwarehouse) // New title
+        title = getString(R.string.firmwarehouse_title) // New title
 
         DarkMode().switch(this) // Set theme
 
@@ -39,16 +43,30 @@ class Firmwarehouse : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onResume() {
         super.onResume()
 
+        init()
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    fun init() {
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
         val webView = findViewById<WebView>(R.id.webView)
         val webSettings = webView?.settings
         val refresh = findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
+        val floatingButton = findViewById<FloatingActionButton>(R.id.favouriteButtonFirmwarehouse)
+
+        if ((sharedPreferences.getString("deviceSource", "") != "")
+        ) {
+            floatingButton.visibility = View.VISIBLE
+        } else {
+            floatingButton.visibility = View.GONE
+        }
 
         webSettings!!.javaScriptEnabled = true
-        webView.loadUrl(MakeRequest().openExplorePage(this)) // Loading WebView
+        webView.loadUrl(MakeRequest().openFirmwarehouse(this)) // Loading WebView
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
@@ -72,8 +90,15 @@ class Firmwarehouse : AppCompatActivity() {
                 failingUrl: String
             ) {
                 webView.loadUrl("about:blank")
-                title = getString(R.string.error)
+                Toast.makeText(this@Firmwarehouse, getString(R.string.failed), Toast.LENGTH_SHORT)
+                    .show()
             }
+        }
+
+        refresh.isRefreshing = false
+
+        refresh.setOnRefreshListener {
+            init()
         }
 
         webView.setDownloadListener { fileUrl, _, _, _, _ -> // Downloading code
@@ -81,11 +106,18 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         refresh.setOnRefreshListener { // Pull refresh
-            title = getString(R.string.firmwarehouse)
+            title = getString(R.string.firmwarehouse_title)
             webView.reload()
             refresh.isRefreshing = false
+        }
 
-            title = getString(R.string.firmwarehouse)
+        floatingButton.setOnClickListener {
+            webView.loadUrl(MakeRequest().openFirmwarehouseDevice(this))
+        }
+
+        floatingButton.setOnLongClickListener {
+            webView.loadUrl(MakeRequest().openFirmwarehouse(this))
+            true
         }
     }
 

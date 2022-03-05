@@ -1,62 +1,41 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/appearance">
+    <PreferenceCategory app:title="@string/settings_title">
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:icon="@drawable/ic_dark_mode"
             app:key="dark_mode"
-            app:title="@string/dark_mode"
+            app:title="@string/settings_dark_mode"
             app:useSimpleSummaryProvider="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/server_response">
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_extras"
             app:key="simple_response"
-            app:title="@string/list_style_response" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:icon="@drawable/ic_lang"
-            app:key="lang_formatted"
-            app:title="@string/full_lang_names" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/download">
+            app:title="@string/settings_extras_list" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_download"
             app:key="download_provider"
-            app:title="@string/download_provider" />
-
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:dependency="download_provider"
-            app:icon="@drawable/ic_notification"
-            app:key="download_notification"
-            app:title="@string/download_notification" />
+            app:title="@string/settings_download_provider" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/About">
+    <PreferenceCategory app:title="@string/settings_about">
 
         <Preference
             app:icon="@drawable/ic_info"
             app:key="info"
-            app:summary="@string/keddnyo"
+            app:summary="@string/settings_keddnyo"
             app:title="@string/app_name" />
 
         <Preference
             app:icon="@drawable/ic_download"
             app:key="info2"
-            app:summary="@string/schakal"
-            app:title="@string/firmwarehouse" />
+            app:summary="@string/settings_schakal"
+            app:title="@string/firmwarehouse_title" />
 
     </PreferenceCategory>
 
