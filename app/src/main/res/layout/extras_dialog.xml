@@ -33,8 +33,7 @@
             android:inputType="number"
             android:maxLength="3"
             android:minHeight="48dp"
-            android:textColorHint="#546E7A"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,TextContrastCheck" />
 
         <EditText
             android:id="@+id/deviceSource"
@@ -44,8 +43,7 @@
             android:inputType="number"
             android:maxLength="3"
             android:minHeight="48dp"
-            android:textColorHint="#546E7A"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,TextContrastCheck" />
 
         <EditText
             android:id="@+id/appVersion"
@@ -55,8 +53,7 @@
             android:inputType="text"
             android:maxLength="17"
             android:minHeight="48dp"
-            android:textColorHint="#546E7A"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,TextContrastCheck" />
 
         <Spinner
             android:id="@+id/appName"
