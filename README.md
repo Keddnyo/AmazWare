@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/Keddnyo/AmazWare/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?token=GHSAT0AAAAAABSAZHCQ2DYSW6DOHEHRM7EEYRD5FLA" align="right"/>
+<img src="https://github.com/Keddnyo/AmazWare/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true" align="right"/>
 
 # AmazWare
 Easily download Xiaomi firmwares for wearables
