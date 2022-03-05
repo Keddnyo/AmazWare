@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="0dp"
-            android:prompt="@string/device_prompt"
+            android:prompt="@string/extras_device_prompt"
             android:spinnerMode="dialog" />
 
         <EditText
             android:id="@+id/productionSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/request_production_source"
+            android:hint="@string/extras_production_source"
             android:inputType="number"
             android:maxLength="3"
             tools:ignore="Autofill" />
@@ -36,7 +36,7 @@
             android:id="@+id/deviceSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/request_device_source"
+            android:hint="@string/extras_device_source"
             android:inputType="number"
             android:maxLength="3"
             tools:ignore="Autofill" />
@@ -45,7 +45,7 @@
             android:id="@+id/appVersion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/request_app_version"
+            android:hint="@string/extras_app_version"
             android:inputType="text"
             android:maxLength="17"
             tools:ignore="Autofill" />
@@ -55,14 +55,34 @@
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/extras_app_name"
             android:padding="0dp"
-            android:hint="@string/request_app_name"
             android:spinnerMode="dialog" />
 
+        <LinearLayout
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_gathering_info" />
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminateOnly="true" />
+
+        </LinearLayout>
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:stretchColumns="1">
 
             <TableRow
@@ -75,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/secondary"
                     android:longClickable="true"
-                    android:text="@string/import_device_values"
+                    android:text="@string/extras_import"
                     android:textColor="@color/secondary_background"
                     android:visibility="gone"
                     tools:ignore="ButtonStyle" />

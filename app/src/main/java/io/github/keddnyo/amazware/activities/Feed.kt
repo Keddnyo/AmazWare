@@ -3,6 +3,7 @@ package io.github.keddnyo.amazware.activities
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.R
@@ -24,28 +25,31 @@ class Feed : AppCompatActivity() {
         setContentView(R.layout.feed)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = getString(R.string.feed) // New title
+        title = getString(R.string.feed_title) // New title
     }
 
     override fun onResume() {
         super.onResume()
+        val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+
         init() // First load
 
-        val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
         refresh.setOnRefreshListener { // Pull refresh
             init()
-            refresh.isRefreshing = false
         }
     }
 
     private fun init() {
         val okHttpClient = OkHttpClient()
         val deviceIndex = findViewById<ListView>(R.id.feedView)
-        val firmwareString = getString(R.string.firmware)
-        val languagesString = getString(R.string.lang)
-        val changelogString = getString(R.string.change_log)
-        val dateString = getString(R.string.date)
+        val firmwareString = getString(R.string.firmware_fw)
+        val languagesString = getString(R.string.firmware_lang)
+        val changelogString = getString(R.string.firmware_change_log)
+        val dateString = getString(R.string.firmware_date)
         val request = MakeRequest().getLatest()
+        val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+
+        refresh.isRefreshing = true
 
         val list = ArrayList<Adapter>() // Setting adapter
         val adapter = SimpleAdapter(
@@ -62,7 +66,8 @@ class Feed : AppCompatActivity() {
         okHttpClient.newCall(request).enqueue(object : Callback { // Creating request
             override fun onFailure(call: Call, e: IOException) { // Error
                 runOnUiThread {
-                    title = getString(R.string.error)
+                    refresh.isRefreshing = false
+                    Toast.makeText(this@Feed, getString(R.string.failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -104,10 +109,17 @@ class Feed : AppCompatActivity() {
                                 }
                                 adapter.notifyDataSetChanged() // Commit changes
                             }
+                            refresh.post {
+                                refresh.isRefreshing = false
+                            }
                         }
                     }
                 } catch (e: IOException) {
-                    title = getString(R.string.error)
+                    refresh.post {
+                        refresh.isRefreshing = false
+                        Toast.makeText(this@Feed, getString(R.string.failed), Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         })
@@ -129,5 +141,4 @@ class Feed : AppCompatActivity() {
         onBackPressed()
         return true
     }
-
 }

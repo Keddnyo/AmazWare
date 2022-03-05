@@ -24,7 +24,7 @@ class ExtrasDialog : AppCompatActivity() {
         setContentView(R.layout.extras_dialog)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = getString(R.string.extras) // New Title
+        title = getString(R.string.extras_title) // New Title
     }
 
     override fun onResume() {
@@ -42,6 +42,7 @@ class ExtrasDialog : AppCompatActivity() {
         val appName: Spinner = findViewById(R.id.appName)
         val buttonImport = findViewById<Button>(R.id.buttonImport)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
+        val progressBar = findViewById<LinearLayout>(R.id.progressBar)
 
         val devList = ArrayList<String>()
         val devAdapter =
@@ -54,14 +55,17 @@ class ExtrasDialog : AppCompatActivity() {
         val appSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, appname)
         val zepp = "com.huami.midong"
         val mifit = "com.xiaomi.hm.health"
+
         appname.add(zepp) // 0
         appname.add(mifit) // 1
         appSpinner.notifyDataSetChanged()
         appName.setSelection(0)
 
-        devList.add(getString(R.string.manual_input))
+        devList.add(getString(R.string.extras_manual))
         devAdapter.notifyDataSetChanged()
         appName.adapter = appSpinner
+
+        progressBar.visibility = View.VISIBLE
 
         if ((sharedPreferences.getString(
                 "productionSource",
@@ -81,6 +85,14 @@ class ExtrasDialog : AppCompatActivity() {
 
         okHttpClient.newCall(deviceList).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                progressBar.post {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        this@ExtrasDialog,
+                        getString(R.string.failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -97,6 +109,10 @@ class ExtrasDialog : AppCompatActivity() {
                             devAdapter.notifyDataSetChanged()
                         }
                     }
+                }
+
+                progressBar.post {
+                    progressBar.visibility = View.GONE
                 }
 
                 deviceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -139,7 +155,7 @@ class ExtrasDialog : AppCompatActivity() {
 
                                     deviceSource.isEnabled = false
                                     productionSource.isEnabled = false
-                                } else if (selectedItem == getString(R.string.manual_input)) {
+                                } else if (selectedItem == getString(R.string.extras_manual)) {
                                     intent.putExtra("title", getString(R.string.server_response))
 
                                     deviceSource.isEnabled = true
@@ -156,7 +172,9 @@ class ExtrasDialog : AppCompatActivity() {
         deviceSpinner.adapter = devAdapter
 
         buttonSubmit.setOnClickListener {
-            title = getString(R.string.extras)
+            progressBar.post {
+                progressBar.visibility = View.VISIBLE
+            }
 
             // Init serverRequest val here because we're communicate with EditText
             val serverRequest =
@@ -169,7 +187,14 @@ class ExtrasDialog : AppCompatActivity() {
 
             okHttpClient.newCall(serverRequest).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    title = getString(R.string.error)
+                    progressBar.post {
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            this@ExtrasDialog,
+                            getString(R.string.failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -245,6 +270,10 @@ class ExtrasDialog : AppCompatActivity() {
                     } else {
                         finish()
                         startActivity(intent)
+                    }
+
+                    progressBar.post {
+                        progressBar.visibility = View.GONE
                     }
                 }
             })

@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
@@ -26,7 +27,7 @@ class Firmwarehouse : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.firmwarehouse)
 
-        title = getString(R.string.firmwarehouse) // New title
+        title = getString(R.string.firmwarehouse_title) // New title
 
         DarkMode().switch(this) // Set theme
 
@@ -42,10 +43,14 @@ class Firmwarehouse : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onResume() {
         super.onResume()
 
+        init()
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    fun init() {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
         val webView = findViewById<WebView>(R.id.webView)
@@ -85,8 +90,15 @@ class Firmwarehouse : AppCompatActivity() {
                 failingUrl: String
             ) {
                 webView.loadUrl("about:blank")
-                title = getString(R.string.error)
+                Toast.makeText(this@Firmwarehouse, getString(R.string.failed), Toast.LENGTH_SHORT)
+                    .show()
             }
+        }
+
+        refresh.isRefreshing = false
+
+        refresh.setOnRefreshListener {
+            init()
         }
 
         webView.setDownloadListener { fileUrl, _, _, _, _ -> // Downloading code
@@ -94,11 +106,9 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         refresh.setOnRefreshListener { // Pull refresh
-            title = getString(R.string.firmwarehouse)
+            title = getString(R.string.firmwarehouse_title)
             webView.reload()
             refresh.isRefreshing = false
-
-            title = getString(R.string.firmwarehouse)
         }
 
         floatingButton.setOnClickListener {

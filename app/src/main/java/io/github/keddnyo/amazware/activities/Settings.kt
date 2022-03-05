@@ -19,7 +19,7 @@ class Settings : AppCompatActivity() {
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = getString(R.string.settings) // New title
+        title = getString(R.string.settings_title) // New title
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {

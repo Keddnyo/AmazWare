@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="downloading">Загрузка файла</string>
-    <string name="error">Ошибка</string>
-    <string name="feed">Лента</string>
-    <string name="extras">Экстра</string>
-    <string name="import_device_values">Импорт</string>
-    <string name="About">О приложении</string>
-    <string name="settings">Настройки</string>
-    <string name="download_provider">Встроенный загрузчик</string>
-    <string name="server_response">Ответ сервера</string>
-    <string name="extras_list_style_response">Ответ списоком в Экстра</string>
-    <string name="dark_mode">Тёмная тема</string>
+    <string name="feed_title">Лента</string>
+    <string name="failed">Ошибка</string>
+    <string name="extras_title">Экстра</string>
+    <string name="settings_title">Настройки</string>
 
-    <string name="device_prompt">Выберите устройство</string>
-    <string name="manual_input">Ручной ввод</string>
+    <string name="extras_import">Импорт</string>
+    <string name="extras_device_prompt">Выберите устройство</string>
+    <string name="extras_manual">Ручной ввод</string>
+    <string name="extras_gathering_info">Получение информации</string>
 
-    <string name="firmware">Прошивка</string>
-    <string name="resource">Расширение</string>
-    <string name="base_resource">Базовое расширение</string>
-    <string name="font">Шрифт</string>
-    <string name="lang">Языки</string>
-    <string name="change_log">Список изменений</string>
-    <string name="date">Дата</string>
-    <string name="none">Отсутствует</string>
+    <string name="settings_dark_mode">Тёмная тема</string>
+    <string name="settings_extras_list">Ответ списоком в Экстра</string>
+    <string name="settings_download_provider">Встроенный загрузчик</string>
+    <string name="settings_about">О приложении</string>
+
+    <string name="firmware_fw">Прошивка</string>
+    <string name="firmware_res">Ресурсы</string>
+    <string name="firmware_base_res">Базовые ресурсы</string>
+    <string name="firmware_ft">Шрифты</string>
+    <string name="firmware_lang">Языки</string>
+    <string name="firmware_change_log">Список изменений</string>
+    <string name="firmware_date">Дата</string>
     <string name="firmware_not_found">Прошивка не найдена</string>
+    <string name="none">Отсутствует</string>
+
+    <string name="server_response">Ответ сервера</string>
+    <string name="downloading">Загрузка файла</string>
 
     <string name="lang_zh">китайский</string>
     <string name="lang_en">английский</string>
