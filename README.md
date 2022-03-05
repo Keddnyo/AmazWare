@@ -1,7 +1,7 @@
 <img src="https://github.com/Keddnyo/AmazWare/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true" align="right"/>
 
 # AmazWare
-Easily download Xiaomi firmwares for wearables
+Easily download firmwares for Xiaomi wearables
 
 ## Features
 * English and Russian GUI languages
