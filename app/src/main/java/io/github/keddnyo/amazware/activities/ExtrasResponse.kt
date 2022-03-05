@@ -73,7 +73,8 @@ class ExtrasResponse : AppCompatActivity() {
         when (sharedPreferences.getBoolean("simple_response", true)) {
             false -> {
                 responseList.visibility = View.GONE
-                responseField.text = json
+                val response = json?.replace("\\", "")
+                responseField.text = response
             }
             true -> {
                 if (firmwareVersion != null) {

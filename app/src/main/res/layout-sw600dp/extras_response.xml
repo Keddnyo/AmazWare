@@ -17,9 +17,9 @@
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:ignore="NestedScrolling"
             android:divider="@android:color/transparent"
-            android:dividerHeight="15dp" />
+            android:dividerHeight="15dp"
+            tools:ignore="NestedScrolling" />
 
         <TextView
             android:id="@+id/responseField"

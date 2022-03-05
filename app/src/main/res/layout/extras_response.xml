@@ -16,10 +16,10 @@
             android:id="@+id/responseList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            tools:ignore="NestedScrolling"
             android:divider="@android:color/transparent"
-            android:dividerHeight="15dp" />
+            android:dividerHeight="15dp"
+            android:padding="5dp"
+            tools:ignore="NestedScrolling" />
 
         <TextView
             android:id="@+id/responseField"
