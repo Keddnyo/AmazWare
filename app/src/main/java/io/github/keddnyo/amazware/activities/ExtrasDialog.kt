@@ -124,6 +124,11 @@ class ExtrasDialog : AppCompatActivity() {
                     ) {
                         val selectedItem = deviceSpinner.selectedItem.toString()
 
+                        productionSource.error = null
+                        deviceSource.error = null
+                        appVersion.error = null
+
+
                         for (i in 1..1000) {
                             if (json.has(i.toString())) { // Existing indexes
                                 val nameResult = json.getJSONObject(i.toString()).getString("name")
