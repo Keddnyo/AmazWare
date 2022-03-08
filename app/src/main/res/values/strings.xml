@@ -31,6 +31,7 @@
     <string name="firmware_lang">Languages</string>
     <string name="firmware_change_log">Changelog</string>
     <string name="firmware_date">Date</string>
+    <string name="firmware_empty_field">The field must not be empty</string>
     <string name="firmware_not_found">Firmware not found</string>
     <string name="none">None</string>
 
