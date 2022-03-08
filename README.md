@@ -5,7 +5,7 @@ Easily download firmwares for Xiaomi wearables
 * English and Russian GUI languages
 * User-friendly GUI
 * Light and dark themes
-* Dark theme is AMOLED *(since 1.1.0)*
+* Dark mode is now AMOLED *(since 1.1.0)*
 * Download firmwares using drop-down device list
 * Explore firmwares feed
 * Make get request manually (Extras)
