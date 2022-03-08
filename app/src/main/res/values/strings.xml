@@ -15,7 +15,7 @@
     <string name="extras_app_version" translatable="false">appVersion</string>
     <string name="extras_gathering_info">Gathering information</string>
 
-    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_dark_mode">Dark mode (AMOLED)</string>
     <string name="settings_extras_list">List-style Extras response</string>
     <string name="settings_download_provider">Built-in download provider</string>
     <string name="settings_about">About</string>

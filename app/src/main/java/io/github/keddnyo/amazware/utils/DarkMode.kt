@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 
 class DarkMode {
-    fun switch(context: Context) {
+    fun switch(context: Context): Boolean {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
-        when (sharedPreferences.getBoolean("dark_mode", false)) {
+
+        return when (sharedPreferences.getBoolean("dark_mode", false)) {
             true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // Dark Mode
+                true
             }
             false -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // Light Mode
+                false
             }
         }
     }

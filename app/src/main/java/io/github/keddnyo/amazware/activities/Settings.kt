@@ -13,6 +13,7 @@ class Settings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings)
+
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
@@ -40,6 +41,7 @@ class Settings : AppCompatActivity() {
                 )
                 true
             }
+
             cloud!!.setOnPreferenceClickListener {
                 startActivity(
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://4pda.to/forum/index.php?showuser=243484"))

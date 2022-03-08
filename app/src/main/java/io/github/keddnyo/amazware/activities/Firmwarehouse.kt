@@ -22,6 +22,7 @@ import io.github.keddnyo.amazware.utils.DarkMode
 import io.github.keddnyo.amazware.utils.Download
 import io.github.keddnyo.amazware.utils.MakeRequest
 
+
 class Firmwarehouse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,22 +30,17 @@ class Firmwarehouse : AppCompatActivity() {
 
         title = getString(R.string.firmwarehouse_title) // New title
 
-        DarkMode().switch(this) // Set theme
-
         val permissionCheck = ActivityCompat.checkSelfPermission( // Permissions
             this,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
             )
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         init()
     }
@@ -53,10 +49,13 @@ class Firmwarehouse : AppCompatActivity() {
     fun init() {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
+        val darkMode = DarkMode().switch(this) // Set theme
         val webView = findViewById<WebView>(R.id.webView)
         val webSettings = webView?.settings
         val refresh = findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
         val floatingButton = findViewById<FloatingActionButton>(R.id.favouriteButtonFirmwarehouse)
+
+        refresh.isRefreshing = true
 
         if ((sharedPreferences.getString("deviceSource", "") != "")
         ) {
@@ -80,6 +79,14 @@ class Firmwarehouse : AppCompatActivity() {
                     true
                 } else {
                     false
+                }
+            }
+
+            override fun onPageFinished(view: WebView, url: String?) {
+                if (darkMode) {
+                    val javascript =
+                        "(function() { document.body.style.background='black'; })();" // Black background
+                    webView.evaluateJavascript(javascript, null)
                 }
             }
 

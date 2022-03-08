@@ -16,7 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-
 class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.setTheme(R.style.dialog)

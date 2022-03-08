@@ -10,7 +10,7 @@
     <string name="extras_manual">Ручной ввод</string>
     <string name="extras_gathering_info">Получение информации</string>
 
-    <string name="settings_dark_mode">Тёмная тема</string>
+    <string name="settings_dark_mode">Тёмная тема (AMOLED)</string>
     <string name="settings_extras_list">Ответ списоком в Экстра</string>
     <string name="settings_download_provider">Встроенный загрузчик</string>
     <string name="settings_about">О приложении</string>

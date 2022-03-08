@@ -1,5 +1,4 @@
 <resources>
-
     <style name="Theme.AmazWare" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/gray</item>
@@ -11,5 +10,4 @@
 
     <style name="dialog" parent="Theme.AppCompat.Light.Dialog">
     </style>
-
 </resources>

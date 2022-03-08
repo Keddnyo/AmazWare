@@ -13,6 +13,7 @@ import io.github.keddnyo.amazware.R
 class Download {
     fun run (context: Context, fileUrl: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+
         when {
             sharedPreferences.getBoolean("download_provider", true) -> {
                 val request = DownloadManager.Request(Uri.parse(fileUrl))
