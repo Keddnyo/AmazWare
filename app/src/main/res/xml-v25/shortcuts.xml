@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_extras"
+        android:shortcutId="Extras"
+        android:shortcutShortLabel="@string/extras_title">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="io.github.keddnyo.amazware.activities.ExtrasDialog"
+            android:targetPackage="io.github.keddnyo.amazware" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_feed"
+        android:shortcutId="Feed"
+        android:shortcutShortLabel="@string/feed_title">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="io.github.keddnyo.amazware.activities.Feed"
+            android:targetPackage="io.github.keddnyo.amazware" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_download"
+        android:shortcutId="Firmwarehouse"
+        android:shortcutShortLabel="@string/firmwarehouse_title">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="io.github.keddnyo.amazware.activities.Firmwarehouse"
+            android:targetPackage="io.github.keddnyo.amazware" />
+    </shortcut>
+</shortcuts>
