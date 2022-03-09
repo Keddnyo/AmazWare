@@ -11,6 +11,7 @@ Easily download firmwares for Xiaomi wearables
 * Make get request manually (Extras)
 * Full languages names instead codes in response
 * Built-in download provider
+* Launcher shortcuts *(since 1.3.0)*
 
 ## Requirements
 * Storage access *(for saving files)*
@@ -18,12 +19,12 @@ Easily download firmwares for Xiaomi wearables
 
 ## Screenshots
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/65981689/156901912-ab231a09-4557-4c65-a1d9-c087039606f7.png" width="33%" height="33%">
-  <img src="https://user-images.githubusercontent.com/65981689/156902021-7fd8183c-8816-4adf-9381-93525afed9a6.png" width="33%" height="33%">
-  <img src="https://user-images.githubusercontent.com/65981689/156901994-2de60fab-dce1-4b93-ad9f-bfd2d570c2f3.png" width="33%" height="33%">
-  <img src="https://user-images.githubusercontent.com/65981689/156901995-61a26a8c-c78c-4faf-9d9f-6f3646d7c049.png" width="33%" height="33%">
-  <img src="https://user-images.githubusercontent.com/65981689/157164050-b4c3bddb-674e-48ba-b907-070439dc0fbf.png" width="33%" height="33%">
-  <img src="https://user-images.githubusercontent.com/65981689/157164048-fae8513a-4238-46e0-b980-4348ff85fe75.png" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453571-5e5ee76c-92b6-4ca0-8992-f806537b889a.jpg" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453570-63ff2ff8-1b66-4242-b8b4-b3355a453469.jpg" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453566-d8479f30-00e0-405b-84a5-c74c2948342d.jpg" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453564-ef98f16c-90f1-4c12-a553-767137f6a2e1.jpg" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453568-f8b0a875-c076-4718-af3a-64596617470d.jpg" width="33%" height="33%">
+  <img src="https://user-images.githubusercontent.com/65981689/157453966-cc773072-8d2d-49c5-86f3-688692571031.jpg" width="33%" height="33%">
 </p>
 
 ## Credits
