@@ -1,5 +1,5 @@
 # AmazWare
-Easily download firmwares for Xiaomi wearables
+The easiest way to download firmwares for Xiaomi wearables
 
 ## Features
 * English and Russian GUI languages

@@ -22,7 +22,6 @@ import io.github.keddnyo.amazware.utils.DarkMode
 import io.github.keddnyo.amazware.utils.Download
 import io.github.keddnyo.amazware.utils.MakeRequest
 
-
 class Firmwarehouse : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +41,11 @@ class Firmwarehouse : AppCompatActivity() {
             )
         }
 
-        init()
+        init(true)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    fun init() {
+    fun init(common: Boolean) {
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
         val darkMode = DarkMode().switch(this) // Set theme
@@ -65,7 +64,13 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         webSettings!!.javaScriptEnabled = true
-        webView.loadUrl(MakeRequest().openFirmwarehouse(this)) // Loading WebView
+
+        if (common) {
+            webView.loadUrl(MakeRequest().openFirmwarehouse(this))
+        } else {
+            webView.loadUrl(MakeRequest().openFirmwarehouseDevice(this))
+        }
+
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
@@ -105,7 +110,7 @@ class Firmwarehouse : AppCompatActivity() {
         refresh.isRefreshing = false
 
         refresh.setOnRefreshListener {
-            init()
+            init(true) // Loading the main page
         }
 
         webView.setDownloadListener { fileUrl, _, _, _, _ -> // Downloading code
@@ -119,11 +124,11 @@ class Firmwarehouse : AppCompatActivity() {
         }
 
         floatingButton.setOnClickListener {
-            webView.loadUrl(MakeRequest().openFirmwarehouseDevice(this))
+            init(false) // Loading favourite device page
         }
 
         floatingButton.setOnLongClickListener {
-            webView.loadUrl(MakeRequest().openFirmwarehouse(this))
+            init(true) // Loading the main page
             true
         }
     }
