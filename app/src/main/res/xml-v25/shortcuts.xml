@@ -2,12 +2,12 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_extras"
-        android:shortcutId="Extras"
-        android:shortcutShortLabel="@string/extras_title">
+        android:icon="@drawable/ic_download"
+        android:shortcutId="Firmwarehouse"
+        android:shortcutShortLabel="@string/firmwarehouse_title">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="io.github.keddnyo.amazware.activities.ExtrasDialog"
+            android:targetClass="io.github.keddnyo.amazware.activities.Firmwarehouse"
             android:targetPackage="io.github.keddnyo.amazware" />
     </shortcut>
     <shortcut
@@ -22,12 +22,12 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_download"
-        android:shortcutId="Firmwarehouse"
-        android:shortcutShortLabel="@string/firmwarehouse_title">
+        android:icon="@drawable/ic_extras"
+        android:shortcutId="Extras"
+        android:shortcutShortLabel="@string/extras_title">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="io.github.keddnyo.amazware.activities.Firmwarehouse"
+            android:targetClass="io.github.keddnyo.amazware.activities.ExtrasDialog"
             android:targetPackage="io.github.keddnyo.amazware" />
     </shortcut>
 </shortcuts>
