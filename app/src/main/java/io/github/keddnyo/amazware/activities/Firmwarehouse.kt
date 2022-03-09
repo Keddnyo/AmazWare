@@ -44,17 +44,12 @@ class Firmwarehouse : AppCompatActivity() {
         init(true)
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    fun init(common: Boolean) {
+    override fun onResume() {
+        super.onResume()
+
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
-        val darkMode = DarkMode().switch(this) // Set theme
-        val webView = findViewById<WebView>(R.id.webView)
-        val webSettings = webView?.settings
-        val refresh = findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
         val floatingButton = findViewById<FloatingActionButton>(R.id.favouriteButtonFirmwarehouse)
-
-        refresh.isRefreshing = true
 
         if ((sharedPreferences.getString("deviceSource", "") != "")
         ) {
@@ -63,6 +58,27 @@ class Firmwarehouse : AppCompatActivity() {
             floatingButton.visibility = View.GONE
         }
 
+        floatingButton.setOnClickListener {
+            init(false) // Loading favourite device page
+        }
+
+        floatingButton.setOnLongClickListener {
+            init(true) // Loading the main page
+            true
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    fun init(common: Boolean) {
+        val darkMode = DarkMode().switch(this) // Set theme
+        val webView = findViewById<WebView>(R.id.webView)
+        val webSettings = webView?.settings
+        val refresh = findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
+
+        refresh.isRefreshing = true
+
+        webView.clearHistory()
+        webView.clearCache(true)
         webSettings!!.javaScriptEnabled = true
 
         if (common) {
@@ -121,15 +137,6 @@ class Firmwarehouse : AppCompatActivity() {
             title = getString(R.string.firmwarehouse_title)
             webView.reload()
             refresh.isRefreshing = false
-        }
-
-        floatingButton.setOnClickListener {
-            init(false) // Loading favourite device page
-        }
-
-        floatingButton.setOnLongClickListener {
-            init(true) // Loading the main page
-            true
         }
     }
 
