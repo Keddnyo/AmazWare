@@ -1,6 +1,8 @@
 package io.github.keddnyo.amazware.activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -24,6 +26,37 @@ class ExtrasDialog : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = getString(R.string.extras_title) // New Title
+
+        val productionSource: EditText = findViewById(R.id.productionSource)
+        val deviceSource: EditText = findViewById(R.id.deviceSource)
+        val appVersion: EditText = findViewById(R.id.appVersion)
+        val appName: Spinner = findViewById(R.id.appName)
+        val intentNew = intent
+        val productionSourceValue = intentNew.getStringExtra("productionSource")
+        val deviceSourceValue = intentNew.getStringExtra("deviceSource")
+        val appVersionValue = intentNew.getStringExtra("appVersion")
+        val appnameValue = intentNew.getStringExtra("appname")
+        val runValue = intentNew.getBooleanExtra("appVersion", false)
+        val context = this@ExtrasDialog
+
+        Toast.makeText(this, "$productionSourceValue $deviceSourceValue $appVersionValue", Toast.LENGTH_SHORT).show()
+
+        if ((productionSourceValue != null) || (deviceSourceValue != null) || (appVersionValue != null)) {
+            productionSource.setText(productionSourceValue)
+            deviceSource.setText(deviceSourceValue)
+            appVersion.setText(appVersionValue)
+            when (appnameValue) {
+                "com.huami.midong" -> {
+                    appName.setSelection(0)
+                }
+                "com.xiaomi.hm.health" -> {
+                    appName.setSelection(1)
+                }
+            }
+            if (runValue) {
+                getResponse(context)
+            }
+        }
     }
 
     override fun onResume() {
@@ -42,7 +75,6 @@ class ExtrasDialog : AppCompatActivity() {
         val buttonImport = findViewById<Button>(R.id.buttonImport)
         val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
         val progressBar = findViewById<LinearLayout>(R.id.progressBar)
-        val error = getString(R.string.firmware_empty_field)
 
         val devList = ArrayList<String>()
         val devAdapter =
@@ -59,7 +91,7 @@ class ExtrasDialog : AppCompatActivity() {
         appname.add(zepp) // 0
         appname.add(mifit) // 1
         appSpinner.notifyDataSetChanged()
-        appName.setSelection(0)
+        // appName.setSelection(0)
 
         devList.add(getString(R.string.extras_manual))
         devAdapter.notifyDataSetChanged()
@@ -177,124 +209,7 @@ class ExtrasDialog : AppCompatActivity() {
         deviceSpinner.adapter = devAdapter
 
         buttonSubmit.setOnClickListener {
-            when {
-                productionSource.text.isEmpty() -> {
-                    productionSource.error = error
-                }
-                deviceSource.text.isEmpty() -> {
-                    deviceSource.error = error
-                }
-                appVersion.text.isEmpty() -> {
-                    appVersion.error = error
-                }
-                else -> {
-                    progressBar.post {
-                        progressBar.visibility = View.VISIBLE
-                    }
-
-                    // Init serverRequest val here because we're communicate with EditText
-                    val serverRequest =
-                        MakeRequest().directDevice(
-                            productionSource.text.toString(),
-                            deviceSource.text.toString(),
-                            appVersion.text.toString(),
-                            appName.selectedItem.toString()
-                        )
-
-                    okHttpClient.newCall(serverRequest).enqueue(object : Callback {
-                        override fun onFailure(call: Call, e: IOException) {
-                            progressBar.post {
-                                progressBar.visibility = View.GONE
-                                Toast.makeText(
-                                    this@ExtrasDialog,
-                                    getString(R.string.failed),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-
-                        override fun onResponse(call: Call, response: Response) {
-                            val json = JSONObject(response.body()!!.string())
-
-                            intent.putExtra("json", json.toString())
-
-                            if (json.has("firmwareVersion")) {
-                                val firmwareVersion =
-                                    json.getString("firmwareVersion") // Firmware
-                                val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
-                                val firmwareUrl = json.getString("firmwareUrl")
-
-                                intent.putExtra("firmwareVersion", firmwareVersion)
-                                intent.putExtra("firmwareMd5", firmwareMd5)
-                                intent.putExtra("firmwareUrl", firmwareUrl)
-                            }
-                            if (json.has("resourceVersion")) {
-                                val resourceVersion =
-                                    json.getString("resourceVersion") // Resources
-                                val resourceMd5 = json.getString("resourceMd5") // Resources MD5
-                                val resourceUrl = json.getString("resourceUrl")
-
-                                intent.putExtra("resourceVersion", resourceVersion)
-                                intent.putExtra("resourceMd5", resourceMd5)
-                                intent.putExtra("resourceUrl", resourceUrl)
-                            }
-                            if (json.has("baseResourceVersion")) {
-                                val baseResourceVersion =
-                                    json.getString("baseResourceVersion") // Base resources
-                                val baseResourceMd5 =
-                                    json.getString("baseResourceMd5") // Base resources MD5
-                                val baseResourceUrl = json.getString("baseResourceUrl")
-
-                                intent.putExtra("baseResourceVersion", baseResourceVersion)
-                                intent.putExtra("baseResourceMd5", baseResourceMd5)
-                                intent.putExtra("baseResourceUrl", baseResourceUrl)
-                            }
-                            if (json.has("fontVersion")) {
-                                val fontVersion = json.getString("fontVersion") // Font
-                                val fontMd5 = json.getString("fontMd5") // Font MD5
-                                val fontUrl = json.getString("fontUrl")
-
-                                intent.putExtra("fontVersion", fontVersion)
-                                intent.putExtra("fontMd5", fontMd5)
-                                intent.putExtra("fontUrl", fontUrl)
-                            }
-                            if (json.has("gpsVersion")) {
-                                val gpsVersion = json.getString("gpsVersion") // gpsVersion
-                                val gpsMd5 = json.getString("gpsMd5") // gpsVersion
-                                val gpsUrl = json.getString("gpsUrl")
-
-                                intent.putExtra("gpsVersion", gpsVersion)
-                                intent.putExtra("gpsMd5", gpsMd5)
-                                intent.putExtra("gpsUrl", gpsUrl)
-                            }
-                            if (json.has("lang")) {
-                                val lang = json.getString("lang") // Languages
-                                intent.putExtra("lang", lang)
-                            }
-                            if (json.has("changeLog")) {
-                                val changelog = json.getString("changeLog") // changeLog
-                                intent.putExtra("changelog", changelog)
-                            }
-                            if (!json.has("firmwareVersion")) {
-                                runOnUiThread {
-                                    Toast.makeText(
-                                        context,
-                                        getString(R.string.firmware_not_found),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            } else {
-                                finish()
-                                startActivity(intent)
-                            }
-
-                            progressBar.post {
-                                progressBar.visibility = View.GONE
-                            }
-                        }
-                    })
-                }
-            }
+            getResponse(context)
         }
 
         buttonImport.setOnClickListener {
@@ -324,6 +239,135 @@ class ExtrasDialog : AppCompatActivity() {
             editor.apply()
             buttonImport.visibility = View.VISIBLE
             true
+        }
+    }
+
+    private fun getResponse(context: Context) {
+        val okHttpClient = OkHttpClient()
+        val productionSource: EditText = findViewById(R.id.productionSource)
+        val deviceSource: EditText = findViewById(R.id.deviceSource)
+        val appVersion: EditText = findViewById(R.id.appVersion)
+        val appName: Spinner = findViewById(R.id.appName)
+        val progressBar = findViewById<LinearLayout>(R.id.progressBar)
+        val error = getString(R.string.firmware_empty_field)
+
+        when {
+            productionSource.text.isEmpty() -> {
+                productionSource.error = error
+            }
+            deviceSource.text.isEmpty() -> {
+                deviceSource.error = error
+            }
+            appVersion.text.isEmpty() -> {
+                appVersion.error = error
+            }
+            else -> {
+                progressBar.post {
+                    progressBar.visibility = View.VISIBLE
+                }
+
+                // Init serverRequest val here because we're communicate with EditText
+                val serverRequest =
+                    MakeRequest().directDevice(
+                        productionSource.text.toString(),
+                        deviceSource.text.toString(),
+                        appVersion.text.toString(),
+                        appName.selectedItem.toString()
+                    )
+
+                okHttpClient.newCall(serverRequest).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        progressBar.post {
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                this@ExtrasDialog,
+                                getString(R.string.failed),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        val json = JSONObject(response.body()!!.string())
+
+                        intent.putExtra("json", json.toString())
+
+                        if (json.has("firmwareVersion")) {
+                            val firmwareVersion =
+                                json.getString("firmwareVersion") // Firmware
+                            val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
+                            val firmwareUrl = json.getString("firmwareUrl")
+
+                            intent.putExtra("firmwareVersion", firmwareVersion)
+                            intent.putExtra("firmwareMd5", firmwareMd5)
+                            intent.putExtra("firmwareUrl", firmwareUrl)
+                        }
+                        if (json.has("resourceVersion")) {
+                            val resourceVersion =
+                                json.getString("resourceVersion") // Resources
+                            val resourceMd5 = json.getString("resourceMd5") // Resources MD5
+                            val resourceUrl = json.getString("resourceUrl")
+
+                            intent.putExtra("resourceVersion", resourceVersion)
+                            intent.putExtra("resourceMd5", resourceMd5)
+                            intent.putExtra("resourceUrl", resourceUrl)
+                        }
+                        if (json.has("baseResourceVersion")) {
+                            val baseResourceVersion =
+                                json.getString("baseResourceVersion") // Base resources
+                            val baseResourceMd5 =
+                                json.getString("baseResourceMd5") // Base resources MD5
+                            val baseResourceUrl = json.getString("baseResourceUrl")
+
+                            intent.putExtra("baseResourceVersion", baseResourceVersion)
+                            intent.putExtra("baseResourceMd5", baseResourceMd5)
+                            intent.putExtra("baseResourceUrl", baseResourceUrl)
+                        }
+                        if (json.has("fontVersion")) {
+                            val fontVersion = json.getString("fontVersion") // Font
+                            val fontMd5 = json.getString("fontMd5") // Font MD5
+                            val fontUrl = json.getString("fontUrl")
+
+                            intent.putExtra("fontVersion", fontVersion)
+                            intent.putExtra("fontMd5", fontMd5)
+                            intent.putExtra("fontUrl", fontUrl)
+                        }
+                        if (json.has("gpsVersion")) {
+                            val gpsVersion = json.getString("gpsVersion") // gpsVersion
+                            val gpsMd5 = json.getString("gpsMd5") // gpsVersion
+                            val gpsUrl = json.getString("gpsUrl")
+
+                            intent.putExtra("gpsVersion", gpsVersion)
+                            intent.putExtra("gpsMd5", gpsMd5)
+                            intent.putExtra("gpsUrl", gpsUrl)
+                        }
+                        if (json.has("lang")) {
+                            val lang = json.getString("lang") // Languages
+                            intent.putExtra("lang", lang)
+                        }
+                        if (json.has("changeLog")) {
+                            val changelog = json.getString("changeLog") // changeLog
+                            intent.putExtra("changelog", changelog)
+                        }
+                        if (!json.has("firmwareVersion")) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    context,
+                                    getString(R.string.firmware_not_found),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            finish()
+                            startActivity(intent)
+                        }
+
+                        progressBar.post {
+                            progressBar.visibility = View.GONE
+                        }
+                    }
+                })
+            }
         }
     }
 

@@ -41,6 +41,21 @@ class Firmwarehouse : AppCompatActivity() {
             )
         }
 
+        val data: Uri? = intent?.data
+
+        if (data != null) {
+
+            Toast.makeText(this, "${data.getQueryParameter("productionSource")} ${data.getQueryParameter("deviceSource")} ${data.getQueryParameter("appVersion")}", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, ExtrasDialog::class.java)
+            intent.putExtra("productionSource", data.getQueryParameter("productionSource"))
+            intent.putExtra("deviceSource", data.getQueryParameter("deviceSource"))
+            intent.putExtra("appVersion", data.getQueryParameter("appVersion"))
+            intent.putExtra("appname", data.getQueryParameter("appname"))
+            intent.putExtra("run", data.getQueryParameter("run").toBoolean())
+            startActivity(intent)
+        }
+
         init(true)
     }
 

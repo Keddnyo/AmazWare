@@ -25,6 +25,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true" tools:targetApi="m">
+                <action android:name="android.intent.action.View" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                android:scheme="amazware"
+                android:pathPrefix="/Extras" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
@@ -37,7 +49,7 @@
             android:name=".activities.ExtrasDialog"
             android:exported="false"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog"/>
         <activity
             android:name=".activities.Settings"
             android:exported="false"
