@@ -1,6 +1,8 @@
 package io.github.keddnyo.amazware.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import android.widget.Toast
@@ -26,10 +28,7 @@ class Feed : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = getString(R.string.feed_title) // New title
-    }
 
-    override fun onResume() {
-        super.onResume()
         val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
 
         init() // First load
@@ -48,6 +47,7 @@ class Feed : AppCompatActivity() {
         val dateString = getString(R.string.firmware_date)
         val request = MakeRequest().getLatest()
         val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
+        var indexes = arrayOf<Int>()
 
         refresh.isRefreshing = true
 
@@ -108,6 +108,8 @@ class Feed : AppCompatActivity() {
                                     )
                                 }
                                 adapter.notifyDataSetChanged() // Commit changes
+
+                                indexes = append(indexes, i.toInt())
                             }
                             refresh.post {
                                 refresh.isRefreshing = false
@@ -123,6 +125,18 @@ class Feed : AppCompatActivity() {
                 }
             }
         })
+
+        deviceIndex.onItemClickListener =
+            OnItemClickListener { _, _, position, _ ->
+                /*Toast.makeText(
+                    applicationContext,
+                    "selected Item Name is ${indexes[position]}",
+                    Toast.LENGTH_LONG
+                ).show()*/
+                val intent = Intent(this@Feed, ExtrasDialog::class.java)
+                intent.putExtra("deviceSource", indexes[position])
+                startActivity(intent)
+            }
     }
 
     private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
@@ -135,6 +149,12 @@ class Feed : AppCompatActivity() {
             JSONObject.NULL -> null
             else -> value
         }
+    }
+
+    fun append(arr: Array<Int>, element: Int): Array<Int> {
+        val list: MutableList<Int> = arr.toMutableList()
+        list.add(element)
+        return list.toTypedArray()
     }
 
     override fun onSupportNavigateUp(): Boolean {

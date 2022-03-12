@@ -16,6 +16,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
+
 class ExtrasDialog : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.setTheme(R.style.dialog)
@@ -101,12 +102,22 @@ class ExtrasDialog : AppCompatActivity() {
                 val keys = array.keys
 
                 for (i in keys) {
+                    val deviceIntent = getIntent()
+                    val deviceSourceIntent = deviceIntent.getIntExtra("deviceSource", 0)
+
                     if (json.has(i)) {
                         deviceSpinner.post {
                             val name = json.getJSONObject(i)
                                 .getString("name") // Filling dropdown list
                             devList.add(name)
                             devAdapter.notifyDataSetChanged()
+
+                            if (deviceSourceIntent != 0) {
+                                val spinnerPosition: Int = devAdapter.getPosition(json.getJSONObject(
+                                    deviceSourceIntent.toString()
+                                ).getString("name"))
+                                deviceSpinner.setSelection(spinnerPosition)
+                            }
                         }
                     }
                 }
@@ -127,7 +138,6 @@ class ExtrasDialog : AppCompatActivity() {
                         productionSource.error = null
                         deviceSource.error = null
                         appVersion.error = null
-
 
                         for (i in 1..1000) {
                             if (json.has(i.toString())) { // Existing indexes
