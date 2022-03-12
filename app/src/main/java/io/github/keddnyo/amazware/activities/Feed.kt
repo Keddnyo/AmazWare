@@ -41,17 +41,9 @@ class Feed : AppCompatActivity() {
         }
     }
 
-    @Suppress("IMPLICIT_CAST_TO_ANY")
-    private fun init() {
-        val okHttpClient = OkHttpClient()
-        val deviceIndex: ListView = findViewById(R.id.feedView)
-        val firmwareString = getString(R.string.firmware_fw)
-        val languagesString = getString(R.string.firmware_lang)
-        val changelogString = getString(R.string.firmware_change_log)
-        val dateString = getString(R.string.firmware_date)
-        val request = MakeRequest().getLatest()
-        val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
-        var indexes = arrayOf<Int>()
+    override fun onResume() {
+        super.onResume()
+
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
         val floatingButton: FloatingActionButton = findViewById(R.id.favouriteButtonFeed)
@@ -66,6 +58,18 @@ class Feed : AppCompatActivity() {
         floatingButton.setOnClickListener {
             openExtras(deviceSource!!.toInt()) // Open Extras favourite device
         }
+    }
+
+    private fun init() {
+        val okHttpClient = OkHttpClient()
+        val deviceIndex: ListView = findViewById(R.id.feedView)
+        val firmwareString = getString(R.string.firmware_fw)
+        val languagesString = getString(R.string.firmware_lang)
+        val changelogString = getString(R.string.firmware_change_log)
+        val dateString = getString(R.string.firmware_date)
+        val request = MakeRequest().getLatest()
+        val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
+        var indexes = arrayOf<Int>()
 
         refresh.isRefreshing = true
 
