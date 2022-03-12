@@ -112,6 +112,7 @@ class ExtrasDialog : AppCompatActivity() {
                             devList.add(name)
                             devAdapter.notifyDataSetChanged()
 
+                            // Load device values after opening Activity from Feed
                             if (deviceSourceIntent != 0) {
                                 val spinnerPosition: Int = devAdapter.getPosition(json.getJSONObject(
                                     deviceSourceIntent.toString()

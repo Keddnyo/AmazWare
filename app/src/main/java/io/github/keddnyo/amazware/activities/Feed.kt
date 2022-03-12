@@ -128,11 +128,6 @@ class Feed : AppCompatActivity() {
 
         deviceIndex.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                /*Toast.makeText(
-                    applicationContext,
-                    "selected Item Name is ${indexes[position]}",
-                    Toast.LENGTH_LONG
-                ).show()*/
                 val intent = Intent(this@Feed, ExtrasDialog::class.java)
                 intent.putExtra("deviceSource", indexes[position])
                 startActivity(intent)
