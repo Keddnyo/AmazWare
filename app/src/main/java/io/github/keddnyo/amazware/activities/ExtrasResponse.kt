@@ -27,8 +27,8 @@ class ExtrasResponse : AppCompatActivity() {
 
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
-        val responseList = findViewById<ListView>(R.id.responseList)
-        val responseField = findViewById<TextView>(R.id.responseField)
+        val responseList: ListView = findViewById(R.id.responseList)
+        val responseField: TextView = findViewById(R.id.responseField)
         val none = getString(R.string.none)
         val context = this@ExtrasResponse
 

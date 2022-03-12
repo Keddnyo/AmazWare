@@ -49,7 +49,7 @@ class Firmwarehouse : AppCompatActivity() {
 
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
-        val floatingButton = findViewById<FloatingActionButton>(R.id.favouriteButtonFirmwarehouse)
+        val floatingButton: FloatingActionButton = findViewById(R.id.favouriteButtonFirmwarehouse)
 
         if ((sharedPreferences.getString("deviceSource", "") != "")
         ) {
@@ -71,15 +71,15 @@ class Firmwarehouse : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     fun init(common: Boolean) {
         val darkMode = DarkMode().switch(this) // Set theme
-        val webView = findViewById<WebView>(R.id.webView)
-        val webSettings = webView?.settings
-        val refresh = findViewById<SwipeRefreshLayout>(R.id.cloud_refresh)
+        val webView: WebView = findViewById(R.id.webView)
+        val webSettings = webView.settings
+        val refresh: SwipeRefreshLayout = findViewById(R.id.cloud_refresh)
 
         refresh.isRefreshing = true
 
         webView.clearHistory()
         webView.clearCache(true)
-        webSettings!!.javaScriptEnabled = true
+        webSettings.javaScriptEnabled = true
 
         if (common) {
             webView.loadUrl(MakeRequest().openFirmwarehouse(this))

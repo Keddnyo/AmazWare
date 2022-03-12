@@ -41,13 +41,13 @@ class Feed : AppCompatActivity() {
 
     private fun init() {
         val okHttpClient = OkHttpClient()
-        val deviceIndex = findViewById<ListView>(R.id.feedView)
+        val deviceIndex: ListView = findViewById(R.id.feedView)
         val firmwareString = getString(R.string.firmware_fw)
         val languagesString = getString(R.string.firmware_lang)
         val changelogString = getString(R.string.firmware_change_log)
         val dateString = getString(R.string.firmware_date)
         val request = MakeRequest().getLatest()
-        val refresh = findViewById<SwipeRefreshLayout>(R.id.feed_refresh)
+        val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
 
         refresh.isRefreshing = true
 

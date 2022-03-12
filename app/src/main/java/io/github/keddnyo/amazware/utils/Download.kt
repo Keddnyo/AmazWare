@@ -11,25 +11,28 @@ import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 
 class Download {
-    fun run (context: Context, fileUrl: String) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
+    fun run(c: Context, fileUrl: String) {
+        val pm = PreferenceManager.getDefaultSharedPreferences(c)
 
         when {
-            sharedPreferences.getBoolean("download_provider", true) -> {
+            pm.getBoolean("download_provider", true) -> {
                 val request = DownloadManager.Request(Uri.parse(fileUrl))
-                request.setDescription(context.getString(R.string.downloading))
-                request.setTitle(URLUtil.guessFileName(fileUrl, "?", "?"))
-                request.allowScanningByMediaScanner()
+                val fileName = URLUtil.guessFileName(fileUrl, "?", "?")
+                request.setTitle(fileName)
+                request.setDescription(c.getString(R.string.app_name))
                 request.setNotificationVisibility(1)
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(fileUrl, "?", "?"))
-                val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                request.setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    fileName
+                )
+                val dm = c.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 dm.enqueue(request)
-                Toast.makeText(context, context.getString(R.string.downloading), Toast.LENGTH_LONG).show()
-            } else -> {
-            run {
-                context.startActivity(
+                Toast.makeText(c, c.getString(R.string.downloading), Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                c.startActivity(
                     Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl))
-                )}
+                )
             }
         }
     }

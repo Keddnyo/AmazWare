@@ -1,13 +1,10 @@
 package io.github.keddnyo.amazware.utils
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
 
 class Lang {
     fun rename(context: Context, lang: String): String {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
-
         val langZH = context.getString(R.string.lang_zh)
         val langEN = context.getString(R.string.lang_en)
         val langES = context.getString(R.string.lang_es)

@@ -39,9 +39,9 @@ class ExtrasDialog : AppCompatActivity() {
         val deviceSource: EditText = findViewById(R.id.deviceSource)
         val appVersion: EditText = findViewById(R.id.appVersion)
         val appName: Spinner = findViewById(R.id.appName)
-        val buttonImport = findViewById<Button>(R.id.buttonImport)
-        val buttonSubmit = findViewById<Button>(R.id.buttonSubmit)
-        val progressBar = findViewById<LinearLayout>(R.id.progressBar)
+        val buttonImport: Button = findViewById(R.id.buttonImport)
+        val buttonSubmit: Button = findViewById(R.id.buttonSubmit)
+        val progressBar: LinearLayout = findViewById(R.id.progressBar)
         val error = getString(R.string.firmware_empty_field)
 
         val devList = ArrayList<String>()
