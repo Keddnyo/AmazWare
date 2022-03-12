@@ -114,10 +114,14 @@ class ExtrasDialog : AppCompatActivity() {
 
                             // Load device values after opening Activity from Feed
                             if (deviceSourceIntent != 0) {
-                                val spinnerPosition: Int = devAdapter.getPosition(json.getJSONObject(
-                                    deviceSourceIntent.toString()
-                                ).getString("name"))
-                                deviceSpinner.setSelection(spinnerPosition)
+                                if (json.has(deviceSourceIntent.toString())) {
+                                    val spinnerPosition: Int = devAdapter.getPosition(json.getJSONObject(
+                                        deviceSourceIntent.toString()
+                                    ).getString("name"))
+                                    deviceSpinner.setSelection(spinnerPosition)
+                                } else {
+                                    finish()
+                                }
                             }
                         }
                     }

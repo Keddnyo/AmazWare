@@ -2,12 +2,15 @@ package io.github.keddnyo.amazware.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.Adapter
 import io.github.keddnyo.amazware.utils.Device
@@ -38,6 +41,7 @@ class Feed : AppCompatActivity() {
         }
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun init() {
         val okHttpClient = OkHttpClient()
         val deviceIndex: ListView = findViewById(R.id.feedView)
@@ -48,6 +52,20 @@ class Feed : AppCompatActivity() {
         val request = MakeRequest().getLatest()
         val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
         var indexes = arrayOf<Int>()
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
+        val floatingButton: FloatingActionButton = findViewById(R.id.favouriteButtonFeed)
+
+        val deviceSource = sharedPreferences.getString("deviceSource", "")
+        if (deviceSource != "") {
+            floatingButton.visibility = View.VISIBLE
+        } else {
+            floatingButton.visibility = View.GONE
+        }
+
+        floatingButton.setOnClickListener {
+            openExtras(deviceSource!!.toInt()) // Open Extras favourite device
+        }
 
         refresh.isRefreshing = true
 
@@ -128,10 +146,20 @@ class Feed : AppCompatActivity() {
 
         deviceIndex.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                val intent = Intent(this@Feed, ExtrasDialog::class.java)
-                intent.putExtra("deviceSource", indexes[position])
-                startActivity(intent)
+                openExtras(indexes[position])
             }
+    }
+
+    private fun append(arr: Array<Int>, element: Int): Array<Int> {
+        val list: MutableList<Int> = arr.toMutableList()
+        list.add(element)
+        return list.toTypedArray()
+    }
+
+    private fun openExtras(index: Int) {
+        val intent = Intent(this@Feed, ExtrasDialog::class.java)
+        intent.putExtra("deviceSource", index)
+        startActivity(intent)
     }
 
     private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith { it ->
@@ -144,12 +172,6 @@ class Feed : AppCompatActivity() {
             JSONObject.NULL -> null
             else -> value
         }
-    }
-
-    fun append(arr: Array<Int>, element: Int): Array<Int> {
-        val list: MutableList<Int> = arr.toMutableList()
-        list.add(element)
-        return list.toTypedArray()
     }
 
     override fun onSupportNavigateUp(): Boolean {
