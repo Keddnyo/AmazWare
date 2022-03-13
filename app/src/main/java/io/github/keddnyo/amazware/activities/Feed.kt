@@ -41,25 +41,6 @@ class Feed : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(this)
-        val floatingButton: FloatingActionButton = findViewById(R.id.favouriteButtonFeed)
-
-        val deviceSource = sharedPreferences.getString("deviceSource", "")
-        if (deviceSource != "") {
-            floatingButton.visibility = View.VISIBLE
-        } else {
-            floatingButton.visibility = View.GONE
-        }
-
-        floatingButton.setOnClickListener {
-            openExtras(deviceSource!!.toInt()) // Open Extras favourite device
-        }
-    }
-
     private fun init() {
         val okHttpClient = OkHttpClient()
         val deviceIndex: ListView = findViewById(R.id.feedView)
