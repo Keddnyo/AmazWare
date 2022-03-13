@@ -2,15 +2,12 @@ package io.github.keddnyo.amazware.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.keddnyo.amazware.R
 import io.github.keddnyo.amazware.utils.Adapter
 import io.github.keddnyo.amazware.utils.Device
