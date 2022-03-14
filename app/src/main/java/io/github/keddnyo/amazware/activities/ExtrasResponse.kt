@@ -2,18 +2,17 @@ package io.github.keddnyo.amazware.activities
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.utils.Adapter
-import io.github.keddnyo.amazware.utils.Download
-import io.github.keddnyo.amazware.utils.Lang
+import io.github.keddnyo.amazware.utils.*
 
 class ExtrasResponse : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.extras_response)
@@ -31,6 +30,12 @@ class ExtrasResponse : AppCompatActivity() {
         val responseField: TextView = findViewById(R.id.responseField)
         val none = getString(R.string.none)
         val context = this@ExtrasResponse
+
+        lateinit var listView: ListView
+        val arrayList: ArrayList<AdapterData> = ArrayList()
+        val adapter: android.widget.Adapter?
+        adapter = Adapter(this, arrayList)
+        listView.adapter = adapter
 
         val json = intent.getStringExtra("json")
 
@@ -58,18 +63,6 @@ class ExtrasResponse : AppCompatActivity() {
 
         var changelog = intent.getStringExtra("changelog")
 
-        val list = ArrayList<Adapter>() // Setting response adapter
-        val adapter = SimpleAdapter(
-            this,
-            list,
-            android.R.layout.two_line_list_item,
-            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
-            intArrayOf(
-                android.R.id.text1, android.R.id.text2
-            )
-        )
-        responseList.adapter = adapter
-
         when (sharedPreferences.getBoolean("simple_response", true)) {
             false -> {
                 responseList.visibility = View.GONE
@@ -78,127 +71,142 @@ class ExtrasResponse : AppCompatActivity() {
             }
             true -> {
                 if (firmwareVersion != null) {
-                    list.add(
-                        Adapter(
-                            "${getString(R.string.firmware_fw)}: $firmwareVersion",
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_fw)} $firmwareMd5",
                             "MD5: $firmwareMd5"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
-                            getString(R.string.firmware_fw) + ": " + none,
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_fw)} $none",
                             "MD5: $none"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (resourceVersion != null) {
-                    list.add(
-                        Adapter(
-                            "${getString(R.string.firmware_res)}: $resourceVersion",
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_res)} $resourceVersion",
                             "MD5: $resourceMd5"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
-                            getString(R.string.firmware_res) + ": " + none,
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_res)} $none",
                             "MD5: $none"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (baseResourceVersion != null) {
-                    list.add(
-                        Adapter(
-                            "${getString(R.string.firmware_base_res)}: $baseResourceVersion",
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_base_res)} $baseResourceVersion",
                             "MD5: $baseResourceMd5"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
-                            getString(R.string.firmware_base_res) + ": " + none,
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_base_res)} $none",
                             "MD5: $none"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (fontVersion != null) {
-                    list.add(
-                        Adapter(
-                            "${getString(R.string.firmware_ft)}: $fontVersion",
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_ft)} $fontVersion",
                             "MD5: $fontMd5"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
-                            getString(R.string.firmware_ft) + ": " + none,
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_ft)} $none",
                             "MD5: $none"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (gpsVersion != null) {
-                    list.add(
-                        Adapter(
-                            "${getString(R.string.firmware_gps)}: $gpsVersion",
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_gps)} $gpsVersion",
                             "MD5: $gpsMd5"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
-                            getString(R.string.firmware_gps) + ": " + none,
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
+                            "${getString(R.string.firmware_gps)} $none",
                             "MD5: $none"
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (lang != null) {
                     val language =
                         Lang().rename(this@ExtrasResponse, lang)
 
-                    list.add(
-                        Adapter(
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
                             "${getString(R.string.firmware_lang)}:",
                             language
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
                             "${getString(R.string.firmware_lang)}:",
                             none
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
                 if (changelog != null) {
                     changelog = changelog.substringBefore('#')
-                    list.add(
-                        Adapter(
+
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
                             "${getString(R.string.firmware_change_log)}:",
                             changelog
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 } else {
-                    list.add(
-                        Adapter(
+                    arrayList.add(
+                        AdapterData(
+                            getDrawable(R.drawable.ic_extras),
                             "${getString(R.string.firmware_change_log)}:",
                             none
                         )
                     )
-                    adapter.notifyDataSetChanged() // Commit changes
+                    (adapter as io.github.keddnyo.amazware.utils.Adapter).notifyDataSetChanged()
                 }
 
                 responseList.onItemClickListener =

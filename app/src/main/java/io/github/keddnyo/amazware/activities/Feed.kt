@@ -9,10 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.keddnyo.amazware.R
-import io.github.keddnyo.amazware.utils.Adapter
-import io.github.keddnyo.amazware.utils.Device
-import io.github.keddnyo.amazware.utils.Lang
-import io.github.keddnyo.amazware.utils.MakeRequest
+import io.github.keddnyo.amazware.utils.*
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -22,6 +19,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class Feed : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.feed)
@@ -49,19 +47,13 @@ class Feed : AppCompatActivity() {
         val refresh: SwipeRefreshLayout = findViewById(R.id.feed_refresh)
         var indexes = arrayOf<Int>()
 
-        refresh.isRefreshing = true
+        val listView: ListView = deviceIndex
+        val arrayList: ArrayList<AdapterData> = ArrayList()
+        val adapter: android.widget.Adapter?
+        adapter = Adapter(this, arrayList)
+        listView.adapter = adapter
 
-        val list = ArrayList<Adapter>() // Setting adapter
-        val adapter = SimpleAdapter(
-            this,
-            list,
-            android.R.layout.simple_list_item_2,
-            arrayOf(Adapter.NAME, Adapter.DESCRIPTION),
-            intArrayOf(
-                android.R.id.text1, android.R.id.text2
-            )
-        )
-        deviceIndex.adapter = adapter
+        refresh.isRefreshing = true
 
         okHttpClient.newCall(request).enqueue(object : Callback { // Creating request
             override fun onFailure(call: Call, e: IOException) { // Error
@@ -93,22 +85,23 @@ class Feed : AppCompatActivity() {
 
                             deviceIndex.post {
                                 if (changelog.isEmpty()) { // An empty changelog won't be shown
-                                    list.add(
-                                        Adapter(
+                                    arrayList.add(
+                                        AdapterData(
+                                            getDrawable(R.drawable.ic_extras),
                                             deviceName,
                                             "$firmwareString: $firmware\n\n$languagesString: $languageNames\n\n$dateString: $date\n"
                                         )
                                     )
                                 } else { // A non-empty changelog will be shown
-                                    list.add(
-                                        Adapter(
+                                    arrayList.add(
+                                        AdapterData(
+                                            getDrawable(R.drawable.ic_extras),
                                             deviceName,
                                             "$firmwareString: $firmware\n\n$languagesString: $languageNames\n\n$changelogString:\n$changelog\n\n$dateString: $date\n"
                                         )
                                     )
                                 }
-                                adapter.notifyDataSetChanged() // Commit changes
-
+                                (adapter as Adapter).notifyDataSetChanged()
                                 indexes = append(indexes, i.toInt())
                             }
                             refresh.post {
