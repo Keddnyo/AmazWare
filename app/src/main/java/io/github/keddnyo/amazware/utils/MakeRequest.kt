@@ -1,5 +1,6 @@
 package io.github.keddnyo.amazware.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -211,6 +212,7 @@ class MakeRequest {
                     intent.putExtra("changelog", changelog)
                 }
                 if (json.has("firmwareVersion")) {
+                    (context as Activity).finish()
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(intent)
                 } else {

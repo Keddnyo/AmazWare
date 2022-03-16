@@ -197,7 +197,7 @@ class ExtrasDialog : AppCompatActivity() {
                         productionSource.text.toString(),
                         deviceSource.text.toString(),
                         appVersion.text.toString(),
-                        appName.selectedItem.toString(),
+                        appName.selectedItem.toString()
                     )
                 }
             }
