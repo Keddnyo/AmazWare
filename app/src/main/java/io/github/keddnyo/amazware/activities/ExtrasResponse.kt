@@ -19,7 +19,7 @@ class ExtrasResponse : AppCompatActivity() {
         setContentView(R.layout.extras_response)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = intent.getStringExtra("title") // New Title
+        title = getString(R.string.server_response)
     }
 
     override fun onResume() {

@@ -66,27 +66,6 @@
             android:spinnerMode="dialog"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <LinearLayout
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/extras_gathering_info" />
-
-            <ProgressBar
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminateOnly="true" />
-
-        </LinearLayout>
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

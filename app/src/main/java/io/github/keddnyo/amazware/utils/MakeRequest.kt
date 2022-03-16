@@ -1,13 +1,33 @@
 package io.github.keddnyo.amazware.utils
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.preference.PreferenceManager
-import okhttp3.Request
+import io.github.keddnyo.amazware.R
+import io.github.keddnyo.amazware.activities.ExtrasResponse
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 import java.util.*
 
+
 class MakeRequest {
-    fun openFirmwarehouse(context: Context): String {
+
+    fun getDevices(): Request {
+        val url = "https://schakal.ru/fw/dev_apps.json"
+        return Request.Builder().url(url).build()
+    }
+
+    fun getLatest(): Request {
+        val url = "https://schakal.ru/fw/latest.json"
+        return Request.Builder().url(url).build()
+    }
+
+    fun openMain(context: Context): String {
         val lang = Locale.getDefault().language.toString()
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
@@ -30,7 +50,8 @@ class MakeRequest {
 
         return url.toString()
     }
-    fun openFirmwarehouseDevice(context: Context): String {
+
+    fun openMainDevice(context: Context): String {
         val lang = Locale.getDefault().language.toString()
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context) // Shared Preferences
@@ -56,10 +77,16 @@ class MakeRequest {
         return url.toString()
     }
 
-    fun directDevice(ps: String, ds: String, av: String, an: String): Request {
+    fun firmwareRequest(context: Context, ps: String, ds: String, av: String, an: String) {
         val requestHost = "api-mifit-ru.huami.com"
         // val requestHost = "api-mifit-us2.huami.com"
         // val requestHost = "api.amazfit.com"
+
+        val intent = Intent(context, ExtrasResponse::class.java)
+
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, context.resources.getString(R.string.extras_gathering_info), Toast.LENGTH_SHORT).show()
+        }
 
         val uriBuilder: Uri.Builder = Uri.Builder()
         uriBuilder.scheme("https")
@@ -97,7 +124,7 @@ class MakeRequest {
             .appendQueryParameter("gpsVersion", "0")
             .appendQueryParameter("baseResourceVersion", "0")
 
-        return Request.Builder()
+        val request = Request.Builder()
             .url(uriBuilder.toString())
             .addHeader("hm-privacy-diagnostics", "false")
             .addHeader("country", "0")
@@ -117,15 +144,81 @@ class MakeRequest {
             .addHeader("accept-encoding", "gzip")
             .addHeader("accept", "*/*")
             .build()
-    }
 
-    fun getDevices(): Request {
-        val url = "https://schakal.ru/fw/dev_apps.json"
-        return Request.Builder().url(url).build()
-    }
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+            }
+            override fun onResponse(call: Call, response: Response) {
+                val json = JSONObject(response.body()!!.string())
 
-    fun getLatest(): Request {
-        val url = "https://schakal.ru/fw/latest.json"
-        return Request.Builder().url(url).build()
+                intent.putExtra("json", json.toString())
+
+                if (json.has("firmwareVersion")) {
+                    val firmwareVersion =
+                        json.getString("firmwareVersion") // Firmware
+                    val firmwareMd5 = json.getString("firmwareMd5") // Firmware MD5
+                    val firmwareUrl = json.getString("firmwareUrl")
+
+                    intent.putExtra("firmwareVersion", firmwareVersion)
+                    intent.putExtra("firmwareMd5", firmwareMd5)
+                    intent.putExtra("firmwareUrl", firmwareUrl)
+                }
+                if (json.has("resourceVersion")) {
+                    val resourceVersion =
+                        json.getString("resourceVersion") // Resources
+                    val resourceMd5 = json.getString("resourceMd5") // Resources MD5
+                    val resourceUrl = json.getString("resourceUrl")
+
+                    intent.putExtra("resourceVersion", resourceVersion)
+                    intent.putExtra("resourceMd5", resourceMd5)
+                    intent.putExtra("resourceUrl", resourceUrl)
+                }
+                if (json.has("baseResourceVersion")) {
+                    val baseResourceVersion =
+                        json.getString("baseResourceVersion") // Base resources
+                    val baseResourceMd5 =
+                        json.getString("baseResourceMd5") // Base resources MD5
+                    val baseResourceUrl = json.getString("baseResourceUrl")
+
+                    intent.putExtra("baseResourceVersion", baseResourceVersion)
+                    intent.putExtra("baseResourceMd5", baseResourceMd5)
+                    intent.putExtra("baseResourceUrl", baseResourceUrl)
+                }
+                if (json.has("fontVersion")) {
+                    val fontVersion = json.getString("fontVersion") // Font
+                    val fontMd5 = json.getString("fontMd5") // Font MD5
+                    val fontUrl = json.getString("fontUrl")
+
+                    intent.putExtra("fontVersion", fontVersion)
+                    intent.putExtra("fontMd5", fontMd5)
+                    intent.putExtra("fontUrl", fontUrl)
+                }
+                if (json.has("gpsVersion")) {
+                    val gpsVersion = json.getString("gpsVersion") // gpsVersion
+                    val gpsMd5 = json.getString("gpsMd5") // gpsVersion
+                    val gpsUrl = json.getString("gpsUrl")
+
+                    intent.putExtra("gpsVersion", gpsVersion)
+                    intent.putExtra("gpsMd5", gpsMd5)
+                    intent.putExtra("gpsUrl", gpsUrl)
+                }
+                if (json.has("lang")) {
+                    val lang = json.getString("lang") // Languages
+                    intent.putExtra("lang", lang)
+                }
+                if (json.has("changeLog")) {
+                    val changelog = json.getString("changeLog") // changeLog
+                    intent.putExtra("changelog", changelog)
+                }
+                if (json.has("firmwareVersion")) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                } else {
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(context, context.resources.getString(R.string.firmware_not_found), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }

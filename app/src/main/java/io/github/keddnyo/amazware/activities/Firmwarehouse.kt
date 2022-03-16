@@ -82,9 +82,9 @@ class Firmwarehouse : AppCompatActivity() {
         webSettings.javaScriptEnabled = true
 
         if (common) {
-            webView.loadUrl(MakeRequest().openFirmwarehouse(this))
+            webView.loadUrl(MakeRequest().openMain(this))
         } else {
-            webView.loadUrl(MakeRequest().openFirmwarehouseDevice(this))
+            webView.loadUrl(MakeRequest().openMainDevice(this))
         }
 
         webView.webViewClient = object : WebViewClient() {
